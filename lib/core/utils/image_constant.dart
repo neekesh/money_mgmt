@@ -6,6 +6,9 @@ class ImageConstant {
 // Get Started Page images
   static String imgFrankEyesClosed = '$imagePath/img_frank_eyes_closed.png';
 
+  // Maintenance images
+  static String imgArrowLeft = '$imagePath/img_arrow_left.svg';
+
 // Dashboard images
   static String imgLogo = '$imagePath/img_logo.png';
 
@@ -22,6 +25,13 @@ class ImageConstant {
 // Common images
   static String imgFrankEyesClosed394x393 =
       '$imagePath/img_frank_eyes_closed_394x393.png';
+
+// Common images
+  static String imgHomePage = '$imagePath/img_home_page.png';
+
+  static String imgSms = '$imagePath/img_sms.png';
+
+  static String imgMaleUser = '$imagePath/img_male_user.png';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
 }

@@ -1,6 +1,6 @@
 import 'dart:ui';
-import 'package:flutter/material.dart';
 import '../core/app_export.dart';
+import 'package:flutter/material.dart';
 
 PrimaryColors get appTheme => ThemeHelper().themeColor();
 ThemeData get theme => ThemeHelper().themeData();
@@ -127,6 +127,8 @@ class PrimaryColors {
   Color get blueGray100 => Color(0XFFD9D9D9);
   Color get blueGray400 => Color(0XFF888888);
   Color get blueGray700 => Color(0XFF40734F);
+  Color get blueGray10000 => Color(0X00D9D9D9);
+
 // Graye
   Color get gray1009e => Color(0X9EF2FFF3);
 // Gray
@@ -134,9 +136,10 @@ class PrimaryColors {
 // Green
   Color get green600 => Color(0XFF4B984D);
 // Lime
-  Color get lime300 => Color(0XFFD8E989);
   Color get lime400 => Color(0XFFC9C55E);
   Color get lime900 => Color(0XFF63681B);
 // Yellow
   Color get yellow900 => Color(0XFFCC7B29);
+
+  Color get lime300 => Color(0XFFD8E989);
 }

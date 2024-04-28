@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import '../core/app_export.dart';
+import 'package:flutter/material.dart';
 
 class AppDecoration {
   // Fill decorations
@@ -21,12 +21,28 @@ class AppDecoration {
   static BoxDecoration get fillPrimaryContainer => BoxDecoration(
         color: theme.colorScheme.primaryContainer,
       );
+
 // Gradient decorations
   static BoxDecoration get gradientBlueGrayToBlueGray => BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment(0.5, 0),
           end: Alignment(0.5, 1),
           colors: [appTheme.blueGray100, appTheme.blueGray100.withOpacity(0)],
+        ),
+      );
+  static BoxDecoration get gradientErrorContainerToBlueGray => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(0.5, 0),
+          end: Alignment(0.5, 1),
+          colors: [theme.colorScheme.errorContainer, appTheme.blueGray10000],
+        ),
+      );
+
+  static BoxDecoration get gradientYellowToBlueGray => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(0.5, 0),
+          end: Alignment(0.5, 1),
+          colors: [appTheme.yellow900, appTheme.blueGray10000],
         ),
       );
   static BoxDecoration get gradientGrayEToGray1009e => BoxDecoration(

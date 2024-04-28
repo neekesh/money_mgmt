@@ -33,7 +33,7 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
             ),
           ),
           child: Container(
-            decoration: AppDecoration.gradientGrayEToGray1009e,
+            decoration: AppDecoration.gradientGrayEToGrayE,
             child: Column(
               children: [
                 SizedBox(height: 13.v),
@@ -43,6 +43,8 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
                       children: [
                         CustomImageView(
                           imagePath: ImageConstant.imgLogo,
+                          height: 146.v,
+                          width: 333.h,
                         ),
                         SizedBox(height: 22.v),
                         Align(
@@ -73,8 +75,7 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,
-                                    style: CustomTextStyles
-                                        .titleLargeOnErrorExtraBold,
+                                    style: theme.textTheme.titleLarge,
                                   ),
                                 )
                               ],
@@ -84,8 +85,9 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
                         SizedBox(height: 23.v),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 30.h),
-                          decoration:
-                              AppDecoration.gradientLimeToBlueGray.copyWith(
+                          decoration: AppDecoration
+                              .gradientErrorContainerToBlueGray
+                              .copyWith(
                             borderRadius: BorderRadiusStyle.roundedBorder50,
                           ),
                           child: Column(
@@ -96,25 +98,24 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
                               _buildGridordertext(context),
                               SizedBox(height: 54.v),
                               SizedBox(
+                                height: 122.v,
+                                width: 141.h,
                                 child: Stack(
                                   alignment: Alignment.center,
                                   children: [
                                     Align(
                                       alignment: Alignment.topCenter,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          onTapCreatefromone(context);
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(),
-                                        ),
+                                      child: Container(
+                                        height: 31.v,
+                                        width: 141.h,
+                                        decoration: BoxDecoration(),
                                       ),
                                     ),
                                     Align(
                                       alignment: Alignment.center,
                                       child: GestureDetector(
                                         onTap: () {
-                                          onTapViewone(context);
+                                          onTapView(context);
                                         },
                                         child: Container(
                                           height: 122.v,
@@ -137,8 +138,7 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
                                           maxLines: null,
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.center,
-                                          style: CustomTextStyles
-                                              .titleSmallOnError_1,
+                                          style: theme.textTheme.titleSmall,
                                         ),
                                       ),
                                     ),
@@ -178,7 +178,7 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
             mainAxisSpacing: 51.h,
             crossAxisSpacing: 51.h,
           ),
-          physics: ScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: ref
                   .watch(dashboardNotifier)
                   .dashboardModelObj
@@ -203,7 +203,17 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
     );
   }
 
-  onTapColumnordertext(BuildContext context) {}
-  onTapCreatefromone(BuildContext context) {}
-  onTapViewone(BuildContext context) {}
+  /// Navigates to the maintenanceScreen when the action is triggered.
+  onTapColumnordertext(BuildContext context) {
+    NavigatorService.pushNamed(
+      AppRoutes.maintainenceScreen,
+    );
+  }
+
+  /// Navigates to the appointmentScreen when the action is triggered.
+  onTapView(BuildContext context) {
+    NavigatorService.pushNamed(
+      AppRoutes.appointmentScreen,
+    );
+  }
 }
