@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import '../core/app_export.dart';
+import 'package:flutter/material.dart';
 
 extension on TextStyle {}
 
@@ -10,6 +10,28 @@ class CustomTextStyles {
   // Headline text style
   static get headlineLargeOnPrimary => theme.textTheme.headlineLarge!.copyWith(
         color: theme.colorScheme.onPrimary,
+      );
+  static get labelLargePrimaryContainer => theme.textTheme.labelLarge!.copyWith(
+        color: theme.colorScheme.primaryContainer.withOpacity(1),
+        fontWeight: FontWeight.w600,
+      );
+  static get titleLargeBold => theme.textTheme.titleLarge!.copyWith(
+        fontSize: 21.fSize,
+        fontWeight: FontWeight.w700,
+      );
+  static get labelLargePrimaryContainerSemiBold =>
+      theme.textTheme.labelLarge!.copyWith(
+        color: theme.colorScheme.primaryContainer.withOpacity(1),
+        fontWeight: FontWeight.w600,
+      );
+  static get headlineSmallOnError => theme.textTheme.headlineSmall!.copyWith(
+        color: theme.colorScheme.onError,
+        fontSize: 24.fSize,
+      );
+  static get labelLargePrimaryContainerSemiBold_1 =>
+      theme.textTheme.labelLarge!.copyWith(
+        color: theme.colorScheme.primaryContainer.withOpacity(1),
+        fontWeight: FontWeight.w600,
       );
   static get headlineMediumOnPrimary =>
       theme.textTheme.headlineMedium!.copyWith(
@@ -47,6 +69,11 @@ class CustomTextStyles {
       );
   static get titleSmallOnPrimary => theme.textTheme.titleSmall!.copyWith(
         color: theme.colorScheme.onPrimary,
+        fontWeight: FontWeight.w600,
+      );
+
+  static get titleSmallOnError => theme.textTheme.titleSmall!.copyWith(
+        color: theme.colorScheme.onError,
         fontWeight: FontWeight.w600,
       );
 }

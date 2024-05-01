@@ -6,6 +6,33 @@ class AppDecoration {
   static BoxDecoration get fillGreen => BoxDecoration(
         color: appTheme.green600,
       );
+  static BoxDecoration get gradientGreenToBlueGray => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(0.5, 0),
+          end: Alignment(0.5, 1),
+          colors: [appTheme.green600, appTheme.blueGray100.withOpacity(0)],
+        ),
+      );
+  static BoxDecoration get gradientLimeToErrorContainer => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(0.5, 0),
+          end: Alignment(0.5, 1),
+          colors: [
+            appTheme.lime900,
+            theme.colorScheme.errorContainer.withOpacity(0)
+          ],
+        ),
+      );
+  static BoxDecoration get gradientGreenToErrorContainer => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(0.5, 0),
+          end: Alignment(0.5, 1),
+          colors: [
+            appTheme.green600,
+            theme.colorScheme.errorContainer.withOpacity(0)
+          ],
+        ),
+      );
   static BoxDecoration get fillLime => BoxDecoration(
         color: appTheme.lime900,
       );
@@ -45,6 +72,30 @@ class AppDecoration {
           colors: [appTheme.yellow900, appTheme.blueGray10000],
         ),
       );
+  static BoxDecoration get gradientOnPrimaryToErrorContainer => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(0.5, 0),
+          end: Alignment(0.5, 1),
+          colors: [
+            theme.colorScheme.onPrimary,
+            theme.colorScheme.errorContainer.withOpacity(0)
+          ],
+        ),
+      );
+  static BoxDecoration get outlinePrimary1 => BoxDecoration(
+        color: appTheme.green600,
+        boxShadow: [
+          BoxShadow(
+            color: theme.colorScheme.primary,
+            spreadRadius: 2.h,
+            blurRadius: 2.h,
+            offset: Offset(
+              6,
+              6,
+            ),
+          )
+        ],
+      );
   static BoxDecoration get gradientGrayEToGray1009e => BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment(0.5, 0),
@@ -66,6 +117,20 @@ class AppDecoration {
           colors: [appTheme.lime300, appTheme.blueGray100.withOpacity(0)],
         ),
       );
+  static BoxDecoration get outlinePrimary2 => BoxDecoration(
+        color: appTheme.lime900,
+        boxShadow: [
+          BoxShadow(
+            color: theme.colorScheme.primary,
+            spreadRadius: 2.h,
+            blurRadius: 2.h,
+            offset: Offset(
+              6,
+              6,
+            ),
+          )
+        ],
+      );
 // Outline decorations
   static BoxDecoration get outlinePrimary => BoxDecoration();
 }
@@ -80,5 +145,8 @@ class BorderRadiusStyle {
       );
   static BorderRadius get roundedBorder80 => BorderRadius.circular(
         80.h,
+      );
+  static BorderRadius get roundedBorder10 => BorderRadius.circular(
+        10.h,
       );
 }
