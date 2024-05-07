@@ -98,14 +98,6 @@ Price: 1000 AUD
                                   style: CustomTextStyles.headlineSmallOnError,
                                 ),
                               ),
-                              SizedBox(height: 26.v),
-                              CustomElevatedButton(
-                                height: 78.v,
-                                width: 174.h,
-                                text: "lbl_pay".tr,
-                                buttonTextStyle: theme.textTheme.headlineLarge!,
-                              ),
-                              SizedBox(height: 26.v)
                             ],
                           ),
                         )

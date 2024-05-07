@@ -244,7 +244,7 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/";
+        return "/profile_details_screen";
       default:
         return "/";
     }
