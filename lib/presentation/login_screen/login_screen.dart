@@ -26,11 +26,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
           width: SizeUtils.width,
           height: SizeUtils.height,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(0.5, 0),
-              end: Alignment(0.5, 1),
-              colors: [Color(0xFFA3A8A2), Color(0XFF282828)],
-            ),
+            color: Color.fromRGBO(226, 226, 226, 1),
           ),
           child: SizedBox(
             child: SingleChildScrollView(
@@ -47,13 +43,15 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                           horizontal: 30.h,
                           vertical: 35.v,
                         ),
-                        decoration:
-                            AppDecoration.gradientBlueGrayToBlueGray.copyWith(
-                          borderRadius: BorderRadiusStyle.roundedBorder50,
-                        ),
+                        decoration: BoxDecoration(
+                            color: Color(0xFFF3FFF4),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(50),
+                                topRight: Radius.circular(50))),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            SizedBox(height: 50.v),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
@@ -76,6 +74,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                                     controller: ref
                                         .watch(loginNotifier)
                                         .edittextController,
+                                    contentPadding: EdgeInsets.all(12),
                                   );
                                 },
                               ),
@@ -103,6 +102,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                                     controller: ref
                                         .watch(loginNotifier)
                                         .edittextoneController,
+                                    contentPadding: EdgeInsets.all(12),
                                     textInputAction: TextInputAction.done,
                                     obscureText: true,
                                   );
@@ -112,18 +112,22 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                             SizedBox(height: 31.v),
                             CustomElevatedButton(
                               width: 199.h,
+                              height: 63.v,
                               text: "lbl_login".tr,
                               buttonTextStyle: theme.textTheme.headlineMedium!,
                               buttonStyle: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith((states) {
-                                  return Colors.green;
+                                  return Color(0xFF4B984D);
                                 }),
                                 side: MaterialStateProperty.all<BorderSide>(
                                   BorderSide(
                                     color: Colors.transparent,
                                   ),
                                 ),
+                                elevation: MaterialStateProperty.all(12.0),
+                                shadowColor:
+                                    MaterialStateProperty.all(Colors.grey),
                               ),
                               onPressed: () {
                                 onTapLogin(context);
@@ -134,10 +138,11 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                               decoration: AppDecoration.outlinePrimary,
                               child: Text(
                                 "msg_forgot_your_password".tr,
-                                style: theme.textTheme.titleMedium,
+                                style: theme.textTheme.titleMedium!
+                                    .copyWith(color: Color(0xFF1E1E1E)),
                               ),
                             ),
-                            SizedBox(height: 41.v)
+                            SizedBox(height: 41.v),
                           ],
                         ),
                       ),

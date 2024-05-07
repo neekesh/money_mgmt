@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 import '../core/app_export.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +8,14 @@ enum BottomBarEnum { Homepage, Sms, Maleuser }
 
 // ignore_for_file: must_be_immutable
 class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({this.onChanged});
+  CustomBottomBar({
+    this.onChanged,
+    this.isNotificationEnabled = false,
+  });
 
   Function(BottomBarEnum)? onChanged;
+
+  bool? isNotificationEnabled;
 
   @override
   CustomBottomBarState createState() => CustomBottomBarState();
@@ -26,10 +33,10 @@ class CustomBottomBarState extends State<CustomBottomBar> {
       type: BottomBarEnum.Homepage,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgSms,
-      activeIcon: ImageConstant.imgSms,
-      type: BottomBarEnum.Sms,
-    ),
+        icon: ImageConstant.imgSms,
+        activeIcon: ImageConstant.imgSms,
+        type: BottomBarEnum.Sms,
+        iconData: Icons.notification_important_outlined),
     BottomMenuModel(
       icon: ImageConstant.imgMaleUser,
       activeIcon: ImageConstant.imgMaleUser,
@@ -57,16 +64,66 @@ class CustomBottomBarState extends State<CustomBottomBar> {
         type: BottomNavigationBarType.fixed,
         items: List.generate(bottomMenuList.length, (index) {
           return BottomNavigationBarItem(
-            icon: CustomImageView(
-              imagePath: bottomMenuList[index].icon,
-              height: 50.v,
-              width: 40.h,
-            ),
-            activeIcon: CustomImageView(
-              imagePath: bottomMenuList[index].activeIcon,
-              height: 50.v,
-              width: 40.h,
-            ),
+            icon: bottomMenuList[index].iconData != null
+                ? Stack(
+                    children: [
+                      Icon(
+                        bottomMenuList[index].iconData,
+                        size: 40,
+                        color: Colors.black,
+                      ),
+                      bottomMenuList[index].iconData ==
+                                  Icons.notification_important_outlined &&
+                              widget.isNotificationEnabled!
+                          ? Positioned(
+                              right: 0,
+                              child: Container(
+                                height: 12,
+                                width: 12,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            )
+                          : SizedBox()
+                    ],
+                  )
+                : CustomImageView(
+                    imagePath: bottomMenuList[index].icon,
+                    height: 50.v,
+                    width: 40.h,
+                  ),
+            activeIcon: bottomMenuList[index].iconData != null
+                ? Stack(
+                    children: [
+                      Icon(
+                        bottomMenuList[index].iconData,
+                        size: 40,
+                        color: Colors.black,
+                      ),
+                      bottomMenuList[index].iconData ==
+                                  Icons.notification_important_outlined &&
+                              widget.isNotificationEnabled!
+                          ? Positioned(
+                              right: 0,
+                              child: Container(
+                                height: 12,
+                                width: 12,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            )
+                          : SizedBox()
+                    ],
+                  )
+                : CustomImageView(
+                    imagePath: bottomMenuList[index].activeIcon,
+                    height: 50.v,
+                    width: 40.h,
+                  ),
             label: '',
           );
         }),
@@ -84,9 +141,13 @@ class CustomBottomBarState extends State<CustomBottomBar> {
 // ignore_for_file: must_be_immutable
 class BottomMenuModel {
   BottomMenuModel(
-      {required this.icon, required this.activeIcon, required this.type});
+      {required this.icon,
+      required this.activeIcon,
+      required this.type,
+      this.iconData});
 
   String icon;
+  IconData? iconData;
 
   String activeIcon;
 

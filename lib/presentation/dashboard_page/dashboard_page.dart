@@ -1,7 +1,9 @@
-import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
-import 'notifier/dashboard_notifier.dart';
+import 'package:money_mgmt/widgets/custom_bottom_bar.dart';
+
+import '../../core/app_export.dart';
 import 'models/gridordertext_item_model.dart';
+import 'notifier/dashboard_notifier.dart';
 import 'widgets/gridordertext_item_widget.dart'; // ignore_for_file: must_be_immutable
 
 class DashboardPage extends ConsumerStatefulWidget {
@@ -15,6 +17,7 @@ class DashboardPage extends ConsumerStatefulWidget {
 }
 
 class DashboardPageState extends ConsumerState<DashboardPage> {
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,16 +28,12 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
         body: Container(
           width: SizeUtils.width,
           height: SizeUtils.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(0.5, 0),
-              end: Alignment(0.5, 1),
-              colors: [appTheme.gray1009e, appTheme.gray1009e],
-            ),
-          ),
+          decoration: BoxDecoration(color: Colors.white),
           child: Container(
             decoration: AppDecoration.gradientGrayEToGrayE,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(height: 13.v),
                 Expanded(
@@ -46,49 +45,21 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
                           height: 146.v,
                           width: 333.h,
                         ),
-                        SizedBox(height: 22.v),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              left: 131.h,
-                              right: 100.h,
-                            ),
-                            decoration:
-                                AppDecoration.fillPrimaryContainer.copyWith(
-                              borderRadius: BorderRadiusStyle.roundedBorder20,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CustomImageView(
-                                  imagePath: ImageConstant.imgTrackOrder,
-                                  height: 70.v,
-                                  width: 162.h,
-                                ),
-                                SizedBox(height: 8.v),
-                                Container(
-                                  width: 149.h,
-                                  margin: EdgeInsets.symmetric(horizontal: 6.h),
-                                  child: Text(
-                                    "msg_track_your_order".tr,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.center,
-                                    style: theme.textTheme.titleLarge,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 23.v),
+                        SizedBox(height: 120.v),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 30.h),
-                          decoration: AppDecoration
-                              .gradientErrorContainerToBlueGray
-                              .copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50),
+                            ),
+                            gradient: LinearGradient(
+                              colors: [Color(0xE6D8E989), Color(0xFFFFFF)],
+                              stops: [0.0, 0.81], // Stop positions
+                              begin: Alignment
+                                  .topCenter, // Gradient start position
+                              end: Alignment.bottomCenter, // Grad
+                            ),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -97,60 +68,6 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
                               SizedBox(height: 76.v),
                               _buildGridordertext(context),
                               SizedBox(height: 54.v),
-                              SizedBox(
-                                height: 122.v,
-                                width: 141.h,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Container(
-                                        height: 31.v,
-                                        width: 141.h,
-                                        decoration: BoxDecoration(),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          onTapView(context);
-                                        },
-                                        child: Container(
-                                          height: 122.v,
-                                          width: 141.h,
-                                          decoration: BoxDecoration(
-                                            color: appTheme.yellow900,
-                                            borderRadius: BorderRadius.circular(
-                                              20.h,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: SizedBox(
-                                        width: 141.h,
-                                        child: Text(
-                                          "lbl_book_a_rep".tr,
-                                          maxLines: null,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
-                                          style: theme.textTheme.titleSmall,
-                                        ),
-                                      ),
-                                    ),
-                                    CustomImageView(
-                                      imagePath: ImageConstant.imgInvoice,
-                                      height: 69.v,
-                                      width: 141.h,
-                                      alignment: Alignment.topCenter,
-                                    )
-                                  ],
-                                ),
-                              )
                             ],
                           ),
                         )
@@ -161,6 +78,10 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(right: 4.h),
+          child: _buildBottomBar(context),
         ),
       ),
     );
@@ -194,7 +115,34 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
             return GridordertextItemWidget(
               model,
               onTapColumnordertext: () {
-                onTapColumnordertext(context);
+                if (index == 0) {
+                  onTapColumnordertext(
+                    context,
+                    AppRoutes.orderScreen,
+                  );
+                  return;
+                }
+                if (index == 1) {
+                  onTapColumnordertext(
+                    context,
+                    AppRoutes.urgentDeliveryPageOneContainerScreen,
+                  );
+                  return;
+                }
+                if (index == 2) {
+                  onTapColumnordertext(
+                    context,
+                    AppRoutes.invoicesPageOneScreen,
+                  );
+                  return;
+                }
+                if (index == 3) {
+                  onTapColumnordertext(
+                    context,
+                    AppRoutes.maintainenceScreen,
+                  );
+                  return;
+                }
               },
             );
           },
@@ -204,10 +152,8 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
   }
 
   /// Navigates to the maintenanceScreen when the action is triggered.
-  onTapColumnordertext(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.maintainenceScreen,
-    );
+  onTapColumnordertext(BuildContext context, String path) {
+    NavigatorService.pushNamed(path);
   }
 
   /// Navigates to the appointmentScreen when the action is triggered.
@@ -215,5 +161,92 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
     NavigatorService.pushNamed(
       AppRoutes.appointmentScreen,
     );
+  }
+
+  Widget _buildBottomBar(BuildContext context) {
+    return Consumer(builder: (context, ref, _) {
+      return CustomBottomBar(
+        isNotificationEnabled: ref
+            .watch(dashboardNotifier)
+            .dashboardModelObj!
+            .isNotificationEnabled,
+        onChanged: (BottomBarEnum type) {
+          if (type == BottomBarEnum.Sms) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Color(0xE6D9D9D9),
+                  surfaceTintColor: Color(0xE6D9D9D9),
+                  title: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 8.0,
+                          right: 8.0,
+                        ),
+                        child: GestureDetector(
+                          onTap: () => {
+                            ref
+                                .read(dashboardNotifier.notifier)
+                                .handleNotificationState(),
+                            Navigator.pop(context),
+                          },
+                          child: Icon(
+                            Icons.close,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  titlePadding: EdgeInsets.zero,
+                  contentPadding: EdgeInsets.zero,
+                  content: Container(
+                    width: SizeUtils.width - 50,
+                    height: 300.v,
+                    child: Center(
+                      child: Text(
+                        "Your Order has been shipped, expect your delivery.",
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.headlineMedium!.copyWith(
+                          fontSize: 21,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xCC000000),
+                        ),
+                      ),
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(0),
+                    ),
+                  ),
+                );
+              },
+            );
+            return;
+          }
+          Navigator.pushNamed(
+              navigatorKey.currentContext!, getCurrentRoute(type));
+        },
+      );
+    });
+  }
+
+  ///Handling route based on bottom click actions
+  String getCurrentRoute(BottomBarEnum type) {
+    switch (type) {
+      case BottomBarEnum.Homepage:
+        return AppRoutes.urgentDeliveryPageOnePage;
+      case BottomBarEnum.Sms:
+        return "/";
+      case BottomBarEnum.Maleuser:
+        return "/";
+      default:
+        return "/";
+    }
   }
 }

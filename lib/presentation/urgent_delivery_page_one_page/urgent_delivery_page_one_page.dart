@@ -17,6 +17,11 @@ class UrgentDeliveryPageOnePage extends ConsumerStatefulWidget {
 
 class UrgentDeliveryPageOnePageState
     extends ConsumerState<UrgentDeliveryPageOnePage> {
+  TextEditingController phoneNumberCtrl = TextEditingController();
+  TextEditingController emailCtrl = TextEditingController();
+  TextEditingController qtyCtrl = TextEditingController();
+  TextEditingController? dateController = TextEditingController();
+  TextEditingController? addressCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,10 +56,25 @@ class UrgentDeliveryPageOnePageState
                         ),
                         SizedBox(height: 54.v),
                         Container(
-                          decoration: AppDecoration.gradientLimeToErrorContainer
-                              .copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder50,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xD963681B), // First color
+                                Color(0x66D9D9D9), // Second color
+                              ],
+                              stops: [0.0, 0.81], // Stop positions
+                              begin: Alignment
+                                  .topCenter, // Gradient start position
+
+                              end: Alignment
+                                  .bottomCenter, // Gradient end position
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50),
+                            ),
                           ),
+                          padding: EdgeInsets.symmetric(horizontal: 30.h),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,104 +83,51 @@ class UrgentDeliveryPageOnePageState
                                 imagePath: ImageConstant.imgDeliverFood,
                                 height: 115.v,
                                 width: 393.h,
+                                color: Color(0xFF63681B),
                               ),
                               SizedBox(height: 5.v),
-                              Padding(
-                                padding: EdgeInsets.only(left: 30.h),
-                                child: Text(
-                                  "lbl_email".tr,
-                                  style: theme.textTheme.titleMedium,
-                                ),
-                              ),
-                              SizedBox(height: 1.v),
-                              Padding(
-                                padding: EdgeInsets.only(left: 30.h),
-                                child: Consumer(
-                                  builder: (context, ref, _) {
-                                    return CustomTextFormField(
-                                      width: 141.h,
-                                      controller: ref
-                                          .watch(urgentDeliveryPageOneNotifier)
-                                          .emailController,
-                                      textInputAction: TextInputAction.done,
-                                    );
-                                  },
-                                ),
-                              ),
-                              SizedBox(height: 29.v),
-                              Padding(
-                                padding: EdgeInsets.only(left: 30.h),
-                                child: Text(
-                                  "lbl_quantity".tr,
-                                  style: theme.textTheme.titleMedium,
-                                ),
-                              ),
-                              Container(
-                                height: 39.v,
-                                width: 141.h,
-                                margin: EdgeInsets.only(left: 30.h),
-                                decoration: BoxDecoration(
-                                  color: appTheme.gray500,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: theme.colorScheme.primary,
-                                      spreadRadius: 2.h,
-                                      blurRadius: 2.h,
-                                      offset: Offset(
-                                        6,
-                                        6,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                              _buildRowemail(context),
                               SizedBox(height: 27.v),
                               _buildQuantitySection(context),
                               SizedBox(height: 27.v),
-                              Padding(
-                                padding: EdgeInsets.only(left: 33.h),
-                                child: Text(
-                                  "lbl_pick_a_date".tr,
-                                  style: theme.textTheme.titleMedium,
+                              _buildPhoneSection(context),
+                              SizedBox(height: 27.v),
+                              Text(
+                                "Pick a Date".tr,
+                                style: theme.textTheme.titleMedium!.copyWith(
+                                  color: Colors.black,
                                 ),
                               ),
                               SizedBox(height: 1.v),
-                              Container(
-                                margin: EdgeInsets.only(left: 30.h),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 37.h,
-                                  vertical: 10.v,
-                                ),
-                                decoration: AppDecoration.outlinePrimary,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    CustomImageView(
-                                      imagePath: ImageConstant.imgArrowLeft,
-                                      height: 17.adaptSize,
-                                      width: 17.adaptSize,
-                                      margin: EdgeInsets.only(bottom: 1.v),
-                                    ),
-                                    CustomImageView(
-                                      imagePath: ImageConstant.imgArrowLeft,
-                                      height: 17.adaptSize,
-                                      width: 17.adaptSize,
-                                      margin: EdgeInsets.only(
-                                        left: 34.h,
-                                        bottom: 1.v,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                              _buildDate(context),
                               SizedBox(height: 26.v),
                               CustomElevatedButton(
                                 width: 141.h,
-                                text: "lbl_confirm".tr,
-                                margin: EdgeInsets.only(left: 30.h),
+                                height: 46.h,
+                                text: "Confirm".tr,
                                 onPressed: () {
                                   onTapConfirm(context);
                                 },
+                                buttonTextStyle:
+                                    theme.textTheme.headlineSmall!.copyWith(
+                                  fontSize: 21,
+                                  color: Colors.white,
+                                ),
+                                buttonStyle: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) {
+                                    return Color(0xFF4B984D);
+                                  }),
+                                  side: MaterialStateProperty.all<BorderSide>(
+                                    BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  elevation: MaterialStateProperty.all(12.0),
+                                  shadowColor:
+                                      MaterialStateProperty.all(Colors.grey),
+                                ),
                               ),
                               SizedBox(height: 26.v)
                             ],
@@ -179,35 +146,53 @@ class UrgentDeliveryPageOnePageState
   }
 
   /// Section Widget
-  Widget _buildQuantitySection(BuildContext context) {
+  Widget _buildPhoneSection(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "lbl_phone_number".tr,
-            style: theme.textTheme.titleMedium,
+            "Phone Number".tr,
+            style: theme.textTheme.titleMedium!.copyWith(
+              color: Colors.black,
+            ),
           ),
           SizedBox(height: 1.v),
-          Container(
-            height: 39.v,
-            width: 141.h,
-            decoration: BoxDecoration(
-              color: appTheme.gray500,
-              boxShadow: [
-                BoxShadow(
-                  color: theme.colorScheme.primary,
-                  spreadRadius: 2.h,
-                  blurRadius: 2.h,
-                  offset: Offset(
-                    6,
-                    6,
-                  ),
-                )
-              ],
+          Consumer(
+            builder: (context, ref, _) {
+              return CustomTextFormField(
+                width: 141.h,
+                contentPadding: EdgeInsets.all(6),
+                controller: phoneNumberCtrl,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuantitySection(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Quantity".tr,
+            style: theme.textTheme.titleMedium!.copyWith(
+              color: Colors.black,
             ),
-          )
+          ),
+          SizedBox(height: 1.v),
+          Consumer(
+            builder: (context, ref, _) {
+              return CustomTextFormField(
+                width: 141.h,
+                contentPadding: EdgeInsets.all(6),
+                controller: qtyCtrl,
+              );
+            },
+          ),
         ],
       ),
     );
@@ -216,7 +201,120 @@ class UrgentDeliveryPageOnePageState
   /// Navigates to the urgentDeliveryPageTwoScreen when the action is triggered.
   onTapConfirm(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.urgentDeliveryPageTwoScreen,
+      AppRoutes.urgentPayment,
+    );
+  }
+
+  /// Section Widget
+  Widget _buildRowemail(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Email".tr,
+              style: theme.textTheme.titleMedium!.copyWith(
+                color: Colors.black,
+              ),
+            ),
+            _buildEmailSection(context)
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "Address".tr,
+              style: theme.textTheme.titleMedium!.copyWith(
+                color: Colors.black,
+              ),
+            ),
+            _buildAddressSection(context)
+          ],
+        )
+      ],
+    );
+  }
+
+  /// Section Widget
+  Widget _buildEmailSection(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, _) {
+        return CustomTextFormField(
+          width: 116.h,
+          contentPadding: EdgeInsets.all(6),
+          controller: emailCtrl,
+        );
+      },
+    );
+  }
+
+  /// Section Widget
+  Widget _buildPhoneNumberSection(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, _) {
+        return CustomTextFormField(
+          width: 141.h,
+          contentPadding: EdgeInsets.all(8),
+          controller: phoneNumberCtrl,
+        );
+      },
+    );
+  }
+
+  /// Section Widget
+  Widget _buildAddressSection(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, _) {
+        return CustomTextFormField(
+          width: 141.h,
+          contentPadding: EdgeInsets.all(6),
+          controller: addressCtrl,
+        );
+      },
+    );
+  }
+
+  /// Section Widget
+  Widget _buildDate(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, _) {
+        return CustomTextFormField(
+          width: 169.h,
+          controller: dateController,
+          contentPadding: EdgeInsets.all(6),
+          prefix: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 30.h,
+              vertical: 10.v,
+            ),
+            child: CustomImageView(
+              imagePath: ImageConstant.imgArrowLeft,
+              height: 17.adaptSize,
+              width: 17.adaptSize,
+            ),
+          ),
+          prefixConstraints: BoxConstraints(
+            maxHeight: 39.v,
+          ),
+          suffix: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 30.h,
+              vertical: 10.v,
+            ),
+            child: CustomImageView(
+              imagePath: ImageConstant.imgArrowLeft,
+              height: 17.adaptSize,
+              width: 17.adaptSize,
+            ),
+          ),
+          suffixConstraints: BoxConstraints(
+            maxHeight: 39.v,
+          ),
+        );
+      },
     );
   }
 }

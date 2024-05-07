@@ -36,6 +36,13 @@ class ThemeHelper {
       visualDensity: VisualDensity.standard,
       colorScheme: colorScheme,
       textTheme: TextThemes.textTheme(colorScheme),
+      // dialogBackgroundColor: Color(0xD9D9D9D9),
+      // dialogTheme: DialogTheme(
+      //   shadowColor: Color(0xD9D9D9D9),
+      //   surfaceTintColor: Color(0xD9D9D9D9),
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      // ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           backgroundColor: Colors.transparent,

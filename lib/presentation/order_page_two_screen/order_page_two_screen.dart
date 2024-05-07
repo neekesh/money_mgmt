@@ -51,10 +51,24 @@ class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
                         ),
                         SizedBox(height: 38.v),
                         Container(
+                          height: SizeUtils.height - 146.v,
                           padding: EdgeInsets.symmetric(vertical: 7.v),
-                          decoration:
-                              AppDecoration.gradientGreenToBlueGray.copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder50,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xD94B984D), // First color
+                                Color(0x66D9D9D9), // Second color
+                              ],
+                              stops: [0.0, 0.81], // Stop positions
+                              begin: Alignment
+                                  .topCenter, // Gradient start position
+                              end: Alignment
+                                  .bottomCenter, // Gradient end position
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50),
+                            ),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -63,26 +77,60 @@ class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
                                 imagePath: ImageConstant.imgFlowerDelivery,
                                 height: 170.v,
                                 width: 393.h,
+                                color: Color(0xD94B984D),
                               ),
                               SizedBox(height: 113.v),
                               Container(
                                 width: 316.h,
                                 margin: EdgeInsets.symmetric(horizontal: 38.h),
                                 child: Text(
-                                  "msg_thank_you_for_creating".tr,
+                                  "Thank you for creating your order".tr,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
-                                  style: theme.textTheme.headlineSmall,
+                                  style:
+                                      theme.textTheme.headlineSmall!.copyWith(
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 42.v),
                               CustomElevatedButton(
-                                text: "msg_back_to_dashboard".tr,
+                                text: "Back to Dashboard".tr,
                                 margin: EdgeInsets.only(
                                   left: 54.h,
                                   right: 61.h,
                                 ),
+                                height: 46.v,
+                                width: 333.h,
+                                buttonTextStyle:
+                                    theme.textTheme.headlineMedium!.copyWith(
+                                  fontSize: 21,
+                                  color: Colors.white,
+                                ),
+                                buttonStyle: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                    (states) {
+                                      return Color(0xFF4B984D);
+                                    },
+                                  ),
+                                  side: MaterialStateProperty.all<BorderSide>(
+                                    BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  NavigatorService.pushNamedAndRemoveUntil(
+                                      AppRoutes.dashboardPage);
+                                },
                               ),
                               SizedBox(height: 42.v)
                             ],

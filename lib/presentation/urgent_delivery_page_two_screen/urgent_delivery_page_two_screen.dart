@@ -53,9 +53,23 @@ class UrgentDeliveryPageTwoScreenState
                         ),
                         SizedBox(height: 54.v),
                         Container(
-                          decoration: AppDecoration.gradientLimeToErrorContainer
-                              .copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder50,
+                          height: SizeUtils.height - 146.v,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xD963681B), // First color
+                                Color(0x66D9D9D9), // Second color
+                              ],
+                              stops: [0.0, 0.81], // Stop positions
+                              begin: Alignment
+                                  .topCenter, // Gradient start position
+                              end: Alignment
+                                  .bottomCenter, // Gradient end position
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50),
+                            ),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -69,7 +83,7 @@ class UrgentDeliveryPageTwoScreenState
                               SizedBox(
                                 width: 206.h,
                                 child: Text(
-                                  "msg_thank_you_for_ordering".tr,
+                                  "Thank you for ordering".tr,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
@@ -78,11 +92,35 @@ class UrgentDeliveryPageTwoScreenState
                               ),
                               SizedBox(height: 33.v),
                               CustomElevatedButton(
-                                text: "msg_back_to_dashboard".tr,
+                                text: "Back to Dashboard".tr,
                                 margin: EdgeInsets.only(
                                   left: 58.h,
                                   right: 57.h,
                                 ),
+                                buttonTextStyle:
+                                    theme.textTheme.headlineSmall!.copyWith(
+                                  fontSize: 21,
+                                  color: Colors.white,
+                                ),
+                                buttonStyle: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) {
+                                    return Color(0xFF4B984D);
+                                  }),
+                                  side: MaterialStateProperty.all<BorderSide>(
+                                    BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  elevation: MaterialStateProperty.all(12.0),
+                                  shadowColor:
+                                      MaterialStateProperty.all(Colors.grey),
+                                ),
+                                onPressed: () {
+                                  NavigatorService.pushNamedAndRemoveUntil(
+                                      AppRoutes.dashboardPage);
+                                },
                               ),
                               SizedBox(height: 33.v)
                             ],

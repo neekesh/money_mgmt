@@ -10,13 +10,16 @@ class OrderState extends Equatable {
       this.durationSectionController,
       this.dateController,
       this.intervalsSectionController,
-      this.orderModelObj});
+      this.orderModelObj,
+      this.quantityController});
 
   TextEditingController? emailSectionController;
 
   TextEditingController? phoneNumberSectionController;
 
   TextEditingController? durationSectionController;
+
+  TextEditingController? quantityController;
 
   TextEditingController? dateController;
 
@@ -31,6 +34,7 @@ class OrderState extends Equatable {
         durationSectionController,
         dateController,
         intervalsSectionController,
+        quantityController,
         orderModelObj
       ];
   OrderState copyWith({
@@ -39,6 +43,7 @@ class OrderState extends Equatable {
     TextEditingController? durationSectionController,
     TextEditingController? dateController,
     TextEditingController? intervalsSectionController,
+    TextEditingController? quantityController,
     OrderModel? orderModelObj,
   }) {
     return OrderState(
@@ -52,6 +57,7 @@ class OrderState extends Equatable {
       intervalsSectionController:
           intervalsSectionController ?? this.intervalsSectionController,
       orderModelObj: orderModelObj ?? this.orderModelObj,
+      quantityController: quantityController ?? this.quantityController,
     );
   }
 }

@@ -1,8 +1,8 @@
-import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
-import 'notifier/invoices_page_three_notifier.dart';
 import '../urgent_delivery_page_one_page/urgent_delivery_page_one_page.dart';
 
 class InvoicesPageThreeScreen extends ConsumerStatefulWidget {
@@ -52,10 +52,24 @@ class InvoicesPageThreeScreenState
                         ),
                         SizedBox(height: 59.v),
                         Container(
-                          decoration: AppDecoration
-                              .gradientOnPrimaryToErrorContainer
-                              .copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder50,
+                          height: SizeUtils.height - 146.h,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xD90F5323), // First color
+                                Color(0x66D9D9D9), // Second color
+                              ],
+                              stops: [0.0, 0.81], // Stop positions
+                              begin: Alignment
+                                  .topCenter, // Gradient start position
+
+                              end: Alignment
+                                  .bottomCenter, // Gradient end position
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50),
+                            ),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -64,16 +78,23 @@ class InvoicesPageThreeScreenState
                                 imagePath: ImageConstant.imgInvoice,
                                 height: 176.v,
                                 width: 393.h,
+                                color: Color.fromARGB(217, 11, 55, 24),
                               ),
                               SizedBox(height: 9.v),
                               Container(
                                 width: 327.h,
                                 margin: EdgeInsets.symmetric(horizontal: 32.h),
                                 child: Text(
-                                  "msg_scheduled_delivery_date".tr,
+                                  '''Scheduled Delivery
+Date: 2022/12/01
+Time: 12:00
+Company Name: ABC
+Quantity: 100L
+Price: 1000 AUD
+''',
                                   maxLines: 6,
                                   overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.start,
                                   style: CustomTextStyles.headlineSmallOnError,
                                 ),
                               ),

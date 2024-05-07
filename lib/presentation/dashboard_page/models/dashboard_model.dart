@@ -8,18 +8,30 @@ import 'gridordertext_item_model.dart';
 
 // ignore_for_file: must_be_immutable
 class DashboardModel extends Equatable {
-  DashboardModel({this.gridordertextItemList = const []});
+  DashboardModel({
+    this.gridordertextItemList = const [],
+    this.isNotificationEnabled = true,
+    this.handleNotificationState,
+  });
+  bool? isNotificationEnabled;
 
   List<GridordertextItemModel> gridordertextItemList;
 
+  Function? handleNotificationState;
+
   DashboardModel copyWith(
-      {List<GridordertextItemModel>? gridordertextItemList}) {
+      {List<GridordertextItemModel>? gridordertextItemList,
+      bool? isNotificationEnabled,
+      Function? handleNotificationState}) {
     return DashboardModel(
       gridordertextItemList:
           gridordertextItemList ?? this.gridordertextItemList,
+      isNotificationEnabled: isNotificationEnabled,
+      handleNotificationState: handleNotificationState ?? () {},
     );
   }
 
   @override
-  List<Object?> get props => [gridordertextItemList];
+  List<Object?> get props =>
+      [gridordertextItemList, isNotificationEnabled, handleNotificationState];
 }

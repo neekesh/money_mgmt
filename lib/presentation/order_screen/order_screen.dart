@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 import '../../core/app_export.dart';
 import 'notifier/order_notifier.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
             gradient: LinearGradient(
               begin: Alignment(0.5, 0),
               end: Alignment(0.5, 1),
-              colors: [appTheme.gray1009e, appTheme.gray1009e],
+              colors: [appTheme.gray1009e, Colors.white],
             ),
           ),
           child: SizedBox(
@@ -52,30 +54,50 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
                           width: 333.h,
                         ),
                         SizedBox(height: 34.v),
-                        Container(
-                          decoration: AppDecoration
-                              .gradientGreenToErrorContainer
-                              .copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder50,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgFlowerDelivery,
-                                height: 84.v,
-                                width: 393.h,
+                        SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0xD94B984D), // First color
+                                  Color(0x66D9D9D9), // Second color
+                                ],
+                                stops: [0.0, 0.81], // Stop positions
+                                begin: Alignment
+                                    .topCenter, // Gradient start position
+                                end: Alignment
+                                    .bottomCenter, // Gradient end position
                               ),
-                              SizedBox(height: 22.v),
-                              _buildRowemail(context),
-                              SizedBox(height: 26.v),
-                              _buildRowquantity(context),
-                              SizedBox(height: 26.v),
-                              _buildRowstartdate(context),
-                              SizedBox(height: 60.v),
-                              _buildCreateAnOrderSection(context),
-                              SizedBox(height: 60.v)
-                            ],
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(50),
+                                topRight: Radius.circular(50),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgFlowerDelivery,
+                                  height: 84.v,
+                                  width: 393.h,
+                                  color: Color.fromARGB(255, 3, 56, 5),
+                                ),
+                                SizedBox(height: 22.v),
+                                _buildRowemail(context),
+                                SizedBox(height: 26.v),
+                                _buildRowquantity(context),
+                                SizedBox(height: 26.v),
+                                _buildRowstartdate(context),
+                                SizedBox(height: 26.v),
+                                _buildRowEnddate(
+                                  context,
+                                ),
+                                SizedBox(height: 26.v),
+                                _buildCreateAnOrderSection(context),
+                                SizedBox(height: 60.v)
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -100,6 +122,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
       builder: (context, ref, _) {
         return CustomTextFormField(
           width: 116.h,
+          contentPadding: EdgeInsets.all(8),
           controller: ref.watch(orderNotifier).emailSectionController,
         );
       },
@@ -112,6 +135,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
       builder: (context, ref, _) {
         return CustomTextFormField(
           width: 177.h,
+          contentPadding: EdgeInsets.all(8),
           controller: ref.watch(orderNotifier).phoneNumberSectionController,
         );
       },
@@ -129,8 +153,10 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "lbl_email".tr,
-                style: theme.textTheme.titleMedium,
+                "Email".tr,
+                style: theme.textTheme.titleMedium!.copyWith(
+                  color: Colors.black,
+                ),
               ),
               SizedBox(height: 1.v),
               _buildEmailSection(context)
@@ -139,8 +165,10 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
           Column(
             children: [
               Text(
-                "lbl_phone_number".tr,
-                style: theme.textTheme.titleMedium,
+                "Phone Number".tr,
+                style: theme.textTheme.titleMedium!.copyWith(
+                  color: Colors.black,
+                ),
               ),
               SizedBox(height: 1.v),
               _buildPhoneNumberSection(context)
@@ -157,6 +185,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
       builder: (context, ref, _) {
         return CustomTextFormField(
           width: 141.h,
+          contentPadding: EdgeInsets.all(8),
           controller: ref.watch(orderNotifier).durationSectionController,
         );
       },
@@ -176,26 +205,14 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "lbl_quantity".tr,
-                  style: theme.textTheme.titleMedium,
+                  "Quantity".tr,
+                  style: theme.textTheme.titleMedium!
+                      .copyWith(color: Colors.black),
                 ),
-                Container(
-                  height: 39.v,
-                  width: 116.h,
-                  decoration: BoxDecoration(
-                    color: appTheme.gray500,
-                    boxShadow: [
-                      BoxShadow(
-                        color: theme.colorScheme.primary,
-                        spreadRadius: 2.h,
-                        blurRadius: 2.h,
-                        offset: Offset(
-                          6,
-                          6,
-                        ),
-                      )
-                    ],
-                  ),
+                CustomTextFormField(
+                  width: 141.h,
+                  contentPadding: EdgeInsets.all(8),
+                  controller: ref.watch(orderNotifier).quantityController,
                 )
               ],
             ),
@@ -204,8 +221,10 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "lbl_duration".tr,
-                style: theme.textTheme.titleMedium,
+                "Address".tr,
+                style: theme.textTheme.titleMedium!.copyWith(
+                  color: Colors.black,
+                ),
               ),
               SizedBox(height: 1.v),
               _buildDurationSection(context)
@@ -223,6 +242,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
         return CustomTextFormField(
           width: 169.h,
           controller: ref.watch(orderNotifier).dateController,
+          contentPadding: EdgeInsets.all(8),
           prefix: Container(
             margin: EdgeInsets.symmetric(
               horizontal: 30.h,
@@ -264,6 +284,8 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
           width: 141.h,
           controller: ref.watch(orderNotifier).intervalsSectionController,
           textInputAction: TextInputAction.done,
+          contentPadding: EdgeInsets.all(8),
+          hintText: "In Weeks",
         );
       },
     );
@@ -282,8 +304,9 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 3.h),
                 child: Text(
-                  "lbl_start_date".tr,
-                  style: theme.textTheme.titleMedium,
+                  "Start Date".tr,
+                  style: theme.textTheme.titleMedium!
+                      .copyWith(color: Colors.black),
                 ),
               ),
               SizedBox(height: 1.v),
@@ -296,8 +319,10 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "lbl_intervals".tr,
-                  style: theme.textTheme.titleMedium,
+                  "Intervals".tr,
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    color: Colors.black,
+                  ),
                 ),
                 SizedBox(height: 1.v),
                 _buildIntervalsSection(context)
@@ -310,10 +335,56 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
   }
 
   /// Section Widget
+  Widget _buildRowEnddate(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 3.h),
+                child: Text(
+                  "End Date".tr,
+                  style: theme.textTheme.titleMedium!
+                      .copyWith(color: Colors.black),
+                ),
+              ),
+              SizedBox(height: 1.v),
+              _buildDate(context)
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Section Widget
   Widget _buildCreateAnOrderSection(BuildContext context) {
     return CustomElevatedButton(
-      width: 248.h,
-      text: "lbl_create_an_order".tr,
+      width: 220.h,
+      text: "Create an order",
+      buttonTextStyle: theme.textTheme.headlineSmall!.copyWith(
+        fontSize: 21,
+        color: Colors.white,
+      ),
+      buttonStyle: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          return Color(0xFF4B984D);
+        }),
+        side: MaterialStateProperty.all<BorderSide>(
+          BorderSide(
+            color: Colors.transparent,
+          ),
+        ),
+        elevation: MaterialStateProperty.all(12.0),
+        shadowColor: MaterialStateProperty.all(Colors.grey),
+      ),
+      onPressed: () => {
+        {NavigatorService.pushNamed(AppRoutes.orderPayment)},
+      },
     );
   }
 
@@ -354,4 +425,3 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
     }
   }
 }
-

@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+
 import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_bar.dart';
@@ -50,10 +53,24 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
                         ),
                         SizedBox(height: 59.v),
                         Container(
-                          decoration: AppDecoration
-                              .gradientOnPrimaryToErrorContainer
-                              .copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder50,
+                          height: SizeUtils.height - 146.v,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xD90F5323), // First color
+                                Color(0x66D9D9D9), // Second color
+                              ],
+                              stops: [0.0, 0.81], // Stop positions
+                              begin: Alignment
+                                  .topCenter, // Gradient start position
+
+                              end: Alignment
+                                  .bottomCenter, // Gradient end position
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50),
+                            ),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -62,6 +79,7 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
                                 imagePath: ImageConstant.imgInvoice,
                                 height: 115.v,
                                 width: 393.h,
+                                color: Color.fromARGB(217, 11, 55, 24),
                               ),
                               SizedBox(height: 24.v),
                               Container(
@@ -83,11 +101,14 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
                                     SizedBox(
                                       width: 179.h,
                                       child: Text(
-                                        "msg_invoice_from_2024_12_01".tr,
+                                        "Invoice from 2024/12/01".tr,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.center,
-                                        style: theme.textTheme.titleLarge,
+                                        style: theme.textTheme.titleLarge!
+                                            .copyWith(
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     )
                                   ],
@@ -114,30 +135,39 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
                                     SizedBox(
                                       width: 179.h,
                                       child: Text(
-                                        "msg_invoice_from_2024_12_04".tr,
+                                        "Invoice from 2024/12/04".tr,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.center,
-                                        style: theme.textTheme.titleLarge,
+                                        style: theme.textTheme.titleLarge!
+                                            .copyWith(
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
-                              Container(
-                                width: 128.h,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8.h,
-                                  vertical: 2.v,
-                                ),
-                                decoration:
-                                    AppDecoration.outlinePrimary2.copyWith(
-                                  borderRadius:
-                                      BorderRadiusStyle.roundedBorder10,
-                                ),
-                                child: Text(
-                                  "lbl_request".tr,
-                                  style: theme.textTheme.titleLarge,
+                              GestureDetector(
+                                onTap: () => {onTapRecentOrders(context)},
+                                child: Container(
+                                  width: 128.h,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8.h,
+                                    vertical: 2.v,
+                                  ),
+                                  decoration:
+                                      AppDecoration.outlinePrimary2.copyWith(
+                                    borderRadius:
+                                        BorderRadiusStyle.roundedBorder10,
+                                  ),
+                                  child: Text(
+                                    "View".tr,
+                                    textAlign: TextAlign.center,
+                                    style: theme.textTheme.titleLarge!.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 34.v),
@@ -160,30 +190,39 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
                                     SizedBox(
                                       width: 179.h,
                                       child: Text(
-                                        "msg_invoice_from_2024_12_08".tr,
+                                        "Invoice from 2024/12/08".tr,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.center,
-                                        style: theme.textTheme.titleLarge,
+                                        style: theme.textTheme.titleLarge!
+                                            .copyWith(
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
-                              Container(
-                                width: 129.h,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 6.h,
-                                  vertical: 2.v,
-                                ),
-                                decoration:
-                                    AppDecoration.outlinePrimary1.copyWith(
-                                  borderRadius:
-                                      BorderRadiusStyle.roundedBorder10,
-                                ),
-                                child: Text(
-                                  "lbl_request".tr,
-                                  style: theme.textTheme.titleLarge,
+                              GestureDetector(
+                                onTap: () => {onTapRecentOrders(context)},
+                                child: Container(
+                                  width: 129.h,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 6.h,
+                                    vertical: 2.v,
+                                  ),
+                                  decoration:
+                                      AppDecoration.outlinePrimary1.copyWith(
+                                    borderRadius:
+                                        BorderRadiusStyle.roundedBorder10,
+                                  ),
+                                  child: Text(
+                                    "View".tr,
+                                    textAlign: TextAlign.center,
+                                    style: theme.textTheme.titleLarge!.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               )
                             ],
@@ -223,8 +262,11 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
             borderRadius: BorderRadiusStyle.roundedBorder10,
           ),
           child: Text(
-            "lbl_request".tr,
-            style: theme.textTheme.titleLarge,
+            "View".tr,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleLarge!.copyWith(
+              color: Colors.white,
+            ),
           ),
         ),
       ),

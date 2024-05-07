@@ -14,7 +14,7 @@ final Map<String, String> enUs = {
   "lbl_first_name": "First Name",
   "lbl_last_name": "Last Name",
   "lbl_phone_number": "Phone Number",
-  "lbl_update": "Update",
+  "lbl_update": "Signup",
   "lbl_book_a_rep": "Book a Rep.",
   "lbl_invoices": "Invoices",
   "lbl_maintenance": "Maintenance",

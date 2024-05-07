@@ -4,7 +4,7 @@ class ImageConstant {
   static String imagePath = 'assets/images';
 
 // Get Started Page images
-  static String imgFrankEyesClosed = '$imagePath/img_frank_eyes_closed.png';
+  static String imgFrankEyesClosed = '$imagePath/frank_eyes_closed.png';
   static String imgEllipse1 = '$imagePath/img_ellipse_1.png';
 
   // Maintenance images

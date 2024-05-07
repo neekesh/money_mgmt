@@ -1,7 +1,5 @@
-import '../../core/app_export.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'notifier/get_started_page_notifier.dart';
+import '../../core/app_export.dart';
 import '../../widgets/custom_outlined_button.dart';
 
 class GetStartedPageScreen extends ConsumerStatefulWidget {
@@ -25,11 +23,15 @@ class GetStartedPageScreenState extends ConsumerState<GetStartedPageScreen> {
           width: SizeUtils.width,
           height: SizeUtils.height,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(0.5, 0),
-              end: Alignment(0.5, 1),
-              colors: [Color(0xFFA3A8A2), Color(0XFF282828)],
-            ),
+            color: Color.fromRGBO(255, 255, 255, 0.9),
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x40000000),
+                offset: Offset(0, 4),
+                blurRadius: 4,
+                spreadRadius: 0,
+              ),
+            ],
           ),
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 50.v),
@@ -56,11 +58,13 @@ class GetStartedPageScreenState extends ConsumerState<GetStartedPageScreen> {
                         ),
                         TextSpan(
                           text: "msg_a_better_sustainable".tr,
-                          style: theme.textTheme.titleSmall,
+                          style: theme.textTheme.titleSmall!
+                              .copyWith(color: appTheme.blueGray700),
                         ),
                         TextSpan(
                           text: "msg_our_exclusive_100".tr,
-                          style: theme.textTheme.labelLarge,
+                          style: theme.textTheme.labelLarge!
+                              .copyWith(color: appTheme.blueGray700),
                         )
                       ],
                     ),
@@ -72,7 +76,16 @@ class GetStartedPageScreenState extends ConsumerState<GetStartedPageScreen> {
                   height: 68.v,
                   width: 203.h,
                   text: "lbl_get_started".tr,
-                  buttonTextStyle: theme.textTheme.titleLarge!,
+                  buttonTextStyle: theme.textTheme.titleLarge!.copyWith(
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 4,
+                        color: Color.fromRGBO(0, 0, 0, 0.25),
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
                   buttonStyle: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.resolveWith((states) {
@@ -84,6 +97,8 @@ class GetStartedPageScreenState extends ConsumerState<GetStartedPageScreen> {
                         color: Colors.transparent,
                       ),
                     ),
+                    elevation: MaterialStateProperty.all(12.0),
+                    shadowColor: MaterialStateProperty.all(Colors.grey),
                   ),
                   onPressed: () {
                     onTapGetstarted(context);

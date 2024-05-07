@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/app_export.dart';
 import '../models/gridordertext_item_model.dart'; // ignore: must_be_immutable
-// ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
 class GridordertextItemWidget extends StatelessWidget {
   GridordertextItemWidget(this.gridordertextItemModelObj,
       {Key? key, this.onTapColumnordertext})
@@ -24,9 +22,10 @@ class GridordertextItemWidget extends StatelessWidget {
       child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 25.h,
-            vertical: 15.v,
+            vertical: 8.v,
           ),
-          decoration: AppDecoration.fillGreen.copyWith(
+          decoration: BoxDecoration(
+            color: gridordertextItemModelObj.color ?? Colors.green,
             borderRadius: BorderRadiusStyle.roundedBorder20,
           ),
           child: Expanded(
@@ -38,10 +37,17 @@ class GridordertextItemWidget extends StatelessWidget {
                   height: 50.v,
                   width: 90.h,
                 ),
-                SizedBox(height: 16.v),
+                SizedBox(height: 10.v),
                 Text(
                   gridordertextItemModelObj.orderText!,
-                  style: CustomTextStyles.titleMediumSemiBold,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1,
+                    height: 1,
+                  ),
                 ),
                 SizedBox(height: 9.v)
               ],

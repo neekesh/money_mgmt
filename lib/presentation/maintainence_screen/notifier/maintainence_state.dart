@@ -4,17 +4,22 @@ part of 'maintainence_notifier.dart';
 
 // ignore_for_file: must_be_immutable
 class MaintenanceState extends Equatable {
-  MaintenanceState(
-      {this.emailEditTextController,
-      this.addressEditTextController,
-      this.phoneNumberEditTextController,
-      this.maintenanceModelObj});
+  MaintenanceState({
+    this.emailEditTextController,
+    this.addressEditTextController,
+    this.phoneNumberEditTextController,
+    this.maintenanceModelObj,
+    this.dateEditCtrl,
+    this.messageTextController,
+  });
 
   TextEditingController? emailEditTextController;
 
   TextEditingController? addressEditTextController;
+  TextEditingController? messageTextController;
 
   TextEditingController? phoneNumberEditTextController;
+  TextEditingController? dateEditCtrl;
 
   MaintenanceModel? maintenanceModelObj;
 
@@ -30,6 +35,8 @@ class MaintenanceState extends Equatable {
     TextEditingController? addressEditTextController,
     TextEditingController? phoneNumberEditTextController,
     MaintenanceModel? maintenanceModelObj,
+    TextEditingController? dateEditCtrl,
+    TextEditingController? messageTextController,
   }) {
     return MaintenanceState(
       emailEditTextController:
@@ -38,7 +45,10 @@ class MaintenanceState extends Equatable {
           addressEditTextController ?? this.addressEditTextController,
       phoneNumberEditTextController:
           phoneNumberEditTextController ?? this.phoneNumberEditTextController,
+      dateEditCtrl: dateEditCtrl,
       maintenanceModelObj: maintenanceModelObj ?? this.maintenanceModelObj,
+      messageTextController:
+          messageTextController ?? this.messageTextController,
     );
   }
 }

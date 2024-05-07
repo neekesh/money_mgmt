@@ -49,8 +49,21 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
                 ),
                 SizedBox(height: 44.v),
                 Container(
-                  decoration: AppDecoration.gradientLimeToBlueGray.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder50,
+                  padding: EdgeInsets.symmetric(horizontal: 30.h),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xD9C9C55E), // First color
+                        Color(0x66D9D9D9), // Second color
+                      ],
+                      stops: [0.0, 0.81], // Stop positions
+                      begin: Alignment.topCenter, // Gradient start position
+                      end: Alignment.bottomCenter, // Gradient end position
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
+                    ),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -60,56 +73,24 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
                         imagePath: ImageConstant.imgWrench,
                         height: 71.v,
                         width: 393.h,
+                        color: Color.fromARGB(255, 168, 165, 60),
                       ),
                       SizedBox(height: 8.v),
                       _buildRowEmail(context),
                       SizedBox(height: 27.v),
-                      Padding(
-                        padding: EdgeInsets.only(left: 30.h),
-                        child: Text(
-                          "lbl_phone_number".tr,
-                          style: theme.textTheme.titleMedium,
-                        ),
+                      Text(
+                        "Phone Number".tr,
+                        style: theme.textTheme.titleMedium,
                       ),
                       SizedBox(height: 1.v),
                       _buildPhoneNumberEditText(context),
                       SizedBox(height: 27.v),
-                      Padding(
-                        padding: EdgeInsets.only(left: 33.h),
-                        child: Text(
-                          "lbl_book_a_date".tr,
-                          style: theme.textTheme.titleMedium,
-                        ),
+                      Text(
+                        "Book a Date".tr,
+                        style: theme.textTheme.titleMedium,
                       ),
                       SizedBox(height: 1.v),
-                      Container(
-                        margin: EdgeInsets.only(left: 30.h),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 37.h,
-                          vertical: 10.v,
-                        ),
-                        decoration: AppDecoration.outlinePrimary,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            CustomImageView(
-                              imagePath: ImageConstant.imgArrowLeft,
-                              height: 17.adaptSize,
-                              width: 17.adaptSize,
-                              margin: EdgeInsets.only(bottom: 1.v),
-                            ),
-                            CustomImageView(
-                              imagePath: ImageConstant.imgArrowLeft,
-                              height: 17.adaptSize,
-                              width: 17.adaptSize,
-                              margin: EdgeInsets.only(
-                                left: 34.h,
-                                bottom: 1.v,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                      _buildDate(context),
                       SizedBox(height: 29.v),
                       _buildQuantityColumn(context),
                       SizedBox(height: 26.v),
@@ -136,6 +117,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
       builder: (context, ref, _) {
         return CustomTextFormField(
           width: 141.h,
+          contentPadding: EdgeInsets.all(6),
           controller: ref.watch(maintenanceNotifier).emailEditTextController,
         );
       },
@@ -148,6 +130,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
       builder: (context, ref, _) {
         return CustomTextFormField(
           width: 141.h,
+          contentPadding: EdgeInsets.all(6),
           controller: ref.watch(maintenanceNotifier).addressEditTextController,
         );
       },
@@ -158,85 +141,67 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
   Widget _buildRowEmail(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "lbl_email".tr,
-                  style: theme.textTheme.titleMedium,
-                ),
-                SizedBox(height: 1.v),
-                _buildEmailEditText(context)
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "lbl_address".tr,
-                  style: theme.textTheme.titleMedium,
-                ),
-                SizedBox(height: 1.v),
-                _buildAddressEditText(context)
-              ],
-            )
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Email".tr,
+                style: theme.textTheme.titleMedium,
+              ),
+              SizedBox(height: 1.v),
+              _buildEmailEditText(context)
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Address".tr,
+                style: theme.textTheme.titleMedium,
+              ),
+              SizedBox(height: 1.v),
+              _buildAddressEditText(context)
+            ],
+          )
+        ],
       ),
     );
   }
 
   /// Section Widget
   Widget _buildPhoneNumberEditText(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 30.h),
-      child: Consumer(
-        builder: (context, ref, _) {
-          return CustomTextFormField(
-            width: 183.h,
-            controller:
-                ref.watch(maintenanceNotifier).phoneNumberEditTextController,
-            textInputAction: TextInputAction.done,
-          );
-        },
-      ),
+    return Consumer(
+      builder: (context, ref, _) {
+        return CustomTextFormField(
+          width: 183.h,
+          controller:
+              ref.watch(maintenanceNotifier).phoneNumberEditTextController,
+          contentPadding: EdgeInsets.all(6),
+          textInputAction: TextInputAction.done,
+        );
+      },
     );
   }
 
   /// Section Widget
   Widget _buildQuantityColumn(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "lbl_your_message".tr,
+            "Your Message".tr,
             style: theme.textTheme.titleMedium,
           ),
-          Container(
-            height: 92.v,
+          CustomTextFormField(
             width: 282.h,
-            decoration: BoxDecoration(
-              color: appTheme.gray500,
-              boxShadow: [
-                BoxShadow(
-                  color: theme.colorScheme.primary,
-                  spreadRadius: 2.h,
-                  blurRadius: 2.h,
-                  offset: Offset(
-                    6,
-                    6,
-                  ),
-                )
-              ],
-            ),
-          )
+            maxLines: 3,
+            contentPadding: EdgeInsets.all(6),
+            controller: ref.watch(maintenanceNotifier).messageTextController,
+          ),
         ],
       ),
     );
@@ -246,8 +211,29 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
   Widget _buildConfirmButton(BuildContext context) {
     return CustomElevatedButton(
       width: 141.h,
-      text: "lbl_confirm".tr,
-      margin: EdgeInsets.only(left: 30.h),
+      height: 46.h,
+      text: "Confirm".tr,
+      onPressed: () {
+        NavigatorService.pushNamed(
+          AppRoutes.maintainenceOneScreen,
+        );
+      },
+      buttonTextStyle: theme.textTheme.headlineSmall!.copyWith(
+        fontSize: 21,
+        color: Colors.white,
+      ),
+      buttonStyle: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          return Color(0xFF4B984D);
+        }),
+        side: MaterialStateProperty.all<BorderSide>(
+          BorderSide(
+            color: Colors.transparent,
+          ),
+        ),
+        elevation: MaterialStateProperty.all(12.0),
+        shadowColor: MaterialStateProperty.all(Colors.grey),
+      ),
     );
   }
 
@@ -286,5 +272,46 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
       default:
         return DefaultWidget();
     }
+  }
+
+  /// Section Widget
+  Widget _buildDate(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, _) {
+        return CustomTextFormField(
+          width: 169.h,
+          controller: ref.watch(maintenanceNotifier).addressEditTextController,
+          contentPadding: EdgeInsets.all(6),
+          prefix: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 30.h,
+              vertical: 10.v,
+            ),
+            child: CustomImageView(
+              imagePath: ImageConstant.imgArrowLeft,
+              height: 17.adaptSize,
+              width: 17.adaptSize,
+            ),
+          ),
+          prefixConstraints: BoxConstraints(
+            maxHeight: 39.v,
+          ),
+          suffix: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 30.h,
+              vertical: 10.v,
+            ),
+            child: CustomImageView(
+              imagePath: ImageConstant.imgArrowLeft,
+              height: 17.adaptSize,
+              width: 17.adaptSize,
+            ),
+          ),
+          suffixConstraints: BoxConstraints(
+            maxHeight: 39.v,
+          ),
+        );
+      },
+    );
   }
 }

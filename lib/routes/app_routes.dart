@@ -1,23 +1,25 @@
-import '../core/app_export.dart';
 import 'package:flutter/material.dart';
-import '../presentation/login_screen/login_screen.dart';
-import '../presentation/appointment_screen/appointment_screen.dart';
-import '../presentation/maintainence_screen/maintainence_screen.dart';
-import '../presentation/signup_login_screen/signup_login_screen.dart';
+import 'package:money_mgmt/presentation/dashboard_page/dashboard_page.dart';
+import 'package:money_mgmt/presentation/edit_profile_screen/edit_profile_screen.dart';
+import 'package:money_mgmt/presentation/invoices_page_one_screen/invoices_page_one_screen.dart';
+import 'package:money_mgmt/presentation/order_page_two_screen/order_page_two_screen.dart';
+import 'package:money_mgmt/presentation/order_payment/order_payment.dart';
 import 'package:money_mgmt/presentation/order_screen/order_screen.dart';
+import 'package:money_mgmt/presentation/profile_details_screen/profile_details_screen.dart';
+import 'package:money_mgmt/presentation/urgent_delivery_page_one_container_screen/urgent_delivery_page_one_container_screen.dart';
+import 'package:money_mgmt/presentation/urgent_delivery_page_two_screen/urgent_delivery_page_two_screen.dart';
+import 'package:money_mgmt/presentation/urgent_payment/urgent_payment.dart';
+
 import '../presentation/app_navigation_screen/app_navigation_screen.dart';
 import '../presentation/appointment_one_screen/appointment_one_screen.dart';
-import 'package:money_mgmt/presentation/dashboard_page/dashboard_page.dart';
-import '../presentation/maintainence_one_screen/maintainence_one_screen.dart';
+import '../presentation/appointment_screen/appointment_screen.dart';
 import '../presentation/get_started_page_screen/get_started_page_screen.dart';
 import '../presentation/invoices_page_three_screen/invoices_page_three_screen.dart';
-import 'package:money_mgmt/presentation/edit_profile_screen/edit_profile_screen.dart';
-import 'package:money_mgmt/presentation/order_page_two_screen/order_page_two_screen.dart';
-import 'package:money_mgmt/presentation/profile_details_screen/profile_details_screen.dart';
-import 'package:money_mgmt/presentation/invoices_page_one_screen/invoices_page_one_screen.dart';
+import '../presentation/login_screen/login_screen.dart';
+import '../presentation/maintainence_one_screen/maintainence_one_screen.dart';
+import '../presentation/maintainence_screen/maintainence_screen.dart';
+import '../presentation/signup_login_screen/signup_login_screen.dart';
 import '../presentation/signup_screen/signup_screen.dart'; // ignore_for_file: must_be_immutable
-import 'package:money_mgmt/presentation/urgent_delivery_page_two_screen/urgent_delivery_page_two_screen.dart';
-import 'package:money_mgmt/presentation/urgent_delivery_page_one_container_screen/urgent_delivery_page_one_container_screen.dart';
 
 // ignore_for_file: must_be_immutable
 class AppRoutes {
@@ -69,6 +71,8 @@ class AppRoutes {
   static const String editProfileScreen = '/edit_profile_screen';
 
   static const String initialRoute = '/initialRoute';
+  static const String orderPayment = '/order_payment';
+  static const String urgentPayment = '/urgent_payment';
 
   static Map<String, WidgetBuilder> routes = {
     getStartedPageScreen: (context) => GetStartedPageScreen(),
@@ -78,10 +82,6 @@ class AppRoutes {
     appNavigationScreen: (context) => AppNavigationScreen(),
     dashboardPage: (context) => DashboardPage(),
     initialRoute: (context) => GetStartedPageScreen(),
-    // orderScreen: (context) => OrderScreen(),
-    // maintainenceScreen: (context) => MaintainenceScreen(),
-    // urgentDeliveryScreen: (context) => UrgentDeliveryScreen(),
-    // invoiceScreen: (context) => InvoiceScreen(),
     appointmentScreen: (context) => AppointmentScreen(),
     maintainenceScreen: (context) => MaintenanceScreen(),
     appointmentOneScreen: (context) => AppointmentOneScreen(),
@@ -92,6 +92,8 @@ class AppRoutes {
     invoicesPageOneScreen: (context) => InvoicesPageOneScreen(),
     invoicesPageThreeScreen: (context) => InvoicesPageThreeScreen(),
     orderScreen: (context) => OrderScreen(),
+    orderPayment: (context) => OrderPayment(),
+    urgentPayment: (context) => UrgentPayment(),
 
     orderPageTwoScreen: (context) => OrderPageTwoScreen(),
     profileDetailsScreen: (context) => ProfileDetailsScreen(),

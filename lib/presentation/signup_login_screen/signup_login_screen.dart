@@ -24,11 +24,7 @@ class SignupLoginScreenState extends ConsumerState<SignupLoginScreen> {
           width: SizeUtils.width,
           height: SizeUtils.height,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(0.5, 0),
-              end: Alignment(0.5, 1),
-              colors: [Color(0xFFA3A8A2), Color(0XFF282828)],
-            ),
+            color: Color.fromRGBO(226, 226, 226, 1),
           ),
           child: SizedBox(
             child: SingleChildScrollView(
@@ -45,27 +41,31 @@ class SignupLoginScreenState extends ConsumerState<SignupLoginScreen> {
                           horizontal: 97.h,
                           vertical: 167.v,
                         ),
-                        decoration:
-                            AppDecoration.gradientBlueGrayToBlueGray.copyWith(
-                          borderRadius: BorderRadiusStyle.roundedBorder50,
-                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadiusStyle.roundedBorder50,
+                            color: Color(0xFFF3FFF4)),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomElevatedButton(
+                              height: 63.v,
+                              width: 199.h,
                               text: "lbl_signup".tr,
                               buttonTextStyle: theme.textTheme.headlineMedium!,
                               buttonStyle: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith((states) {
-                                  return Colors.green;
+                                  return Color(0xFF4B984D);
                                 }),
                                 side: MaterialStateProperty.all<BorderSide>(
                                   BorderSide(
                                     color: Colors.transparent,
                                   ),
                                 ),
+                                elevation: MaterialStateProperty.all(12.0),
+                                shadowColor:
+                                    MaterialStateProperty.all(Colors.grey),
                               ),
                               onPressed: () {
                                 onTapSignUp(context);
@@ -79,18 +79,23 @@ class SignupLoginScreenState extends ConsumerState<SignupLoginScreen> {
                             ),
                             SizedBox(height: 40.v),
                             CustomElevatedButton(
+                              height: 63.v,
+                              width: 199.h,
                               text: "lbl_login".tr,
                               buttonTextStyle: theme.textTheme.headlineMedium!,
                               buttonStyle: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith((states) {
-                                  return Colors.green;
+                                  return Color(0xFF4B984D);
                                 }),
                                 side: MaterialStateProperty.all<BorderSide>(
                                   BorderSide(
                                     color: Colors.transparent,
                                   ),
                                 ),
+                                elevation: MaterialStateProperty.all(12.0),
+                                shadowColor:
+                                    MaterialStateProperty.all(Colors.grey),
                               ),
                               onPressed: () {
                                 onTapLogin(context);

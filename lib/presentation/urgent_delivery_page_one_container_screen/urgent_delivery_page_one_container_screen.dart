@@ -1,7 +1,6 @@
-import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
+import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import 'notifier/urgent_delivery_page_one_container_notifier.dart';
 import '../urgent_delivery_page_one_page/urgent_delivery_page_one_page.dart';
 
 class UrgentDeliveryPageOneContainerScreen extends ConsumerStatefulWidget {
