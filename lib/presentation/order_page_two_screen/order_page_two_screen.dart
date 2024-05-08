@@ -156,8 +156,7 @@ class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
   }
@@ -170,7 +169,7 @@ class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/";
+        return AppRoutes.profileDetailsScreen;
       default:
         return "/";
     }

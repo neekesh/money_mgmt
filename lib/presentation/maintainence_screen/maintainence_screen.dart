@@ -210,7 +210,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
   /// Section Widget
   Widget _buildConfirmButton(BuildContext context) {
     return CustomElevatedButton(
-      width: 141.h,
+      width: 150.h,
       height: 46.h,
       text: "Confirm".tr,
       onPressed: () {
@@ -219,7 +219,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
         );
       },
       buttonTextStyle: theme.textTheme.headlineSmall!.copyWith(
-        fontSize: 21,
+        fontSize: 21.fSize,
         color: Colors.white,
       ),
       buttonStyle: ButtonStyle(
@@ -241,8 +241,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
   }
@@ -255,7 +254,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/";
+        return AppRoutes.profileDetailsScreen;
       default:
         return "/";
     }

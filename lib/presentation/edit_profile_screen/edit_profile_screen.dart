@@ -42,7 +42,7 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     child: Column(
                       children: [
                         Text(
-                          "lbl_edit_profile".tr,
+                          "Edit Profile".tr,
                           style: theme.textTheme.headlineLarge,
                         ),
                         SizedBox(height: 5.v),
@@ -75,6 +75,7 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                     controller: ref
                                         .watch(editProfileNotifier)
                                         .edittexttwoController,
+                                    contentPadding: EdgeInsets.all(8),
                                   );
                                 },
                               ),
@@ -129,6 +130,7 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           child: Consumer(
             builder: (context, ref, _) {
               return CustomTextFormField(
+                contentPadding: EdgeInsets.all(8),
                 controller: ref.watch(editProfileNotifier).edittextController,
               );
             },
@@ -155,6 +157,7 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           child: Consumer(
             builder: (context, ref, _) {
               return CustomTextFormField(
+                contentPadding: EdgeInsets.all(8),
                 controller:
                     ref.watch(editProfileNotifier).edittextoneController,
               );
@@ -177,23 +180,16 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             style: theme.textTheme.titleLarge,
           ),
         ),
-        Container(
-          height: 40.v,
-          width: 233.h,
-          margin: EdgeInsets.only(left: 2.h),
-          decoration: BoxDecoration(
-            color: appTheme.gray500,
-            boxShadow: [
-              BoxShadow(
-                color: theme.colorScheme.primary,
-                spreadRadius: 2.h,
-                blurRadius: 2.h,
-                offset: Offset(
-                  6,
-                  6,
-                ),
-              )
-            ],
+        Padding(
+          padding: EdgeInsets.only(left: 2.h),
+          child: Consumer(
+            builder: (context, ref, _) {
+              return CustomTextFormField(
+                contentPadding: EdgeInsets.all(8),
+                controller:
+                    ref.watch(editProfileNotifier).edittextoneController,
+              );
+            },
           ),
         )
       ],
@@ -212,6 +208,7 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         Consumer(
           builder: (context, ref, _) {
             return CustomTextFormField(
+              contentPadding: EdgeInsets.all(8),
               controller:
                   ref.watch(editProfileNotifier).edittextthreeController,
             );
@@ -242,6 +239,7 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     ref.watch(editProfileNotifier).edittextfourController,
                 textInputAction: TextInputAction.done,
                 obscureText: true,
+                contentPadding: EdgeInsets.all(8),
               );
             },
           ),

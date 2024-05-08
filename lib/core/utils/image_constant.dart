@@ -34,5 +34,7 @@ class ImageConstant {
 
   static String imgMaleUser = '$imagePath/img_male_user.png';
 
+  static String profile = '$imagePath/profile.png';
+
   static String imageNotFound = 'assets/images/image_not_found.png';
 }

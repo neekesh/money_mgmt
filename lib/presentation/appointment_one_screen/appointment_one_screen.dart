@@ -100,8 +100,7 @@ class AppointmentOneScreenState extends ConsumerState<AppointmentOneScreen> {
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
   }
@@ -114,7 +113,7 @@ class AppointmentOneScreenState extends ConsumerState<AppointmentOneScreen> {
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/";
+        return AppRoutes.profileDetailsScreen;
       default:
         return "/";
     }

@@ -89,12 +89,17 @@ class AppointmentScreenState extends ConsumerState<AppointmentScreen> {
                       _buildMessageColumn(context),
                       SizedBox(height: 35.v),
                       CustomElevatedButton(
-                        width: 141.h,
+                        width: 150.h,
                         text: "lbl_confirm".tr,
                         margin: EdgeInsets.only(left: 30.h),
                         onPressed: () {
                           onTapConfirm(context);
                         },
+                        buttonTextStyle:
+                            theme.textTheme.headlineSmall!.copyWith(
+                          fontSize: 21.fSize,
+                          color: Colors.white,
+                        ),
                       ),
                       SizedBox(height: 35.v)
                     ],

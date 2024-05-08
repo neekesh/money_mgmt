@@ -392,8 +392,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
   Widget _buildBottomBarSection(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
   }
@@ -402,11 +401,11 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {
       case BottomBarEnum.Homepage:
-        return AppRoutes.urgentDeliveryPageOnePage;
+        return AppRoutes.dashboardPage;
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/";
+        return AppRoutes.profileDetailsScreen;
       default:
         return "/";
     }

@@ -432,7 +432,7 @@ class OrderPaymentState extends ConsumerState<OrderPayment> {
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/";
+        return AppRoutes.profileDetailsScreen;
       default:
         return "/";
     }
@@ -454,8 +454,7 @@ class OrderPaymentState extends ConsumerState<OrderPayment> {
   Widget _buildBottomBarSection(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
   }

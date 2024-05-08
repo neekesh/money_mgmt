@@ -92,7 +92,7 @@ class MaintenanceOneScreenState extends ConsumerState<MaintenanceOneScreen> {
                         ),
                         buttonTextStyle:
                             theme.textTheme.headlineSmall!.copyWith(
-                          fontSize: 21,
+                          fontSize: 21.fSize,
                           color: Colors.white,
                         ),
                         buttonStyle: ButtonStyle(
@@ -132,8 +132,7 @@ class MaintenanceOneScreenState extends ConsumerState<MaintenanceOneScreen> {
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
   }
@@ -146,7 +145,7 @@ class MaintenanceOneScreenState extends ConsumerState<MaintenanceOneScreen> {
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/";
+        return AppRoutes.profileDetailsScreen;
       default:
         return "/";
     }

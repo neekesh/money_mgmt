@@ -102,7 +102,7 @@ class UrgentDeliveryPageOnePageState
                               _buildDate(context),
                               SizedBox(height: 26.v),
                               CustomElevatedButton(
-                                width: 141.h,
+                                width: 150.h,
                                 height: 46.h,
                                 text: "Confirm".tr,
                                 onPressed: () {
@@ -110,7 +110,7 @@ class UrgentDeliveryPageOnePageState
                                 },
                                 buttonTextStyle:
                                     theme.textTheme.headlineSmall!.copyWith(
-                                  fontSize: 21,
+                                  fontSize: 21.fSize,
                                   color: Colors.white,
                                 ),
                                 buttonStyle: ButtonStyle(

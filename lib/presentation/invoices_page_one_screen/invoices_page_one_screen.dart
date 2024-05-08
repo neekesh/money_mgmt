@@ -274,8 +274,7 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
   }
@@ -284,11 +283,11 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {
       case BottomBarEnum.Homepage:
-        return AppRoutes.urgentDeliveryPageOnePage;
+        return AppRoutes.dashboardPage;
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/";
+        return AppRoutes.profileDetailsScreen;
       default:
         return "/";
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_mgmt/core/utils/navigator_service.dart';
 import 'package:money_mgmt/widgets/custom_bottom_bar.dart';
 
 import '../../core/app_export.dart';
@@ -29,54 +30,31 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
           width: SizeUtils.width,
           height: SizeUtils.height,
           decoration: BoxDecoration(color: Colors.white),
-          child: Container(
-            decoration: AppDecoration.gradientGrayEToGrayE,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(height: 13.v),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        CustomImageView(
-                          imagePath: ImageConstant.imgLogo,
-                          height: 146.v,
-                          width: 333.h,
-                        ),
-                        SizedBox(height: 120.v),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 30.h),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(50),
-                              topRight: Radius.circular(50),
-                            ),
-                            gradient: LinearGradient(
-                              colors: [Color(0xE6D8E989), Color(0xFFFFFF)],
-                              stops: [0.0, 0.81], // Stop positions
-                              begin: Alignment
-                                  .topCenter, // Gradient start position
-                              end: Alignment.bottomCenter, // Grad
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 76.v),
-                              _buildGridordertext(context),
-                              SizedBox(height: 54.v),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+          child: Column(
+            children: [
+              CustomImageView(
+                imagePath: ImageConstant.imgLogo,
+                height: 146.v,
+                width: 333.h,
+              ),
+              SizedBox(height: 120.v),
+              Container(
+                padding: EdgeInsets.only(left: 30.h, right: 30.h, top: 60.h),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
                   ),
-                )
-              ],
-            ),
+                  gradient: LinearGradient(
+                    colors: [Color(0xE6D8E989), Color(0xFFFFFF)],
+                    stops: [0.0, 0.81], // Stop positions
+                    begin: Alignment.topCenter, // Gradient start position
+                    end: Alignment.bottomCenter, // Grad
+                  ),
+                ),
+                child: _buildGridordertext(context),
+              )
+            ],
           ),
         ),
         bottomNavigationBar: Padding(
@@ -229,8 +207,7 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
             );
             return;
           }
-          Navigator.pushNamed(
-              navigatorKey.currentContext!, getCurrentRoute(type));
+          NavigatorService.pushNamed(getCurrentRoute(type));
         },
       );
     });
@@ -240,11 +217,11 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {
       case BottomBarEnum.Homepage:
-        return AppRoutes.urgentDeliveryPageOnePage;
+        return AppRoutes.dashboardPage;
       case BottomBarEnum.Sms:
         return "/";
       case BottomBarEnum.Maleuser:
-        return "/profile_details_screen";
+        return AppRoutes.profileDetailsScreen;
       default:
         return "/";
     }
