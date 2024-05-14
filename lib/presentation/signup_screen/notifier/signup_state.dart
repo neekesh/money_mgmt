@@ -4,54 +4,61 @@ part of 'signup_notifier.dart';
 
 // ignore_for_file: must_be_immutable
 class SignupState extends Equatable {
-  SignupState(
-      {this.edittextController,
-      this.edittextoneController,
-      this.edittexttwoController,
-      this.edittextthreeController,
-      this.edittextfourController,
-      this.signupModelObj});
+  SignupState({
+    this.companyCtrl,
+    this.firstNameCtrl,
+    this.lastNameCtrl,
+    this.emailCtrl,
+    this.passwordCtrl,
+    this.phoneCtrl,
+    this.signupModelObj,
+    this.formKey,
+  });
 
-  TextEditingController? edittextController;
+  TextEditingController? firstNameCtrl;
+  GlobalKey<FormState>? formKey;
 
-  TextEditingController? edittextoneController;
+  TextEditingController? lastNameCtrl;
 
-  TextEditingController? edittexttwoController;
+  TextEditingController? companyCtrl;
 
-  TextEditingController? edittextthreeController;
+  TextEditingController? phoneCtrl;
 
-  TextEditingController? edittextfourController;
+  TextEditingController? emailCtrl;
+
+  TextEditingController? passwordCtrl;
 
   SignupModel? signupModelObj;
 
   @override
   List<Object?> get props => [
-        edittextController,
-        edittextoneController,
-        edittexttwoController,
-        edittextthreeController,
-        edittextfourController,
-        signupModelObj
+        firstNameCtrl,
+        lastNameCtrl,
+        companyCtrl,
+        phoneCtrl,
+        passwordCtrl,
+        emailCtrl,
+        signupModelObj,
+        formKey
       ];
   SignupState copyWith({
-    TextEditingController? edittextController,
-    TextEditingController? edittextoneController,
-    TextEditingController? edittexttwoController,
-    TextEditingController? edittextthreeController,
-    TextEditingController? edittextfourController,
+    TextEditingController? firstNameCtrl,
+    TextEditingController? lastNameCtrl,
+    TextEditingController? companyCtrl,
+    TextEditingController? phoneCtrl,
+    TextEditingController? passwordCtrl,
+    TextEditingController? emailCtrl,
     SignupModel? signupModelObj,
+    GlobalKey<FormState>? formKey,
   }) {
     return SignupState(
-      edittextController: edittextController ?? this.edittextController,
-      edittextoneController:
-          edittextoneController ?? this.edittextoneController,
-      edittexttwoController:
-          edittexttwoController ?? this.edittexttwoController,
-      edittextthreeController:
-          edittextthreeController ?? this.edittextthreeController,
-      edittextfourController:
-          edittextfourController ?? this.edittextfourController,
-      signupModelObj: signupModelObj ?? this.signupModelObj,
-    );
+        firstNameCtrl: firstNameCtrl ?? this.firstNameCtrl,
+        lastNameCtrl: lastNameCtrl ?? this.lastNameCtrl,
+        companyCtrl: companyCtrl ?? this.companyCtrl,
+        phoneCtrl: passwordCtrl ?? this.phoneCtrl,
+        passwordCtrl: passwordCtrl ?? this.passwordCtrl,
+        emailCtrl: emailCtrl ?? this.emailCtrl,
+        signupModelObj: signupModelObj ?? this.signupModelObj,
+        formKey: formKey ?? this.formKey);
   }
 }

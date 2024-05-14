@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
 import 'notifier/signup_notifier.dart';
@@ -31,90 +29,98 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
             color: Color.fromRGBO(226, 226, 226, 1),
           ),
           child: SizedBox(
-            child: Column(
-              children: [
-                SizedBox(height: 57.v),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Text(
-                          "lbl_signup".tr,
-                          style: theme.textTheme.headlineLarge,
-                        ),
-                        SizedBox(height: 1.v),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 79.h,
-                            vertical: 35.v,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            borderRadius: BorderRadiusStyle.roundedBorder50,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              _buildSignupForm(context),
-                              SizedBox(height: 20.v),
-                              _buildLastnameForm(context),
-                              SizedBox(height: 20.v),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "lbl_company_name".tr,
-                                  style: theme.textTheme.titleLarge,
-                                ),
-                              ),
-                              Consumer(
-                                builder: (context, ref, _) {
-                                  return CustomTextFormField(
-                                    contentPadding: EdgeInsets.all(8),
-                                    controller: ref
-                                        .watch(signupNotifier)
-                                        .edittexttwoController,
-                                  );
-                                },
-                              ),
-                              SizedBox(height: 20.v),
-                              _buildPhonenumberForm(context),
-                              SizedBox(height: 20.v),
-                              _buildEmailForm(context),
-                              SizedBox(height: 20.v),
-                              _buildPasswordForm(context),
-                              SizedBox(height: 20.v),
-                              CustomElevatedButton(
-                                text: "lbl_update".tr,
-                                height: 39.v,
-                                width: 118.h,
-                                buttonTextStyle: theme.textTheme.headlineMedium!
-                                    .copyWith(fontSize: 15),
-                                buttonStyle: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.resolveWith(
-                                          (states) {
-                                    return Color(0xFF4B984D);
-                                  }),
-                                  side: MaterialStateProperty.all<BorderSide>(
-                                    BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  elevation: MaterialStateProperty.all(12.0),
-                                ),
-                                onPressed: () {
-                                  onTapUpdate(context);
-                                },
-                              ),
-                              SizedBox(height: 70.v)
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+            child: Form(
+              key: ref.read(signupNotifier).formKey,
+              child: Column(
+                children: [
+                  SizedBox(height: 57.v),
+                  Text(
+                    "lbl_signup".tr,
+                    style: theme.textTheme.headlineLarge,
                   ),
-                )
-              ],
+                  SizedBox(height: 1.v),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 79.h,
+                              vertical: 35.v,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadiusStyle.roundedBorder50,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _buildSignupForm(context),
+                                SizedBox(height: 20.v),
+                                _buildLastnameForm(context),
+                                SizedBox(height: 20.v),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "lbl_company_name".tr,
+                                    style: theme.textTheme.titleLarge,
+                                  ),
+                                ),
+                                Consumer(
+                                  builder: (context, ref, _) {
+                                    return CustomTextFormField(
+                                      contentPadding: EdgeInsets.all(8),
+                                      validator: (value) => ref
+                                          .read(signupNotifier.notifier)
+                                          .validateCompany(value),
+                                      controller:
+                                          ref.watch(signupNotifier).companyCtrl,
+                                    );
+                                  },
+                                ),
+                                SizedBox(height: 20.v),
+                                _buildPhonenumberForm(context),
+                                SizedBox(height: 20.v),
+                                _buildEmailForm(context),
+                                SizedBox(height: 20.v),
+                                _buildPasswordForm(context),
+                                SizedBox(height: 20.v),
+                                CustomElevatedButton(
+                                  text: "lbl_update".tr,
+                                  height: 39.v,
+                                  width: 118.h,
+                                  buttonTextStyle: theme
+                                      .textTheme.headlineMedium!
+                                      .copyWith(fontSize: 15),
+                                  buttonStyle: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.resolveWith(
+                                            (states) {
+                                      return Color(0xFF4B984D);
+                                    }),
+                                    side: MaterialStateProperty.all<BorderSide>(
+                                      BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    elevation: MaterialStateProperty.all(12.0),
+                                  ),
+                                  onPressed: () {
+                                    ref
+                                        .read(signupNotifier.notifier)
+                                        .onSignup();
+                                  },
+                                ),
+                                SizedBox(height: 70.v)
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -140,7 +146,9 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
             builder: (context, ref, _) {
               return CustomTextFormField(
                 contentPadding: EdgeInsets.all(8),
-                controller: ref.watch(signupNotifier).edittextController,
+                controller: ref.watch(signupNotifier).firstNameCtrl,
+                validator: (value) =>
+                    ref.read(signupNotifier.notifier).validateFirstName(value),
               );
             },
           ),
@@ -167,7 +175,9 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
             builder: (context, ref, _) {
               return CustomTextFormField(
                 contentPadding: EdgeInsets.all(8),
-                controller: ref.watch(signupNotifier).edittextoneController,
+                validator: (value) =>
+                    ref.read(signupNotifier.notifier).validateLastName(value),
+                controller: ref.watch(signupNotifier).lastNameCtrl,
               );
             },
           ),
@@ -195,7 +205,10 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
               return CustomTextFormField(
                 borderDecoration: null,
                 contentPadding: EdgeInsets.all(8),
-                controller: ref.watch(signupNotifier).edittextoneController,
+                textInputType: TextInputType.phone,
+                controller: ref.watch(signupNotifier).phoneCtrl,
+                validator: (value) =>
+                    ref.read(signupNotifier.notifier).validatePhone(value),
               );
             },
           ),
@@ -217,7 +230,9 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
           builder: (context, ref, _) {
             return CustomTextFormField(
               contentPadding: EdgeInsets.all(8),
-              controller: ref.watch(signupNotifier).edittextthreeController,
+              controller: ref.watch(signupNotifier).emailCtrl,
+              validator: (value) =>
+                  ref.read(signupNotifier.notifier).validateEmail(value),
             );
           },
         )
@@ -243,7 +258,9 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
             builder: (context, ref, _) {
               return CustomTextFormField(
                 contentPadding: EdgeInsets.all(8),
-                controller: ref.watch(signupNotifier).edittextfourController,
+                controller: ref.watch(signupNotifier).passwordCtrl,
+                validator: ((value) =>
+                    ref.watch(signupNotifier.notifier).validatePassword(value)),
                 textInputAction: TextInputAction.done,
                 obscureText: true,
               );
