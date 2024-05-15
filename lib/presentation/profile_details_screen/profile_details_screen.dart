@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
+import 'package:money_mgmt/presentation/profile_details_screen/notifier/profile_details_notifier.dart';
 
 import '../../core/app_export.dart';
-import 'package:flutter/material.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import 'notifier/profile_details_notifier.dart';
 import '../../widgets/custom_elevated_button.dart';
 // import '../profile_invoice_page/profile_invoice_page.dart';
 
@@ -50,12 +50,21 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          CustomImageView(
-                            imagePath: ImageConstant.profile,
-                            height: 49.v,
-                            width: 46.h,
-                            radius: BorderRadius.circular(
-                              23.h,
+                          // CustomImageView(
+                          //   imagePath: ImageConstant.profile,
+                          //   height: 49.v,
+                          //   width: 46.h,
+                          //   radius: BorderRadius.circular(
+                          //     23.h,
+                          //   ),
+                          // ),
+                          CircleAvatar(
+                            radius: 19.v,
+                            backgroundColor: appTheme.gray500,
+                            child: Center(
+                              child: Icon(
+                                Icons.person,
+                              ),
                             ),
                           ),
                           Container(
@@ -65,23 +74,32 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
                               top: 8.v,
                               bottom: 11.v,
                             ),
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Manish Pandey\n".tr,
-                                    style: CustomTextStyles
-                                        .labelLargePrimaryContainerSemiBold_1,
-                                  ),
-                                  TextSpan(
-                                    text: "XYZ Company".tr,
-                                    style: CustomTextStyles
-                                        .labelLargePrimaryContainer,
-                                  )
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
+                            child: ValueListenableBuilder<Object>(
+                                valueListenable: ref
+                                    .watch(profileDetailsNotifier)
+                                    .userValues!,
+                                builder: (context, userData, snapshot) {
+                                  return RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              "${ref.watch(profileDetailsNotifier).userValues!.value["username"]}\n",
+                                          style: CustomTextStyles
+                                              .labelLargePrimaryContainerSemiBold_1,
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              "${ref.watch(profileDetailsNotifier).userValues!.value["company"]}\n"
+                                                  .tr,
+                                          style: CustomTextStyles
+                                              .labelLargePrimaryContainer,
+                                        )
+                                      ],
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  );
+                                }),
                           )
                         ],
                       ),
@@ -165,305 +183,332 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
           horizontal: 10,
         ),
         alignment: Alignment.topLeft,
-        child: Column(
-          children: [
-            SizedBox(height: 18.v),
-            SizedBox(height: 18.v),
-            SizedBox(height: 18.v),
-            Row(
-              children: [
-                Text(
-                  "Name".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleLargeBold,
+        child: FutureBuilder(
+            future:
+                ref.read(profileDetailsNotifier.notifier).getProfile(context),
+            builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (snapshot.hasData) {
+                Map<String, dynamic>? userData = snapshot.data!;
+
+                return Column(
+                  children: [
+                    SizedBox(height: 18.v),
+                    SizedBox(height: 18.v),
+                    SizedBox(height: 18.v),
+                    Row(
+                      children: [
+                        Text(
+                          "Name".tr,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomTextStyles.titleLargeBold,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "${userData["first_name"] + userData["last_name"]}"
+                              .tr,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomTextStyles.titleLargeBold,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 18.v),
+                    SizedBox(height: 18.v),
+                    Row(
+                      children: [
+                        Text(
+                          "Email".tr,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomTextStyles.titleLargeBold,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "${userData["email"]}",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomTextStyles.titleLargeBold,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 18.v),
+                    SizedBox(height: 18.v),
+                    Row(
+                      children: [
+                        Text(
+                          "Phone Number".tr,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomTextStyles.titleLargeBold,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "${userData["phone_number"]}",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomTextStyles.titleLargeBold,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 18.v),
+                    SizedBox(height: 18.v),
+                    Row(
+                      children: [
+                        Text(
+                          "Company Name".tr,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomTextStyles.titleLargeBold,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "${userData["company_name"]}",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomTextStyles.titleLargeBold,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 18.v),
+                    Row(
+                      children: [
+                        CustomElevatedButton(
+                          height: 28.v,
+                          width: 88.h,
+                          text: "Edit".tr,
+                          buttonStyle: CustomButtonStyles.outlinePrimaryTL14,
+                          buttonTextStyle:
+                              CustomTextStyles.titleSmallOnErrorSemiBold,
+                          onPressed: () {
+                            onTapEdit(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }
+
+              return Center(
+                child: Container(
+                  height: 40.v,
+                  width: 40.v,
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                    valueColor: AlwaysStoppedAnimation(
+                      Colors.orange,
+                    ),
+                    strokeWidth: 4,
+                  ),
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "Manish Pandey".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleLargeBold,
-                ),
-              ],
-            ),
-            SizedBox(height: 18.v),
-            SizedBox(height: 18.v),
-            Row(
-              children: [
-                Text(
-                  "Email".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleLargeBold,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "abcd@gmail.com".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleLargeBold,
-                ),
-              ],
-            ),
-            SizedBox(height: 18.v),
-            SizedBox(height: 18.v),
-            Row(
-              children: [
-                Text(
-                  "Phone Number".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleLargeBold,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "9800965652".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleLargeBold,
-                ),
-              ],
-            ),
-            SizedBox(height: 18.v),
-            SizedBox(height: 18.v),
-            Row(
-              children: [
-                Text(
-                  "Company Name".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleLargeBold,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "XYZ".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: CustomTextStyles.titleLargeBold,
-                ),
-              ],
-            ),
-            SizedBox(height: 18.v),
-            Row(
-              children: [
-                CustomElevatedButton(
-                  height: 28.v,
-                  width: 88.h,
-                  text: "Edit".tr,
-                  buttonStyle: CustomButtonStyles.outlinePrimaryTL14,
-                  buttonTextStyle: CustomTextStyles.titleSmallOnErrorSemiBold,
-                  onPressed: () {
-                    onTapEdit(context);
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
+              );
+            }),
       ),
     );
   }
 
   Widget _profileHistory(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: [
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Schedule Delivery".tr,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: CustomTextStyles.titleLargeBold,
-                  ),
-                ],
+    return FutureBuilder(
+        future: ref.read(profileDetailsNotifier.notifier).getHistory(context),
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            List<dynamic> history = snapshot.data!;
+
+            return ListView.builder(
+              itemCount: history.length,
+              itemBuilder: (context, index) {
+                if (history[index]["type"] == "urgent_delivery") {
+                  Map<String, dynamic> data = history[index]["data"];
+                  return _buildUrgentDeliveryRow(data: data);
+                }
+
+                if (history[index]["type"] == "order") {
+                  Map<String, dynamic> data = history[index]["data"];
+                  return _buildScheduleRow(data: data);
+                }
+
+                if (history[index]["type"] == "maintainence") {
+                  Map<String, dynamic> data = history[index]["data"];
+                  return _buildRepairRow(data: data);
+                }
+                return SizedBox();
+              },
+            );
+          }
+          return Center(
+            child: Container(
+              height: 40.v,
+              width: 40.v,
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+                valueColor: AlwaysStoppedAnimation(
+                  Colors.orange,
+                ),
+                strokeWidth: 4,
               ),
-              Row(
-                children: [
-                  Text(
-                    "Date: 2022/12/01",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.titleLarge!.copyWith(
+            ),
+          );
+        });
+  }
+
+  Widget _buildUrgentDeliveryRow({required Map<String, dynamic> data}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            SizedBox(
+              height: 36.v,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Urgent Delivery",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleLarge!.copyWith(
+                      fontSize: 21.fSize,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF63681B)),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "Date: ${data["date"]}",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleLarge!.copyWith(
                       fontSize: 15.fSize,
                       fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Quantity: 100L",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.titleLarge!.copyWith(
+                      color: Color(0xFF63681B)),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "Quantity: ${data["quantity"]}L",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleLarge!.copyWith(
                       fontSize: 15.fSize,
                       fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+                      color: Color(0xFF63681B)),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildScheduleRow({required Map<String, dynamic> data}) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 36.v,
+        ),
+        Row(
+          children: [
+            Text(
+              "Schedule Delivery".tr,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: CustomTextStyles.titleLargeBold,
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Text(
+              "Date: ${data["start_date"]}",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.titleLarge!.copyWith(
+                fontSize: 15.fSize,
+                fontWeight: FontWeight.w500,
               ),
-            ],
-          ),
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Urgent Delivery",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleLarge!.copyWith(
-                            fontSize: 21.fSize,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF63681B)),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Date: 2022/12/04",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleLarge!.copyWith(
-                            fontSize: 15.fSize,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF63681B)),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Quantity: 50L",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleLarge!.copyWith(
-                            fontSize: 15.fSize,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF63681B)),
-                      ),
-                    ],
-                  ),
-                ],
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Text(
+              "Quantity: ${data["quantity"]}L",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.titleLarge!.copyWith(
+                fontSize: 15.fSize,
+                fontWeight: FontWeight.w500,
               ),
-            ],
-          ),
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Schedule Delivery".tr,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: CustomTextStyles.titleLargeBold,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Date: 2022/12/08",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.titleLarge!.copyWith(
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRepairRow({required Map<String, dynamic> data}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            SizedBox(
+              height: 36.v,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Maintenance",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleLarge!.copyWith(
+                      fontSize: 21.fSize,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFFCC7B29)),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "Date: ${data["date"]}",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleLarge!.copyWith(
                       fontSize: 15.fSize,
                       fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Quantity: 100L",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.titleLarge!.copyWith(
-                      fontSize: 15.fSize,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Maintenance",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleLarge!.copyWith(
-                            fontSize: 21.fSize,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFCC7B29)),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Date: 2022/12/11",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleLarge!.copyWith(
-                            fontSize: 15.fSize,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFCC7B29)),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+                      color: Color(0xFFCC7B29)),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -474,6 +519,7 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
             List<dynamic> data = snapshot.data!;
+
             return data.isEmpty
                 ? Text(
                     "NO DATA",

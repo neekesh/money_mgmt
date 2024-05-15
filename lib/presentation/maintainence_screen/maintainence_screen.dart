@@ -93,13 +93,38 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
                           SizedBox(height: 8.v),
                           _buildRowEmail(context),
                           SizedBox(height: 27.v),
-                          Text(
-                            "Phone Number".tr,
-                            style: theme.textTheme.titleMedium!
-                                .copyWith(color: Colors.black),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Phone Number".tr,
+                                        style: theme.textTheme.titleMedium!
+                                            .copyWith(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 1.v),
+                                  _buildPhoneNumberEditText(context),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Address".tr,
+                                    style: theme.textTheme.titleMedium!
+                                        .copyWith(color: Colors.black),
+                                  ),
+                                  SizedBox(height: 1.v),
+                                  _buildAddressEditText(context)
+                                ],
+                              )
+                            ],
                           ),
-                          SizedBox(height: 1.v),
-                          _buildPhoneNumberEditText(context),
                           SizedBox(height: 27.v),
                           Text(
                             "Pick a Date".tr,
@@ -135,7 +160,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
     return Consumer(
       builder: (context, ref, _) {
         return CustomTextFormField(
-          width: 141.h,
+          width: SizeUtils.width - 70.v,
           contentPadding: EdgeInsets.all(6),
           controller: ref.watch(maintenanceNotifier).emailEditTextController,
           validator: (value) =>
@@ -179,18 +204,6 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
               _buildEmailEditText(context)
             ],
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Address".tr,
-                style:
-                    theme.textTheme.titleMedium!.copyWith(color: Colors.black),
-              ),
-              SizedBox(height: 1.v),
-              _buildAddressEditText(context)
-            ],
-          )
         ],
       ),
     );
@@ -201,7 +214,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
     return Consumer(
       builder: (context, ref, _) {
         return CustomTextFormField(
-          width: 183.h,
+          width: 151.h,
           textInputType: TextInputType.phone,
           controller:
               ref.watch(maintenanceNotifier).phoneNumberEditTextController,

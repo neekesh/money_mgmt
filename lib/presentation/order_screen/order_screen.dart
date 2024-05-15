@@ -147,7 +147,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
     return Consumer(
       builder: (context, ref, _) {
         return CustomTextFormField(
-          width: 116.h,
+          width: SizeUtils.width - 70.v,
           contentPadding: EdgeInsets.all(8),
           controller: ref.watch(orderNotifier).emailSectionController,
           validator: (value) =>
@@ -162,7 +162,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
     return Consumer(
       builder: (context, ref, _) {
         return CustomTextFormField(
-          width: 177.h,
+          width: 141.h,
           contentPadding: EdgeInsets.all(8),
           controller: ref.watch(orderNotifier).phoneNumberSectionController,
           validator: (value) =>
@@ -193,19 +193,6 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
               _buildEmailSection(context)
             ],
           ),
-          Column(
-            children: [
-              Text(
-                "Phone Number".tr,
-                textAlign: TextAlign.start,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(height: 1.v),
-              _buildPhoneNumberSection(context)
-            ],
-          )
         ],
       ),
     );
@@ -217,24 +204,29 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Address".tr,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: Colors.black,
+          Padding(
+            padding: EdgeInsets.only(top: 2.v),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Quantity".tr,
+                  style: theme.textTheme.titleMedium!
+                      .copyWith(color: Colors.black),
                 ),
-              ),
-              SizedBox(height: 1.v),
-              CustomTextFormField(
-                width: 141.h,
-                contentPadding: EdgeInsets.all(8),
-                controller: ref.watch(orderNotifier).addressCtrl,
-                validator: (value) =>
-                    ref.read(orderNotifier.notifier).validateAddress(value),
-              )
-            ],
+                CustomTextFormField(
+                  textInputType: TextInputType.number,
+                  width: 141.h,
+                  contentPadding: EdgeInsets.all(8),
+                  controller: ref.watch(orderNotifier).quantityController,
+                  hintText: "In Litre",
+                  hintStyle: theme.textTheme.titleMedium!
+                      .copyWith(color: Color.fromARGB(255, 91, 88, 88)),
+                  validator: (value) =>
+                      ref.read(orderNotifier.notifier).validateQuantity(value),
+                )
+              ],
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 2.v),
@@ -267,31 +259,39 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30.h),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 2.v),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Quantity".tr,
-                  style: theme.textTheme.titleMedium!
-                      .copyWith(color: Colors.black),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Address".tr,
+                style: theme.textTheme.titleMedium!.copyWith(
+                  color: Colors.black,
                 ),
-                CustomTextFormField(
-                  textInputType: TextInputType.number,
-                  width: 141.h,
-                  contentPadding: EdgeInsets.all(8),
-                  controller: ref.watch(orderNotifier).quantityController,
-                  hintText: "In Litre",
-                  hintStyle: theme.textTheme.titleMedium!
-                      .copyWith(color: Color.fromARGB(255, 91, 88, 88)),
-                  validator: (value) =>
-                      ref.read(orderNotifier.notifier).validateQuantity(value),
-                )
-              ],
-            ),
+              ),
+              SizedBox(height: 1.v),
+              CustomTextFormField(
+                width: 141.h,
+                contentPadding: EdgeInsets.all(8),
+                controller: ref.watch(orderNotifier).addressCtrl,
+                validator: (value) =>
+                    ref.read(orderNotifier.notifier).validateAddress(value),
+              )
+            ],
           ),
+          Column(
+            children: [
+              Text(
+                "Phone Number".tr,
+                textAlign: TextAlign.start,
+                style: theme.textTheme.titleMedium!.copyWith(
+                  color: Colors.black,
+                ),
+              ),
+              _buildPhoneNumberSection(context)
+            ],
+          )
         ],
       ),
     );

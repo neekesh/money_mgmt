@@ -11,9 +11,13 @@ part 'profile_details_state.dart';
 
 final profileDetailsNotifier =
     StateNotifierProvider<ProfileDetailsNotifier, ProfileDetailsState>(
-  (ref) => ProfileDetailsNotifier(ProfileDetailsState(
-    profileDetailsModelObj: ProfileDetailsModel(),
-  )),
+  (ref) => ProfileDetailsNotifier(
+    ProfileDetailsState(
+      profileDetailsModelObj: ProfileDetailsModel(),
+      userValues:
+          ValueNotifier<Map<String, dynamic>>({"username": "", "company": ""}),
+    ),
+  ),
 );
 
 /// A notifier that manages the state of a ProfileDetails according to the event that is dispatched to it.
@@ -26,6 +30,10 @@ class ProfileDetailsNotifier extends StateNotifier<ProfileDetailsState> {
       final request = await dio.get(APIs.getUser);
       if (request.statusCode == 200 || request.statusCode == 201) {
         userData = request.data as Map<String, dynamic>;
+        state.userValues!.value = {
+          "username": "${userData["first_name"] + userData["last_name"]}",
+          "company": "${userData["company_name"]}"
+        };
       }
     } on Exception catch (e) {
       if (e is DioException) {
@@ -37,12 +45,12 @@ class ProfileDetailsNotifier extends StateNotifier<ProfileDetailsState> {
     return userData;
   }
 
-  Future<Map<String, dynamic>> getHistory(BuildContext context) async {
-    Map<String, dynamic> userHistory = {};
+  Future<List<dynamic>> getHistory(BuildContext context) async {
+    List<dynamic> userHistory = [];
     try {
-      final request = await dio.get(APIs.getUser + 1.toString());
+      final request = await dio.get(APIs.getHistory);
       if (request.statusCode == 200 || request.statusCode == 201) {
-        userHistory = request.data as Map<String, dynamic>;
+        userHistory = request.data as List<dynamic>;
       }
     } on Exception catch (e) {
       if (e is DioException) {

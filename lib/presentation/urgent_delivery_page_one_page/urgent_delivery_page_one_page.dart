@@ -197,30 +197,45 @@ class UrgentDeliveryPageOnePageState
   }
 
   Widget _buildQuantitySection(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Quantity".tr,
-            style: theme.textTheme.titleMedium!.copyWith(
-              color: Colors.black,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Quantity".tr,
+              style: theme.textTheme.titleMedium!.copyWith(
+                color: Colors.black,
+              ),
             ),
-          ),
-          SizedBox(height: 1.v),
-          Consumer(
-            builder: (context, ref, _) {
-              return CustomTextFormField(
-                textInputType: TextInputType.number,
-                width: 141.h,
-                contentPadding: EdgeInsets.all(6),
-                controller: qtyCtrl,
-                validator: (value) => validateQuantity(value),
-              );
-            },
-          ),
-        ],
-      ),
+            SizedBox(height: 1.v),
+            Consumer(
+              builder: (context, ref, _) {
+                return CustomTextFormField(
+                  textInputType: TextInputType.number,
+                  width: 141.h,
+                  contentPadding: EdgeInsets.all(6),
+                  controller: qtyCtrl,
+                  validator: (value) => validateQuantity(value),
+                );
+              },
+            ),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "Address".tr,
+              style: theme.textTheme.titleMedium!.copyWith(
+                color: Colors.black,
+              ),
+            ),
+            _buildAddressSection(context)
+          ],
+        )
+      ],
     );
   }
 
@@ -277,18 +292,6 @@ class UrgentDeliveryPageOnePageState
             _buildEmailSection(context)
           ],
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "Address".tr,
-              style: theme.textTheme.titleMedium!.copyWith(
-                color: Colors.black,
-              ),
-            ),
-            _buildAddressSection(context)
-          ],
-        )
       ],
     );
   }
@@ -298,7 +301,7 @@ class UrgentDeliveryPageOnePageState
     return Consumer(
       builder: (context, ref, _) {
         return CustomTextFormField(
-          width: 116.h,
+          width: SizeUtils.width - 70.v,
           contentPadding: EdgeInsets.all(6),
           controller: emailCtrl,
           validator: (value) => validateEmail(value),
