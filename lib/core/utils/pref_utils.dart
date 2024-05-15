@@ -28,6 +28,12 @@ class PrefUtils {
     return _sharedPreferences!.setString('themeData', value);
   }
 
+  Future<void> setAccessToken(String value) {
+    return _sharedPreferences!.setString("accessToken", value);
+  }
+
+  String? getAccessToken() => _sharedPreferences!.getString("accessToken");
+
   String getThemeData() {
     try {
       return _sharedPreferences!.getString('themeData')!;

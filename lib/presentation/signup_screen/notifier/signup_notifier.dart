@@ -1,6 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
+import 'package:money_mgmt/core/network/apis.dart';
+import 'package:money_mgmt/core/network/logger.dart';
+import 'package:money_mgmt/core/utils/flash_message.dart';
 import '../../../core/app_export.dart';
+import '../../../core/network/api_s.dart';
 import '../models/signup_model.dart';
 part 'signup_state.dart';
 
@@ -15,6 +20,8 @@ final signupNotifier = StateNotifierProvider<SignupNotifier, SignupState>(
       companyCtrl: TextEditingController(),
       signupModelObj: SignupModel(),
       formKey: GlobalKey<FormState>(),
+      addressCtrl: TextEditingController(),
+      isLoading: false,
     ),
   ),
 );
@@ -51,6 +58,13 @@ class SignupNotifier extends StateNotifier<SignupState> {
     return null;
   }
 
+  validateAddress(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Address is  required";
+    }
+    return null;
+  }
+
   validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return "Email is required";
@@ -77,18 +91,47 @@ class SignupNotifier extends StateNotifier<SignupState> {
   bool isFormValidated() => state.formKey!.currentState!.validate();
 
   ///TODO: signup api integration
-  onSignup() {
+  Future<void> onSignup(BuildContext context) async {
     if (isFormValidated()) {
       Map<String, dynamic> user = {
-        "firstname": state.firstNameCtrl!.text,
-        "lastname": state.lastNameCtrl!.text,
+        "first_name": state.firstNameCtrl!.text,
+        "last_name": state.lastNameCtrl!.text,
         "phone_number": state.phoneCtrl!.text,
-        "company": state.companyCtrl!.text,
+        "company_name": state.companyCtrl!.text,
         "email": state.emailCtrl!.text,
-        "password": state.passwordCtrl!.text
+        "password": state.passwordCtrl!.text,
+        "address": state.addressCtrl!.text
       };
-
-      print("signUp data ${user}");
+      try {
+        state.isLoading = true;
+        final request = await dio.post(APIs.register, data: user);
+        if (request.statusCode == 200 || request.statusCode == 201) {
+          state.isLoading = false;
+          showSuccess("Registration successful!! Please login ", context);
+          clearForm();
+          NavigatorService.pushNamedAndRemoveUntil(AppRoutes.loginScreen);
+        }
+      } on Exception catch (e) {
+        state.isLoading = false;
+        if (e is DioException) {
+          if (e.response!.statusCode == 400) {
+            showError("${e.response?.data ?? "something went wrong"}", context);
+            return;
+          }
+          showError("${e.response?.data ?? "$e"}", context);
+        }
+        showError("error occurred:$e", context);
+      }
     }
+  }
+
+  void clearForm() {
+    state.addressCtrl!.clear();
+    state.companyCtrl!.clear();
+    state.firstNameCtrl!.clear();
+    state.lastNameCtrl!.clear();
+    state.passwordCtrl!.clear();
+    state.phoneCtrl!.clear();
+    state.emailCtrl!.clear();
   }
 }

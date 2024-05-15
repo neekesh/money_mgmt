@@ -9,18 +9,18 @@ class MaintenanceState extends Equatable {
     this.addressEditTextController,
     this.phoneNumberEditTextController,
     this.maintenanceModelObj,
-    this.dateEditCtrl,
+    this.dateCtrl,
     this.messageTextController,
+    required this.formKey,
   });
 
   TextEditingController? emailEditTextController;
 
   TextEditingController? addressEditTextController;
   TextEditingController? messageTextController;
-
   TextEditingController? phoneNumberEditTextController;
-  TextEditingController? dateEditCtrl;
-
+  DateTime? dateCtrl;
+  GlobalKey<FormState> formKey;
   MaintenanceModel? maintenanceModelObj;
 
   @override
@@ -28,7 +28,9 @@ class MaintenanceState extends Equatable {
         emailEditTextController,
         addressEditTextController,
         phoneNumberEditTextController,
-        maintenanceModelObj
+        messageTextController,
+        maintenanceModelObj,
+        formKey,
       ];
   MaintenanceState copyWith({
     TextEditingController? emailEditTextController,
@@ -37,6 +39,7 @@ class MaintenanceState extends Equatable {
     MaintenanceModel? maintenanceModelObj,
     TextEditingController? dateEditCtrl,
     TextEditingController? messageTextController,
+    GlobalKey<FormState>? formKey,
   }) {
     return MaintenanceState(
       emailEditTextController:
@@ -45,10 +48,11 @@ class MaintenanceState extends Equatable {
           addressEditTextController ?? this.addressEditTextController,
       phoneNumberEditTextController:
           phoneNumberEditTextController ?? this.phoneNumberEditTextController,
-      dateEditCtrl: dateEditCtrl,
+      dateCtrl: dateCtrl ?? this.dateCtrl,
       maintenanceModelObj: maintenanceModelObj ?? this.maintenanceModelObj,
       messageTextController:
           messageTextController ?? this.messageTextController,
+      formKey: formKey ?? this.formKey,
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../core/app_export.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +27,7 @@ class CustomTextFormField extends StatelessWidget {
       this.borderDecoration,
       this.fillColor,
       this.filled = true,
+      this.inputFormatters,
       this.validator})
       : super(
           key: key,
@@ -73,6 +76,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? filled;
 
   final FormFieldValidator<String>? validator;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +90,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget textFormFieldWidget(BuildContext context) => SizedBox(
         width: width ?? double.maxFinite,
         child: TextFormField(
+          inputFormatters: inputFormatters ?? [],
           scrollPadding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           controller: controller,

@@ -4,26 +4,33 @@ part of 'order_notifier.dart';
 
 // ignore_for_file: must_be_immutable
 class OrderState extends Equatable {
-  OrderState(
-      {this.emailSectionController,
-      this.phoneNumberSectionController,
-      this.durationSectionController,
-      this.dateController,
-      this.intervalsSectionController,
-      this.orderModelObj,
-      this.quantityController});
+  OrderState({
+    this.emailSectionController,
+    this.phoneNumberSectionController,
+    this.startDateController,
+    this.durationCtrl,
+    this.orderModelObj,
+    this.quantityController,
+    this.addressCtrl,
+    this.frequencyCtrl,
+    required this.formKey,
+    this.isLoading = false,
+  });
 
   TextEditingController? emailSectionController;
+  String? frequencyCtrl;
+  bool? isLoading;
 
   TextEditingController? phoneNumberSectionController;
 
-  TextEditingController? durationSectionController;
-
   TextEditingController? quantityController;
 
-  TextEditingController? dateController;
+  DateTime? startDateController;
 
-  TextEditingController? intervalsSectionController;
+  TextEditingController? addressCtrl;
+
+  TextEditingController? durationCtrl;
+  GlobalKey<FormState> formKey;
 
   OrderModel? orderModelObj;
 
@@ -31,33 +38,39 @@ class OrderState extends Equatable {
   List<Object?> get props => [
         emailSectionController,
         phoneNumberSectionController,
-        durationSectionController,
-        dateController,
-        intervalsSectionController,
+        startDateController,
+        durationCtrl,
         quantityController,
-        orderModelObj
+        orderModelObj,
+        frequencyCtrl,
+        formKey,
+        isLoading
       ];
   OrderState copyWith({
     TextEditingController? emailSectionController,
     TextEditingController? phoneNumberSectionController,
     TextEditingController? durationSectionController,
-    TextEditingController? dateController,
-    TextEditingController? intervalsSectionController,
+    TextEditingController? durationCtrl,
     TextEditingController? quantityController,
+    DateTime? startDateController,
+    TextEditingController? endDateController,
     OrderModel? orderModelObj,
+    String? frequencyCtrl,
+    GlobalKey<FormState>? formKey,
+    bool? isLoading,
   }) {
     return OrderState(
       emailSectionController:
           emailSectionController ?? this.emailSectionController,
       phoneNumberSectionController:
           phoneNumberSectionController ?? this.phoneNumberSectionController,
-      durationSectionController:
-          durationSectionController ?? this.durationSectionController,
-      dateController: dateController ?? this.dateController,
-      intervalsSectionController:
-          intervalsSectionController ?? this.intervalsSectionController,
+      startDateController: startDateController ?? this.startDateController,
+      durationCtrl: durationCtrl ?? this.durationCtrl,
       orderModelObj: orderModelObj ?? this.orderModelObj,
       quantityController: quantityController ?? this.quantityController,
+      frequencyCtrl: frequencyCtrl ?? this.frequencyCtrl,
+      formKey: formKey ?? this.formKey,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }

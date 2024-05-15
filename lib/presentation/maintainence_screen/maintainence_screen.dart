@@ -1,10 +1,13 @@
-import '../../core/app_export.dart';
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
-import 'notifier/maintainence_notifier.dart';
+import 'package:intl/intl.dart';
+
+import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import '../dashboard_page/dashboard_page.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
+import '../dashboard_page/dashboard_page.dart';
+import 'notifier/maintainence_notifier.dart';
 
 class MaintenanceScreen extends ConsumerStatefulWidget {
   const MaintenanceScreen({Key? key})
@@ -19,7 +22,15 @@ class MaintenanceScreen extends ConsumerStatefulWidget {
 
 // ignore_for_file: must_be_immutable
 class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  DateTime initialDate = DateTime.now();
+
+  void onDateChange(DateTime? date) {
+    if (date != null) {
+      setState(() {
+        initialDate = date;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,78 +39,86 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
         extendBody: true,
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
-        body: Container(
-          width: SizeUtils.width,
-          height: SizeUtils.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(0.5, 0),
-              end: Alignment(0.5, 1),
-              colors: [appTheme.gray1009e, appTheme.gray1009e],
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            width: SizeUtils.width,
+            height: SizeUtils.height * 1.2,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment(0.5, 0),
+                end: Alignment(0.5, 1),
+                colors: [appTheme.gray1009e, appTheme.gray1009e],
+              ),
             ),
-          ),
-          child: SizedBox(
-            child: Column(
-              children: [
-                SizedBox(height: 13.v),
-                CustomImageView(
-                  imagePath: ImageConstant.imgLogo,
-                  height: 146.v,
-                  width: 333.h,
+            child: SizedBox(
+              child: Form(
+                key: ref.read(maintenanceNotifier).formKey,
+                child: Column(
+                  children: [
+                    SizedBox(height: 13.v),
+                    CustomImageView(
+                      imagePath: ImageConstant.imgLogo,
+                      height: 146.v,
+                      width: 333.h,
+                    ),
+                    SizedBox(height: 44.v),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 30.h),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xD9C9C55E), // First color
+                            Color(0x66D9D9D9), // Second color
+                          ],
+                          stops: [0.0, 0.81], // Stop positions
+                          begin: Alignment.topCenter, // Gradient start position
+                          end: Alignment.bottomCenter, // Gradient end position
+                        ),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          topRight: Radius.circular(50),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomImageView(
+                            imagePath: ImageConstant.imgWrench,
+                            height: 71.v,
+                            width: 393.h,
+                            color: Color.fromARGB(255, 168, 165, 60),
+                          ),
+                          SizedBox(height: 8.v),
+                          _buildRowEmail(context),
+                          SizedBox(height: 27.v),
+                          Text(
+                            "Phone Number".tr,
+                            style: theme.textTheme.titleMedium!
+                                .copyWith(color: Colors.black),
+                          ),
+                          SizedBox(height: 1.v),
+                          _buildPhoneNumberEditText(context),
+                          SizedBox(height: 27.v),
+                          Text(
+                            "Pick a Date".tr,
+                            style: theme.textTheme.titleMedium!
+                                .copyWith(color: Colors.black),
+                          ),
+                          SizedBox(height: 1.v),
+                          _buildDate(context),
+                          SizedBox(height: 29.v),
+                          _buildQuantityColumn(context),
+                          SizedBox(height: 26.v),
+                          _buildConfirmButton(context),
+                          SizedBox(height: 26.v)
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                SizedBox(height: 44.v),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30.h),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xD9C9C55E), // First color
-                        Color(0x66D9D9D9), // Second color
-                      ],
-                      stops: [0.0, 0.81], // Stop positions
-                      begin: Alignment.topCenter, // Gradient start position
-                      end: Alignment.bottomCenter, // Gradient end position
-                    ),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      topRight: Radius.circular(50),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgWrench,
-                        height: 71.v,
-                        width: 393.h,
-                        color: Color.fromARGB(255, 168, 165, 60),
-                      ),
-                      SizedBox(height: 8.v),
-                      _buildRowEmail(context),
-                      SizedBox(height: 27.v),
-                      Text(
-                        "Phone Number".tr,
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      SizedBox(height: 1.v),
-                      _buildPhoneNumberEditText(context),
-                      SizedBox(height: 27.v),
-                      Text(
-                        "Book a Date".tr,
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      SizedBox(height: 1.v),
-                      _buildDate(context),
-                      SizedBox(height: 29.v),
-                      _buildQuantityColumn(context),
-                      SizedBox(height: 26.v),
-                      _buildConfirmButton(context),
-                      SizedBox(height: 26.v)
-                    ],
-                  ),
-                )
-              ],
+              ),
             ),
           ),
         ),
@@ -119,6 +138,8 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
           width: 141.h,
           contentPadding: EdgeInsets.all(6),
           controller: ref.watch(maintenanceNotifier).emailEditTextController,
+          validator: (value) =>
+              ref.read(maintenanceNotifier.notifier).validateEmail(value),
         );
       },
     );
@@ -132,6 +153,8 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
           width: 141.h,
           contentPadding: EdgeInsets.all(6),
           controller: ref.watch(maintenanceNotifier).addressEditTextController,
+          validator: (value) =>
+              ref.read(maintenanceNotifier.notifier).validateAddress(value),
         );
       },
     );
@@ -149,7 +172,8 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
             children: [
               Text(
                 "Email".tr,
-                style: theme.textTheme.titleMedium,
+                style:
+                    theme.textTheme.titleMedium!.copyWith(color: Colors.black),
               ),
               SizedBox(height: 1.v),
               _buildEmailEditText(context)
@@ -160,7 +184,8 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
             children: [
               Text(
                 "Address".tr,
-                style: theme.textTheme.titleMedium,
+                style:
+                    theme.textTheme.titleMedium!.copyWith(color: Colors.black),
               ),
               SizedBox(height: 1.v),
               _buildAddressEditText(context)
@@ -177,10 +202,13 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
       builder: (context, ref, _) {
         return CustomTextFormField(
           width: 183.h,
+          textInputType: TextInputType.phone,
           controller:
               ref.watch(maintenanceNotifier).phoneNumberEditTextController,
           contentPadding: EdgeInsets.all(6),
           textInputAction: TextInputAction.done,
+          validator: (value) =>
+              ref.read(maintenanceNotifier.notifier).validatePhone(value),
         );
       },
     );
@@ -194,7 +222,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
         children: [
           Text(
             "Your Message".tr,
-            style: theme.textTheme.titleMedium,
+            style: theme.textTheme.titleMedium!.copyWith(color: Colors.black),
           ),
           CustomTextFormField(
             width: 282.h,
@@ -214,9 +242,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
       height: 46.h,
       text: "Confirm".tr,
       onPressed: () {
-        NavigatorService.pushNamed(
-          AppRoutes.maintainenceOneScreen,
-        );
+        ref.read(maintenanceNotifier.notifier).createMaintenance(context);
       },
       buttonTextStyle: theme.textTheme.headlineSmall!.copyWith(
         fontSize: 21.fSize,
@@ -275,42 +301,38 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
 
   /// Section Widget
   Widget _buildDate(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, _) {
-        return CustomTextFormField(
-          width: 169.h,
-          controller: ref.watch(maintenanceNotifier).addressEditTextController,
-          contentPadding: EdgeInsets.all(6),
-          prefix: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 30.h,
-              vertical: 10.v,
+    return Consumer(builder: (context, ref, _) {
+      return Container(
+        width: 141.h,
+        height: 40.v,
+        child: DateTimeField(
+          mode: DateTimeFieldPickerMode.date,
+          dateFormat: DateFormat('yyyy-MM-dd'),
+          firstDate: DateTime.now(),
+          value: initialDate,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Colors.black,
+              ),
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(top: 20.v, left: 6),
+            fillColor: appTheme.gray500,
+            filled: true,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
             ),
-            child: CustomImageView(
-              imagePath: ImageConstant.imgArrowLeft,
-              height: 17.adaptSize,
-              width: 17.adaptSize,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide.none,
             ),
-          ),
-          prefixConstraints: BoxConstraints(
-            maxHeight: 39.v,
-          ),
-          suffix: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 30.h,
-              vertical: 10.v,
-            ),
-            child: CustomImageView(
-              imagePath: ImageConstant.imgArrowLeft,
-              height: 17.adaptSize,
-              width: 17.adaptSize,
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide.none,
             ),
           ),
-          suffixConstraints: BoxConstraints(
-            maxHeight: 39.v,
-          ),
-        );
-      },
-    );
+          onChanged: (DateTime? value) {
+            onDateChange(value);
+            ref.watch(maintenanceNotifier.notifier).setDate(value);
+          },
+        ),
+      );
+    });
   }
 }

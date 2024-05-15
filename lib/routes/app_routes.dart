@@ -90,10 +90,23 @@ class AppRoutes {
         UrgentDeliveryPageOneContainerScreen(),
     urgentDeliveryPageTwoScreen: (context) => UrgentDeliveryPageTwoScreen(),
     invoicesPageOneScreen: (context) => InvoicesPageOneScreen(),
-    invoicesPageThreeScreen: (context) => InvoicesPageThreeScreen(),
+    invoicesPageThreeScreen: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return InvoicesPageThreeScreen(
+          invoiceID: int.tryParse(args['invoiceID'].toString())!);
+    },
     orderScreen: (context) => OrderScreen(),
-    orderPayment: (context) => OrderPayment(),
-    urgentPayment: (context) => UrgentPayment(),
+    orderPayment: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return OrderPayment(orderID: int.tryParse(args['orderID'].toString())!);
+    },
+    urgentPayment: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return UrgentPayment(orderID: int.tryParse(args['orderID'].toString())!);
+    },
 
     orderPageTwoScreen: (context) => OrderPageTwoScreen(),
     profileDetailsScreen: (context) => ProfileDetailsScreen(),

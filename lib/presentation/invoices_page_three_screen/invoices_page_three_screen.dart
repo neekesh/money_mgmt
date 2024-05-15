@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:money_mgmt/core/network/logger.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../urgent_delivery_page_one_page/urgent_delivery_page_one_page.dart';
+import 'notifier/invoices_page_three_notifier.dart';
 
 class InvoicesPageThreeScreen extends ConsumerStatefulWidget {
-  const InvoicesPageThreeScreen({Key? key})
+  const InvoicesPageThreeScreen({Key? key, required this.invoiceID})
       : super(
           key: key,
         );
-
+  final int invoiceID;
   @override
   InvoicesPageThreeScreenState createState() => InvoicesPageThreeScreenState();
 }
@@ -81,23 +84,165 @@ class InvoicesPageThreeScreenState
                                 color: Color.fromARGB(217, 11, 55, 24),
                               ),
                               SizedBox(height: 9.v),
-                              Container(
-                                width: 327.h,
-                                margin: EdgeInsets.symmetric(horizontal: 32.h),
-                                child: Text(
-                                  '''Scheduled Delivery
-Date: 2022/12/01
-Time: 12:00
-Company Name: ABC
-Quantity: 100L
-Price: 1000 AUD
-''',
-                                  maxLines: 6,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                  style: CustomTextStyles.headlineSmallOnError,
-                                ),
-                              ),
+                              FutureBuilder<Map<String, dynamic>>(
+                                  future: ref
+                                      .read(invoicesPageThreeNotifier.notifier)
+                                      .getInvoiceDetails(
+                                          invoiceID: widget.invoiceID,
+                                          context: context),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      Map<String, dynamic> data =
+                                          snapshot.data!;
+                                      bool isUrgent =
+                                          data["urgent_delivery"] != null
+                                              ? true
+                                              : false;
+
+                                      String? checkPrice() {
+                                        if (isUrgent) {
+                                          return data["urgent_delivery"]
+                                              ["price"];
+                                        } else {
+                                          return data["order"]["price"];
+                                        }
+                                      }
+
+                                      return Container(
+                                          width: 327.h,
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 32.h),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Scheduled Delivery",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.start,
+                                                    style: theme.textTheme
+                                                        .headlineSmall!
+                                                        .copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: 24.fSize,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Date: ",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.start,
+                                                    style: theme.textTheme
+                                                        .headlineSmall!
+                                                        .copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: 24.fSize,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    " ${isUrgent ? data["urgent_delivery"]["date"] : data["order"]["start_date"]}",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.start,
+                                                    style: theme.textTheme
+                                                        .headlineSmall!
+                                                        .copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: 24.fSize,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Company Name: ",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.start,
+                                                    style: theme.textTheme
+                                                        .headlineSmall!
+                                                        .copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: 24.fSize,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      " ${data["user"]["company_name"] ?? ""}",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      maxLines: 3,
+                                                      style: theme.textTheme
+                                                          .headlineSmall!
+                                                          .copyWith(
+                                                        color: Colors.black,
+                                                        fontSize: 20.fSize,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Quantity: ${isUrgent ? data["urgent_delivery"]["quantity"] : data["order"]["quantity"]}L",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.start,
+                                                    style: theme.textTheme
+                                                        .headlineSmall!
+                                                        .copyWith(
+                                                      color: Colors.black,
+                                                      fontSize: 24.fSize,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              checkPrice() == null
+                                                  ? SizedBox()
+                                                  : Row(
+                                                      children: [
+                                                        Text(
+                                                          "Price: ${checkPrice()}AUD",
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: theme.textTheme
+                                                              .headlineSmall!
+                                                              .copyWith(
+                                                            color: Colors.black,
+                                                            fontSize: 24.fSize,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                            ],
+                                          ));
+                                    }
+
+                                    return Center(
+                                      child: Container(
+                                        height: 40.v,
+                                        width: 40.v,
+                                        child: CircularProgressIndicator(
+                                          backgroundColor: Colors.white,
+                                          valueColor: AlwaysStoppedAnimation(
+                                            Colors.orange,
+                                          ),
+                                          strokeWidth: 4,
+                                        ),
+                                      ),
+                                    );
+                                  }),
                             ],
                           ),
                         )

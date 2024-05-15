@@ -22,35 +22,40 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
         extendBody: true,
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
-        body: Container(
-          width: SizeUtils.width,
-          height: SizeUtils.height,
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(226, 226, 226, 1),
-          ),
-          child: SizedBox(
-            child: Form(
-              key: ref.read(signupNotifier).formKey,
-              child: Column(
-                children: [
-                  SizedBox(height: 57.v),
-                  Text(
-                    "lbl_signup".tr,
-                    style: theme.textTheme.headlineLarge,
-                  ),
-                  SizedBox(height: 1.v),
-                  Expanded(
-                    child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            width: SizeUtils.width,
+            height: SizeUtils.height * 1.3,
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(226, 226, 226, 1),
+            ),
+            child: SizedBox(
+              child: Form(
+                key: ref.read(signupNotifier).formKey,
+                child: Column(
+                  children: [
+                    SizedBox(height: 57.v),
+                    Text(
+                      "lbl_signup".tr,
+                      style: theme.textTheme.headlineLarge,
+                    ),
+                    SizedBox(height: 1.v),
+                    Expanded(
                       child: Column(
                         children: [
                           Container(
+                            height: SizeUtils.height,
                             padding: EdgeInsets.symmetric(
                               horizontal: 79.h,
                               vertical: 35.v,
                             ),
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 255, 255, 255),
-                              borderRadius: BorderRadiusStyle.roundedBorder50,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(50),
+                                topRight: Radius.circular(50),
+                              ),
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -75,6 +80,26 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
                                           .validateCompany(value),
                                       controller:
                                           ref.watch(signupNotifier).companyCtrl,
+                                    );
+                                  },
+                                ),
+                                SizedBox(height: 20.v),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Address".tr,
+                                    style: theme.textTheme.titleLarge,
+                                  ),
+                                ),
+                                Consumer(
+                                  builder: (context, ref, _) {
+                                    return CustomTextFormField(
+                                      contentPadding: EdgeInsets.all(8),
+                                      validator: (value) => ref
+                                          .read(signupNotifier.notifier)
+                                          .validateAddress(value),
+                                      controller:
+                                          ref.watch(signupNotifier).addressCtrl,
                                     );
                                   },
                                 ),
@@ -105,10 +130,12 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
                                     ),
                                     elevation: MaterialStateProperty.all(12.0),
                                   ),
+                                  isDisabled:
+                                      ref.watch(signupNotifier).isLoading,
                                   onPressed: () {
                                     ref
                                         .read(signupNotifier.notifier)
-                                        .onSignup();
+                                        .onSignup(context);
                                   },
                                 ),
                                 SizedBox(height: 70.v)
@@ -117,9 +144,9 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
                           )
                         ],
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

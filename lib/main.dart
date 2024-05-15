@@ -1,3 +1,7 @@
+import 'package:money_mgmt/core/network/apis.dart';
+import 'package:money_mgmt/core/network/logger.dart';
+import 'package:money_mgmt/presentation/login_screen/notifier/login_notifier.dart';
+
 import 'core/app_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  InitDio()();
   Future.wait([
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
     PrefUtils().init()
@@ -21,6 +26,8 @@ class MyApp extends ConsumerWidget {
     WidgetRef ref,
   ) {
     final themeType = ref.watch(themeNotifier).themeType;
+    final authToken = ref.watch(loginNotifier.notifier).authToken();
+    debugLog(message: "token $authToken");
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
@@ -40,7 +47,9 @@ class MyApp extends ConsumerWidget {
               '',
             )
           ],
-          initialRoute: AppRoutes.initialRoute,
+          initialRoute: authToken != null
+              ? AppRoutes.dashboardPage
+              : AppRoutes.initialRoute,
           routes: AppRoutes.routes,
         );
       },

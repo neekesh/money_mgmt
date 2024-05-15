@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
 
 import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
@@ -467,204 +468,129 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
   }
 
   Widget _invoiceHistory(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          Container(
-            width: 215.h,
-            padding: EdgeInsets.symmetric(
-              vertical: 12,
+    return FutureBuilder(
+        future:
+            ref.read(invoicesPageOneNotifier.notifier).getAllInvoice(context),
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            List<dynamic> data = snapshot.data!;
+            return data.isEmpty
+                ? Text(
+                    "NO DATA",
+                    style: theme.textTheme.titleLarge!
+                        .copyWith(color: Colors.black),
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic>? urgentData =
+                          data[index]["urgent_delivery"] ?? null;
+                      Map<String, dynamic>? orderData =
+                          data[index]["order"] ?? null;
+
+                      bool isOrderData = orderData != null ? true : false;
+
+                      String date = isOrderData
+                          ? orderData["start_date"]
+                          : urgentData!["date"];
+
+                      String quanitity = isOrderData
+                          ? orderData["quantity"]
+                          : urgentData!["quantity"];
+                      String? price = isOrderData
+                          ? orderData["price"]
+                          : urgentData!["price"];
+
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 18.v),
+                          Container(
+                            width: 215.h,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 12,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isOrderData
+                                  ? Color(0xFFD9E591)
+                                  : Color(0xFF63681B),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Schedule Delivery".tr,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: theme.textTheme.titleLarge!.copyWith(
+                                    fontSize: 21.fSize,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Date: ${date}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: theme.textTheme.titleLarge!.copyWith(
+                                    fontSize: 15.fSize,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  "${quanitity} Litre",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: theme.textTheme.titleLarge!.copyWith(
+                                    fontSize: 15.fSize,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                price != null
+                                    ? Text(
+                                        "${price} AUD",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: theme.textTheme.titleLarge!
+                                            .copyWith(
+                                          fontSize: 15.fSize,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ),
+                                      )
+                                    : SizedBox(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    itemCount: data.length,
+                  );
+          }
+
+          return Center(
+            child: Container(
+              height: 40.v,
+              width: 40.v,
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+                valueColor: AlwaysStoppedAnimation(
+                  Colors.orange,
+                ),
+                strokeWidth: 4,
+              ),
             ),
-            decoration: BoxDecoration(
-              color: Color(0xFFD9E591),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Text(
-                  "Schedule Delivery".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 21.fSize,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  "Date: 2022/12/01",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  "100 Liters",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  "1000 AUD",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          Container(
-            width: 215.h,
-            padding: EdgeInsets.symmetric(
-              vertical: 12,
-            ),
-            decoration: BoxDecoration(
-              color: Color(0xFF63681B),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Text(
-                  "Urgent Delivery".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 21.fSize,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  "2022/12/04",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF0F5323),
-                  ),
-                ),
-                Text(
-                  "50 Liters",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF0F5323),
-                  ),
-                ),
-                Text(
-                  "500 AUD",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF0F5323),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 18.v),
-          SizedBox(height: 18.v),
-          Container(
-            width: 215.h,
-            padding: EdgeInsets.symmetric(
-              vertical: 12,
-            ),
-            decoration: BoxDecoration(
-              color: Color(0xFF63681B),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Text(
-                  "Schedule Delivery".tr,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 21.fSize,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  "Date: 2022/12/01",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF0F5323),
-                  ),
-                ),
-                Text(
-                  "100 Liters",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF0F5323),
-                  ),
-                ),
-                Text(
-                  "1000 AUD",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontSize: 15.fSize,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF0F5323),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 
   /// Section Widget

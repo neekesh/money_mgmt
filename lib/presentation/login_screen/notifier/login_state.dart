@@ -4,30 +4,41 @@ part of 'login_notifier.dart';
 
 // ignore_for_file: must_be_immutable
 class LoginState extends Equatable {
-  LoginState(
-      {this.edittextController,
-      this.edittextoneController,
-      this.loginModelObj});
+  LoginState({
+    this.usernameCtrl,
+    this.passwordCtrl,
+    this.loginModelObj,
+    required this.formKey,
+    this.isLoading = false,
+  });
 
-  TextEditingController? edittextController;
+  TextEditingController? usernameCtrl;
 
-  TextEditingController? edittextoneController;
+  TextEditingController? passwordCtrl;
 
   LoginModel? loginModelObj;
 
+  GlobalKey<FormState> formKey;
+
+  bool? isLoading;
+
   @override
   List<Object?> get props =>
-      [edittextController, edittextoneController, loginModelObj];
+      [usernameCtrl, passwordCtrl, loginModelObj, formKey];
   LoginState copyWith({
-    TextEditingController? edittextController,
-    TextEditingController? edittextoneController,
+    TextEditingController? passwordCtrl,
+    TextEditingController? usernameCtrl,
     LoginModel? loginModelObj,
+    GlobalKey<FormState>? formKey,
+    bool? isLoading,
+    String? accessToken,
   }) {
     return LoginState(
-      edittextController: edittextController ?? this.edittextController,
-      edittextoneController:
-          edittextoneController ?? this.edittextoneController,
+      passwordCtrl: passwordCtrl ?? this.passwordCtrl,
+      usernameCtrl: usernameCtrl ?? this.usernameCtrl,
       loginModelObj: loginModelObj ?? this.loginModelObj,
+      formKey: formKey ?? this.formKey,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }

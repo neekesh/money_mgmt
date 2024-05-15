@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+
 import '../core/app_export.dart';
-import '../theme/custom_button_style.dart';
 import 'base_button.dart';
 
 class CustomElevatedButton extends BaseButton {
-  CustomElevatedButton(
-      {Key? key,
-      this.decoration,
-      this.leftIcon,
-      this.rightIcon,
-      EdgeInsets? margin,
-      VoidCallback? onPressed,
-      ButtonStyle? buttonStyle,
-      Alignment? alignment,
-      TextStyle? buttonTextStyle,
-      bool? isDisabled,
-      double? height,
-      double? width,
-      required String text})
-      : super(
+  CustomElevatedButton({
+    Key? key,
+    this.decoration,
+    this.leftIcon,
+    this.rightIcon,
+    EdgeInsets? margin,
+    VoidCallback? onPressed,
+    ButtonStyle? buttonStyle,
+    Alignment? alignment,
+    TextStyle? buttonTextStyle,
+    bool? isDisabled,
+    double? height,
+    double? width,
+    required String text,
+    this.isLoading = false,
+  }) : super(
           text: text,
           onPressed: onPressed,
           buttonStyle: buttonStyle,
@@ -35,6 +36,7 @@ class CustomElevatedButton extends BaseButton {
   final Widget? leftIcon;
 
   final Widget? rightIcon;
+  bool? isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,16 @@ class CustomElevatedButton extends BaseButton {
                 text,
                 style: buttonTextStyle,
               ),
-              rightIcon ?? const SizedBox.shrink()
+              rightIcon ?? const SizedBox.shrink(),
+              isLoading!
+                  ? CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                      valueColor: AlwaysStoppedAnimation(
+                        Colors.orange,
+                      ),
+                      strokeWidth: 2,
+                    )
+                  : SizedBox()
             ],
           ),
         ),

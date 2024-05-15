@@ -13,6 +13,8 @@ class SignupState extends Equatable {
     this.phoneCtrl,
     this.signupModelObj,
     this.formKey,
+    this.addressCtrl,
+    this.isLoading = false,
   });
 
   TextEditingController? firstNameCtrl;
@@ -27,8 +29,11 @@ class SignupState extends Equatable {
   TextEditingController? emailCtrl;
 
   TextEditingController? passwordCtrl;
+  TextEditingController? addressCtrl;
 
   SignupModel? signupModelObj;
+
+  bool? isLoading;
 
   @override
   List<Object?> get props => [
@@ -39,7 +44,8 @@ class SignupState extends Equatable {
         passwordCtrl,
         emailCtrl,
         signupModelObj,
-        formKey
+        formKey,
+        addressCtrl,
       ];
   SignupState copyWith({
     TextEditingController? firstNameCtrl,
@@ -50,6 +56,7 @@ class SignupState extends Equatable {
     TextEditingController? emailCtrl,
     SignupModel? signupModelObj,
     GlobalKey<FormState>? formKey,
+    TextEditingController? addressCtrl,
   }) {
     return SignupState(
         firstNameCtrl: firstNameCtrl ?? this.firstNameCtrl,
@@ -58,6 +65,7 @@ class SignupState extends Equatable {
         phoneCtrl: passwordCtrl ?? this.phoneCtrl,
         passwordCtrl: passwordCtrl ?? this.passwordCtrl,
         emailCtrl: emailCtrl ?? this.emailCtrl,
+        addressCtrl: addressCtrl ?? this.addressCtrl,
         signupModelObj: signupModelObj ?? this.signupModelObj,
         formKey: formKey ?? this.formKey);
   }

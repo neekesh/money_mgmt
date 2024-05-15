@@ -27,7 +27,7 @@ final dashboardNotifier =
         ),
         GridordertextItemModel(
           orderImage: ImageConstant.imgWrench,
-          orderText: "Maintenance",
+          orderText: "Repair",
           color: Color(0xFFC9C55E),
         ),
       ],
