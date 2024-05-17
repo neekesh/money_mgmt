@@ -1,7 +1,7 @@
 import 'package:money_mgmt/routes/app_routes.dart';
 import 'package:money_mgmt/widgets/custom_bottom_bar.dart';
 
-String getCurrentRoute(BottomBarEnum type) {
+String getCurrentRoute(BottomBarEnum type, BottomBarEnum currentType) {
   switch (type) {
     case BottomBarEnum.Homepage:
       return AppRoutes.dashboardPage;

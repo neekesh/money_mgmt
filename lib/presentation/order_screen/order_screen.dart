@@ -440,7 +440,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
   Widget _buildBottomBarSection(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        NavigatorService.pushNamed(getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type, BottomBarEnum.none));
       },
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:money_mgmt/core/utils/get_route.dart';
 import 'package:money_mgmt/core/utils/navigator_service.dart';
@@ -21,10 +23,23 @@ class DashboardPage extends ConsumerStatefulWidget {
 
 class DashboardPageState extends ConsumerState<DashboardPage> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  StreamSubscription? _streamSubscription;
+
   @override
   void initState() {
-    ref.read(invoicesPageOneNotifier.notifier).latestNotification(context);
+    _startFetchingNotifications();
     super.initState();
+  }
+
+  void _startFetchingNotifications() {
+    _streamSubscription = Stream.periodic(Duration(seconds: 10)).listen((_) =>
+        ref.read(invoicesPageOneNotifier.notifier).latestNotification(context));
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription!.cancel();
+    super.dispose();
   }
 
   @override
@@ -215,7 +230,8 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
             // );
           }
 
-          NavigatorService.pushNamed(getCurrentRoute(type));
+          NavigatorService.pushNamed(
+              getCurrentRoute(type, BottomBarEnum.Homepage));
         },
       );
     });

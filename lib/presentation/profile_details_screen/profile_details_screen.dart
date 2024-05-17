@@ -26,11 +26,6 @@ class ProfileDetailsScreen extends ConsumerStatefulWidget {
 class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-  void initState() {
-    ref.read(invoicesPageOneNotifier.notifier).latestNotification(context);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -649,7 +644,8 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        NavigatorService.pushNamed(getCurrentRoute(type));
+        NavigatorService.pushNamed(
+            getCurrentRoute(type, BottomBarEnum.Maleuser));
       },
     );
   }

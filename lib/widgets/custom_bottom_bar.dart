@@ -4,7 +4,7 @@ import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoic
 import '../core/app_export.dart';
 import 'package:flutter/material.dart';
 
-enum BottomBarEnum { Homepage, Sms, Maleuser }
+enum BottomBarEnum { Homepage, Sms, Maleuser, none }
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable

@@ -134,7 +134,7 @@ class MaintenanceOneScreenState extends ConsumerState<MaintenanceOneScreen> {
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
-        NavigatorService.pushNamed(getCurrentRoute(type));
+        NavigatorService.pushNamed(getCurrentRoute(type, BottomBarEnum.none));
       },
     );
   }
