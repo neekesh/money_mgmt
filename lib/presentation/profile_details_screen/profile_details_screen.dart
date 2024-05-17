@@ -294,7 +294,9 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
                           buttonTextStyle:
                               CustomTextStyles.titleSmallOnErrorSemiBold,
                           onPressed: () {
-                            onTapEdit(context);
+                            NavigatorService.pushNamed(
+                                AppRoutes.editProfileScreen,
+                                arguments: userData);
                           },
                         ),
                       ],
@@ -645,7 +647,11 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
         NavigatorService.pushNamed(
-            getCurrentRoute(type, BottomBarEnum.Maleuser));
+          getCurrentRoute(
+            type,
+            BottomBarEnum.Maleuser,
+          ),
+        );
       },
     );
   }
@@ -658,9 +664,4 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
   }
 
   /// Navigates to the editProfileScreen when the action is triggered.
-  onTapEdit(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.editProfileScreen,
-    );
-  }
 }

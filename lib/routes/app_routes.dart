@@ -121,6 +121,17 @@ class AppRoutes {
     // profileHistoryTabContainerScreen: (context) =>
     //     ProfileHistoryTabContainerScreen(),
     // profileInvoiceContainerScreen: (context) => ProfileInvoiceContainerScreen(),
-    editProfileScreen: (context) => EditProfileScreen(),
+    editProfileScreen: (context) {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      return EditProfileScreen(
+        companyName: args["company_name"],
+        firstname: args["first_name"],
+        lastname: args["last_name"],
+        email: args["email"],
+        phoneNumber: args["phone_number"],
+        address: args["address"],
+      );
+    },
   };
 }

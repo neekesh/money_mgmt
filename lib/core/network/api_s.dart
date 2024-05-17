@@ -12,4 +12,5 @@ class APIs {
   static const String getNotification = "/notification/lists";
   static const String updateNotification = "/notification/update/";
   static const String latestNotification = "/notification/latest";
+  static const String editUser = "/edit_user";
 }
