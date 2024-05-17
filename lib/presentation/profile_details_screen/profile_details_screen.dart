@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:money_mgmt/core/utils/get_route.dart';
 import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
 import 'package:money_mgmt/presentation/profile_details_screen/notifier/profile_details_notifier.dart';
 
@@ -24,6 +25,11 @@ class ProfileDetailsScreen extends ConsumerStatefulWidget {
 // ignore_for_file: must_be_immutable
 class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
+  void initState() {
+    ref.read(invoicesPageOneNotifier.notifier).latestNotification(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -646,33 +652,6 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
         NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
-  }
-
-  ///Handling route based on bottom click actions
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Homepage:
-        return AppRoutes.dashboardPage;
-      case BottomBarEnum.Sms:
-        return "/";
-      case BottomBarEnum.Maleuser:
-        return AppRoutes.profileDetailsScreen;
-      default:
-        return "/";
-    }
-  }
-
-  ///Handling page based on route
-  Widget getCurrentPage(
-    BuildContext context,
-    String currentRoute,
-  ) {
-    switch (currentRoute) {
-      case AppRoutes.profileInvoicePage:
-      // return ProfileInvoicePage();
-      default:
-        return DefaultWidget();
-    }
   }
 
   /// Navigates to the profileHistoryTabContainerScreen when the action is triggered.

@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:money_mgmt/core/network/api_s.dart';
 import 'package:money_mgmt/core/network/logger.dart';
 import 'package:money_mgmt/core/utils/flash_message.dart';
+import 'package:money_mgmt/core/utils/get_route.dart';
 import 'package:money_mgmt/widgets/custom_text_form_field.dart';
 
 import '../../core/app_export.dart';
@@ -495,20 +496,6 @@ class UrgentPaymentState extends ConsumerState<UrgentPayment> {
         ),
       ),
     );
-  }
-
-  ///Handling route based on bottom click actions
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Homepage:
-        return AppRoutes.urgentDeliveryPageOnePage;
-      case BottomBarEnum.Sms:
-        return "/";
-      case BottomBarEnum.Maleuser:
-        return AppRoutes.profileDetailsScreen;
-      default:
-        return "/";
-    }
   }
 
   ///Handling page based on route

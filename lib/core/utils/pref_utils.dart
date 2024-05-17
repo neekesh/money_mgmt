@@ -32,7 +32,13 @@ class PrefUtils {
     return _sharedPreferences!.setString("accessToken", value);
   }
 
+  Future<void> setNotificationID(int id) {
+    return _sharedPreferences!.setInt("notification_id", id);
+  }
+
   String? getAccessToken() => _sharedPreferences!.getString("accessToken");
+
+  int? getNotificationID() => _sharedPreferences!.getInt("notification_id");
 
   String getThemeData() {
     try {

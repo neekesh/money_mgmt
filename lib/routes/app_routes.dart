@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:money_mgmt/presentation/dashboard_page/dashboard_page.dart';
 import 'package:money_mgmt/presentation/edit_profile_screen/edit_profile_screen.dart';
 import 'package:money_mgmt/presentation/invoices_page_one_screen/invoices_page_one_screen.dart';
+import 'package:money_mgmt/presentation/notification_screen/notification_complete_page.dart';
+import 'package:money_mgmt/presentation/notification_screen/notification_list.dart';
 import 'package:money_mgmt/presentation/order_page_two_screen/order_page_two_screen.dart';
 import 'package:money_mgmt/presentation/order_payment/order_payment.dart';
 import 'package:money_mgmt/presentation/order_screen/order_screen.dart';
@@ -34,6 +36,9 @@ class AppRoutes {
   static const String dashboardPage = '/dashboard_page';
 
   static const String appNavigationScreen = '/app_navigation_screen';
+
+  static const String notificationScreen = '/app_notificaiton';
+  static const String notificationScreenSucess = '/app_notificaiton_success';
 
   static const String orderScreen = '/order_screen';
   static const String urgentDeliveryScreen = '/urgent_delivery_screen';
@@ -107,6 +112,9 @@ class AppRoutes {
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       return UrgentPayment(orderID: int.tryParse(args['orderID'].toString())!);
     },
+
+    notificationScreen: ((context) => NotificationPage()),
+    notificationScreenSucess: ((context) => NotificationSucess()),
 
     orderPageTwoScreen: (context) => OrderPageTwoScreen(),
     profileDetailsScreen: (context) => ProfileDetailsScreen(),

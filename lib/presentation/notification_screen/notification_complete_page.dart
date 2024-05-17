@@ -1,25 +1,23 @@
+import 'package:flutter/material.dart';
 import 'package:money_mgmt/core/utils/get_route.dart';
 
 import '../../core/app_export.dart';
-import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import 'notifier/order_page_two_notifier.dart';
 import '../../widgets/custom_elevated_button.dart';
-// import '../profile_invoice_page/profile_invoice_page.dart';
 
-class OrderPageTwoScreen extends ConsumerStatefulWidget {
-  const OrderPageTwoScreen({Key? key})
+class NotificationSucess extends ConsumerStatefulWidget {
+  const NotificationSucess({Key? key})
       : super(
           key: key,
         );
 
   @override
-  OrderPageTwoScreenState createState() => OrderPageTwoScreenState();
+  NotificationSucessState createState() => NotificationSucessState();
 }
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
-class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
+class NotificationSucessState extends ConsumerState<NotificationSucess> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
@@ -58,7 +56,8 @@ class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Color(0xD94B984D), // First color
+                                Color.fromARGB(
+                                    217, 229, 247, 93), // First color
                                 Color(0x66D9D9D9), // Second color
                               ],
                               stops: [0.0, 0.81], // Stop positions
@@ -75,24 +74,23 @@ class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgFlowerDelivery,
-                                height: 170.v,
-                                width: 393.h,
-                                color: Color(0xD94B984D),
+                              Icon(
+                                Icons.notifications,
+                                color: Color.fromARGB(217, 11, 55, 24),
+                                size: 115.v,
                               ),
                               SizedBox(height: 113.v),
                               Container(
                                 width: 316.h,
                                 margin: EdgeInsets.symmetric(horizontal: 38.h),
                                 child: Text(
-                                  "Thank you for creating your order".tr,
+                                  "SHIPPED *".tr,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                   style:
                                       theme.textTheme.headlineSmall!.copyWith(
-                                    color: Colors.black,
+                                    color: appTheme.green600,
                                   ),
                                 ),
                               ),

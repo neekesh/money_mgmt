@@ -1,3 +1,5 @@
+import 'package:money_mgmt/core/utils/get_route.dart';
+
 import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_bar.dart';
@@ -149,32 +151,5 @@ class UrgentDeliveryPageTwoScreenState
         NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
-  }
-
-  ///Handling route based on bottom click actions
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Homepage:
-        return AppRoutes.urgentDeliveryPageOnePage;
-      case BottomBarEnum.Sms:
-        return "/";
-      case BottomBarEnum.Maleuser:
-        return AppRoutes.profileDetailsScreen;
-      default:
-        return "/";
-    }
-  }
-
-  ///Handling page based on route
-  Widget getCurrentPage(
-    BuildContext context,
-    String currentRoute,
-  ) {
-    switch (currentRoute) {
-      case AppRoutes.urgentDeliveryPageOnePage:
-        return UrgentDeliveryPageOnePage();
-      default:
-        return DefaultWidget();
-    }
   }
 }

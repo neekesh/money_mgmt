@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
 
 import '../core/app_export.dart';
 import 'package:flutter/material.dart';
@@ -7,15 +8,12 @@ enum BottomBarEnum { Homepage, Sms, Maleuser }
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
-class CustomBottomBar extends StatefulWidget {
+class CustomBottomBar extends ConsumerStatefulWidget {
   CustomBottomBar({
     this.onChanged,
-    this.isNotificationEnabled = false,
   });
 
   Function(BottomBarEnum)? onChanged;
-
-  bool? isNotificationEnabled;
 
   @override
   CustomBottomBarState createState() => CustomBottomBarState();
@@ -23,7 +21,7 @@ class CustomBottomBar extends StatefulWidget {
 // ignore_for_file: must_be_immutable
 
 // ignore_for_file: must_be_immutable
-class CustomBottomBarState extends State<CustomBottomBar> {
+class CustomBottomBarState extends ConsumerState<CustomBottomBar> {
   int selectedIndex = 0;
 
   List<BottomMenuModel> bottomMenuList = [
@@ -54,85 +52,98 @@ class CustomBottomBarState extends State<CustomBottomBar> {
           30.h,
         ),
       ),
-      child: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedFontSize: 0,
-        elevation: 0,
-        currentIndex: selectedIndex,
-        type: BottomNavigationBarType.fixed,
-        items: List.generate(bottomMenuList.length, (index) {
-          return BottomNavigationBarItem(
-            icon: bottomMenuList[index].iconData != null
-                ? Stack(
-                    children: [
-                      Icon(
-                        bottomMenuList[index].iconData,
-                        size: 40,
-                        color: Colors.black,
-                      ),
-                      bottomMenuList[index].iconData ==
-                                  Icons.notification_important_outlined &&
-                              widget.isNotificationEnabled!
-                          ? Positioned(
-                              right: 0,
-                              child: Container(
-                                height: 12,
-                                width: 12,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            )
-                          : SizedBox()
-                    ],
-                  )
-                : CustomImageView(
-                    imagePath: bottomMenuList[index].icon,
-                    height: 50.v,
-                    width: 40.h,
-                  ),
-            activeIcon: bottomMenuList[index].iconData != null
-                ? Stack(
-                    children: [
-                      Icon(
-                        bottomMenuList[index].iconData,
-                        size: 40,
-                        color: Colors.black,
-                      ),
-                      bottomMenuList[index].iconData ==
-                                  Icons.notification_important_outlined &&
-                              widget.isNotificationEnabled!
-                          ? Positioned(
-                              right: 0,
-                              child: Container(
-                                height: 12,
-                                width: 12,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            )
-                          : SizedBox()
-                    ],
-                  )
-                : CustomImageView(
-                    imagePath: bottomMenuList[index].activeIcon,
-                    height: 50.v,
-                    width: 40.h,
-                  ),
-            label: '',
-          );
-        }),
-        onTap: (index) {
-          selectedIndex = index;
-          widget.onChanged?.call(bottomMenuList[index].type);
-          setState(() {});
-        },
-      ),
+      child: ValueListenableBuilder<Object>(
+          valueListenable:
+              ref.watch(invoicesPageOneNotifier).notificationStatus!,
+          builder: (context, notificationValue, snapshot) {
+            return BottomNavigationBar(
+              backgroundColor: Colors.transparent,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              selectedFontSize: 0,
+              elevation: 0,
+              currentIndex: selectedIndex,
+              type: BottomNavigationBarType.fixed,
+              items: List.generate(bottomMenuList.length, (index) {
+                return BottomNavigationBarItem(
+                  icon: bottomMenuList[index].iconData != null
+                      ? Stack(
+                          children: [
+                            Icon(
+                              bottomMenuList[index].iconData,
+                              size: 40,
+                              color: Colors.black,
+                            ),
+                            bottomMenuList[index].iconData ==
+                                        Icons.notification_important_outlined &&
+                                    ref
+                                            .watch(invoicesPageOneNotifier)
+                                            .notificationStatus!
+                                            .value["status"] ==
+                                        "unseen"
+                                ? Positioned(
+                                    right: 0,
+                                    child: Container(
+                                      height: 12,
+                                      width: 12,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox()
+                          ],
+                        )
+                      : CustomImageView(
+                          imagePath: bottomMenuList[index].icon,
+                          height: 50.v,
+                          width: 40.h,
+                        ),
+                  activeIcon: bottomMenuList[index].iconData != null
+                      ? Stack(
+                          children: [
+                            Icon(
+                              bottomMenuList[index].iconData,
+                              size: 40,
+                              color: Colors.black,
+                            ),
+                            bottomMenuList[index].iconData ==
+                                        Icons.notification_important_outlined &&
+                                    ref
+                                            .watch(invoicesPageOneNotifier)
+                                            .notificationStatus!
+                                            .value["status"] ==
+                                        "unseen"
+                                ? Positioned(
+                                    right: 0,
+                                    child: Container(
+                                      height: 12,
+                                      width: 12,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox()
+                          ],
+                        )
+                      : CustomImageView(
+                          imagePath: bottomMenuList[index].activeIcon,
+                          height: 50.v,
+                          width: 40.h,
+                        ),
+                  label: '',
+                );
+              }),
+              onTap: (index) {
+                selectedIndex = index;
+                widget.onChanged?.call(bottomMenuList[index].type);
+                setState(() {});
+              },
+            );
+          }),
     );
   }
 }

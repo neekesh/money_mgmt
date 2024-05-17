@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:money_mgmt/core/utils/get_route.dart';
 import 'package:money_mgmt/core/utils/navigator_service.dart';
+import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
 import 'package:money_mgmt/widgets/custom_bottom_bar.dart';
 
 import '../../core/app_export.dart';
@@ -19,6 +21,12 @@ class DashboardPage extends ConsumerStatefulWidget {
 
 class DashboardPageState extends ConsumerState<DashboardPage> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  @override
+  void initState() {
+    ref.read(invoicesPageOneNotifier.notifier).latestNotification(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -144,69 +152,69 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
   Widget _buildBottomBar(BuildContext context) {
     return Consumer(builder: (context, ref, _) {
       return CustomBottomBar(
-        isNotificationEnabled: ref
-            .watch(dashboardNotifier)
-            .dashboardModelObj!
-            .isNotificationEnabled,
         onChanged: (BottomBarEnum type) {
           if (type == BottomBarEnum.Sms) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: Color(0xE6D9D9D9),
-                  surfaceTintColor: Color(0xE6D9D9D9),
-                  title: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 8.0,
-                          right: 8.0,
-                        ),
-                        child: GestureDetector(
-                          onTap: () => {
-                            ref
-                                .read(dashboardNotifier.notifier)
-                                .handleNotificationState(),
-                            Navigator.pop(context),
-                          },
-                          child: Icon(
-                            Icons.close,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  titlePadding: EdgeInsets.zero,
-                  contentPadding: EdgeInsets.zero,
-                  content: Container(
-                    width: SizeUtils.width - 50,
-                    height: 300.v,
-                    child: Center(
-                      child: Text(
-                        "Your Order has been shipped, expect your delivery.",
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.headlineMedium!.copyWith(
-                          fontSize: 21,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xCC000000),
-                        ),
-                      ),
-                    ),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(0),
-                    ),
-                  ),
-                );
-              },
-            );
-            return;
+            ref.read(invoicesPageOneNotifier).notificationStatus!.value = {
+              "id": PrefUtils().getNotificationID(),
+              "status": "seen",
+            };
+            // showDialog(
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return AlertDialog(
+            //       backgroundColor: Color(0xE6D9D9D9),
+            //       surfaceTintColor: Color(0xE6D9D9D9),
+            //       title: Row(
+            //         mainAxisSize: MainAxisSize.min,
+            //         mainAxisAlignment: MainAxisAlignment.end,
+            //         children: [
+            //           Padding(
+            //             padding: const EdgeInsets.only(
+            //               top: 8.0,
+            //               right: 8.0,
+            //             ),
+            //             child: GestureDetector(
+            //               onTap: () => {
+            //                 ref
+            //                     .read(dashboardNotifier.notifier)
+            //                     .handleNotificationState(),
+            //                 Navigator.pop(context),
+            //               },
+            //               child: Icon(
+            //                 Icons.close,
+            //                 size: 25,
+            //               ),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       titlePadding: EdgeInsets.zero,
+            //       contentPadding: EdgeInsets.zero,
+            //       content: Container(
+            //         width: SizeUtils.width - 50,
+            //         height: 300.v,
+            //         child: Center(
+            //           child: Text(
+            //             "Your Order has been shipped, expect your delivery.",
+            //             textAlign: TextAlign.center,
+            //             style: theme.textTheme.headlineMedium!.copyWith(
+            //               fontSize: 21,
+            //               fontWeight: FontWeight.bold,
+            //               color: Color(0xCC000000),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.all(
+            //           Radius.circular(0),
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // );
           }
+
           NavigatorService.pushNamed(getCurrentRoute(type));
         },
       );
@@ -214,16 +222,4 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
   }
 
   ///Handling route based on bottom click actions
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Homepage:
-        return AppRoutes.dashboardPage;
-      case BottomBarEnum.Sms:
-        return "/";
-      case BottomBarEnum.Maleuser:
-        return AppRoutes.profileDetailsScreen;
-      default:
-        return "/";
-    }
-  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_mgmt/core/utils/get_route.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../urgent_delivery_page_one_page/urgent_delivery_page_one_page.dart';
@@ -61,20 +62,6 @@ class UrgentDeliveryPageOneContainerScreenState
         NavigatorService.pushNamed(getCurrentRoute(type));
       },
     );
-  }
-
-  ///Handling route based on bottom click actions
-  String getCurrentRoute(BottomBarEnum type) {
-    switch (type) {
-      case BottomBarEnum.Homepage:
-        return AppRoutes.urgentDeliveryPageOnePage;
-      case BottomBarEnum.Sms:
-        return "/";
-      case BottomBarEnum.Maleuser:
-        return AppRoutes.profileDetailsScreen;
-      default:
-        return "/";
-    }
   }
 
   ///Handling page based on route
