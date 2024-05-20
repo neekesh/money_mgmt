@@ -176,11 +176,4 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
       ),
     );
   }
-
-  /// Navigates to the loginScreen when the action is triggered.
-  onTapLogin() {
-    NavigatorService.pushNamed(
-      AppRoutes.dashboardPage,
-    );
-  }
 }

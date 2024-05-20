@@ -49,11 +49,8 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   /// signin api integration
   Future<void> onSingIn(BuildContext context) async {
-    NavigatorService.pushNamed(
-      AppRoutes.dashboardPage,
-    );
-
     if (isFormValidated()) {
+      print("testet test");
       Map<String, dynamic> user = {
         "email": state.usernameCtrl!.text,
         "password": state.passwordCtrl!.text

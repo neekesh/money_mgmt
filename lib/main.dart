@@ -27,7 +27,9 @@ class MyApp extends ConsumerWidget {
   ) {
     final themeType = ref.watch(themeNotifier).themeType;
     final authToken = ref.watch(loginNotifier.notifier).authToken();
+
     debugLog(message: "token $authToken");
+
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
