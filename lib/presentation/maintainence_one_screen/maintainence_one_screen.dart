@@ -1,10 +1,9 @@
-import 'package:money_mgmt/core/utils/get_route.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:oll2u/core/utils/get_route.dart';
 
 import '../../core/app_export.dart';
-import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import '../dashboard_page/dashboard_page.dart';
-import './notifier/maintenance_one_notifier.dart';
 import '../../widgets/custom_elevated_button.dart';
 
 class MaintenanceOneScreen extends ConsumerStatefulWidget {
@@ -41,7 +40,7 @@ class MaintenanceOneScreenState extends ConsumerState<MaintenanceOneScreen> {
           child: SizedBox(
             child: Column(
               children: [
-                SizedBox(height: 13.v),
+                SizedBox(height: 36.v),
                 CustomImageView(
                   imagePath: ImageConstant.imgLogo,
                   height: 146.v,
@@ -74,12 +73,13 @@ class MaintenanceOneScreenState extends ConsumerState<MaintenanceOneScreen> {
                         width: 393.h,
                         color: Color.fromARGB(255, 168, 165, 60),
                       ),
-                      SizedBox(height: 66.v),
-                      SizedBox(
-                        width: 206.h,
+                      SizedBox(height: 67.v),
+                      Container(
+                        width: SizeUtils.width,
+                        padding: EdgeInsets.symmetric(horizontal: 20.h),
                         child: Text(
-                          "Thank you for ordering".tr,
-                          maxLines: 2,
+                          "Thank you for requesting for Maintenance",
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.headlineSmall,
@@ -112,7 +112,8 @@ class MaintenanceOneScreenState extends ConsumerState<MaintenanceOneScreen> {
                         ),
                         onPressed: () {
                           NavigatorService.pushNamedAndRemoveUntil(
-                              AppRoutes.dashboardPage);
+                            AppRoutes.entryScreen,
+                          );
                         },
                       ),
                     ],
@@ -122,29 +123,7 @@ class MaintenanceOneScreenState extends ConsumerState<MaintenanceOneScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBar(context),
-        ),
       ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildBottomBar(BuildContext context) {
-    return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {
-        NavigatorService.pushNamed(getCurrentRoute(type, BottomBarEnum.none));
-      },
-    );
-  }
-
-  ///Handling route based on bottom click actions
-
-  /// Navigates to the dashboardPage when the action is triggered.
-  onTapBackto(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.dashboardPage,
     );
   }
 }

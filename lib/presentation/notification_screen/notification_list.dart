@@ -1,8 +1,11 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_mgmt/core/app_export.dart';
-import 'package:money_mgmt/widgets/custom_elevated_button.dart';
+import 'package:oll2u/core/app_export.dart';
+import 'package:oll2u/core/utils/get_route.dart';
+import 'package:oll2u/widgets/custom_elevated_button.dart';
 
+import '../../widgets/custom_bottom_bar.dart';
 import '../invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
 
 class NotificationPage extends ConsumerStatefulWidget {
@@ -15,12 +18,6 @@ class NotificationPage extends ConsumerStatefulWidget {
 class NotificationPageState extends ConsumerState<NotificationPage> {
   @override
   void initState() {
-    // if (mounted) {
-    // ref.read(invoicesPageOneNotifier).notificationStatus!.value = {
-    //   "id": PrefUtils().getNotificationID(),
-    //   "status": "seen",
-    // };
-    // }
     super.initState();
   }
 
@@ -92,6 +89,9 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
                                   ),
                                   child: ListView.builder(
                                     itemCount: data.length,
+                                    padding: EdgeInsets.only(
+                                      bottom: 70,
+                                    ),
                                     itemBuilder: (context, index) {
                                       Map<String, dynamic> items = data[index];
                                       String orderDate =
@@ -128,7 +128,7 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Status: ${items["status"].toString().toUpperCase()}",
+                                                  "Status: ${items["order_status"].toString().toUpperCase()}",
                                                   style: theme
                                                       .textTheme.titleLarge!
                                                       .copyWith(
@@ -136,7 +136,8 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
                                                     fontSize: 16.fSize,
                                                   ),
                                                 ),
-                                                items["status"] != "processing"
+                                                items["order_status"] !=
+                                                        "processing"
                                                     ? SizedBox()
                                                     : CustomElevatedButton(
                                                         width: 120.h,
@@ -174,9 +175,10 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  items["status"] == "pending"
+                                                  items["order_status"] ==
+                                                          "pending"
                                                       ? "The order is Pending"
-                                                      : "The order has been ${items["status"].toString().toUpperCase()}",
+                                                      : "The order has been ${items["order_status"].toString().toUpperCase()}",
                                                   style: theme
                                                       .textTheme.titleLarge!
                                                       .copyWith(
@@ -218,6 +220,17 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildBottomBar(BuildContext context) {
+    return CustomBottomBar(
+      onChanged: (BottomBarEnum type) {
+        if (type == BottomBarEnum.Sms) {
+          return;
+        }
+        NavigatorService.pushNamed(getCurrentRoute(type, BottomBarEnum.Sms));
+      },
     );
   }
 

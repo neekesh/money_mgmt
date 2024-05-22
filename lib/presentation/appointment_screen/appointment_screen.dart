@@ -109,10 +109,6 @@ class AppointmentScreenState extends ConsumerState<AppointmentScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBar(context),
-        ),
       ),
     );
   }

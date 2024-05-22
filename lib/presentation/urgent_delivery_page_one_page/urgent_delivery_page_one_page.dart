@@ -2,9 +2,9 @@ import 'package:date_field/date_field.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_mgmt/core/network/apis.dart';
-import 'package:money_mgmt/core/network/logger.dart';
-import 'package:money_mgmt/core/utils/flash_message.dart';
+import 'package:oll2u/core/network/apis.dart';
+import 'package:oll2u/core/network/logger.dart';
+import 'package:oll2u/core/utils/flash_message.dart';
 
 import '../../core/app_export.dart';
 import '../../core/network/api_s.dart';
@@ -74,7 +74,7 @@ class UrgentDeliveryPageOnePageState
                 decoration: AppDecoration.gradientGrayEToGrayE,
                 child: Column(
                   children: [
-                    SizedBox(height: 13.v),
+                    SizedBox(height: 60.v),
                     Expanded(
                       child: Column(
                         children: [
@@ -405,6 +405,9 @@ class UrgentDeliveryPageOnePageState
       return "Quantity is required";
     }
     if (int.tryParse(value)! < 1) {
+      return "Invalid quantity";
+    }
+    if (value.length > 3) {
       return "Invalid quantity";
     }
     return null;

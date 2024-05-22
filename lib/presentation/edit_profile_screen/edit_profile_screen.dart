@@ -70,7 +70,7 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         resizeToAvoidBottomInset: false,
         body: Container(
           width: SizeUtils.width,
-          height: SizeUtils.height,
+          height: SizeUtils.height * 1.2,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment(0.5, 0),
@@ -397,7 +397,7 @@ class EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         if (request.statusCode == 200 || request.statusCode == 201) {
           showSuccess("Profile Updated successful!!", context);
 
-          NavigatorService.pushNamedAndRemoveUntil(AppRoutes.dashboardPage);
+          NavigatorService.pushNamedAndRemoveUntil(AppRoutes.entryScreen);
         }
       } on Exception catch (e) {
         if (e is DioException) {

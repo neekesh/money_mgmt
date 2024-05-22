@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:money_mgmt/core/network/apis.dart';
-import 'package:money_mgmt/core/network/logger.dart';
-import 'package:money_mgmt/core/utils/get_route.dart';
+import 'package:oll2u/core/network/apis.dart';
+import 'package:oll2u/core/network/logger.dart';
+import 'package:oll2u/core/utils/get_route.dart';
 
 import '../../core/app_export.dart';
 import '../../core/network/api_s.dart';
@@ -216,10 +216,10 @@ class InvoicesPageOneScreenState extends ConsumerState<InvoicesPageOneScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBar(context),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.only(right: 4.h),
+        //   child: _buildBottomBar(context),
+        // ),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_mgmt/core/utils/get_route.dart';
-import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
-import 'package:money_mgmt/presentation/profile_details_screen/notifier/profile_details_notifier.dart';
+import 'package:oll2u/core/utils/get_route.dart';
+import 'package:oll2u/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
+import 'package:oll2u/presentation/profile_details_screen/notifier/profile_details_notifier.dart';
 
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
@@ -107,11 +107,14 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
                       padding: EdgeInsets.only(left: 23.h),
                       child: CustomElevatedButton(
                         height: 28.v,
-                        width: 110.v,
+                        width: 100.v,
                         text: "Logout".tr,
                         buttonStyle: CustomButtonStyles.outlinePrimaryTL14,
-                        buttonTextStyle:
-                            CustomTextStyles.titleSmallOnErrorSemiBold,
+                        buttonTextStyle: theme.textTheme.titleSmall!.copyWith(
+                          color: theme.colorScheme.onError,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.fSize,
+                        ),
                         onPressed: () {
                           PrefUtils().clearPreferencesData();
                           NavigatorService.pushNamedAndRemoveUntil(
@@ -184,7 +187,6 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
               ),
             ),
           ),
-          bottomNavigationBar: _buildBottomBar(context),
         ),
       ),
     );
@@ -661,6 +663,9 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
   Widget _buildBottomBar(BuildContext context) {
     return CustomBottomBar(
       onChanged: (BottomBarEnum type) {
+        if (BottomBarEnum.Maleuser == type) {
+          return;
+        }
         NavigatorService.pushNamed(
           getCurrentRoute(
             type,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_mgmt/core/utils/get_route.dart';
+import 'package:oll2u/core/utils/get_route.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../urgent_delivery_page_one_page/urgent_delivery_page_one_page.dart';
@@ -47,10 +47,10 @@ class UrgentDeliveryPageOneContainerScreenState
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBarSection(context),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.only(right: 4.h),
+        //   child: _buildBottomBarSection(context),
+        // ),
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:money_mgmt/core/utils/get_route.dart';
+import 'package:oll2u/core/utils/get_route.dart';
 
 import '../../core/app_export.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +121,8 @@ class UrgentDeliveryPageTwoScreenState
                                 ),
                                 onPressed: () {
                                   NavigatorService.pushNamedAndRemoveUntil(
-                                      AppRoutes.dashboardPage);
+                                    AppRoutes.entryScreen,
+                                  );
                                 },
                               ),
                               SizedBox(height: 33.v)
@@ -136,20 +137,7 @@ class UrgentDeliveryPageTwoScreenState
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBar(context),
-        ),
       ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildBottomBar(BuildContext context) {
-    return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {
-        NavigatorService.pushNamed(getCurrentRoute(type, BottomBarEnum.none));
-      },
     );
   }
 }

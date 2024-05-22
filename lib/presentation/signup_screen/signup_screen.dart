@@ -297,10 +297,4 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
       ],
     );
   }
-
-  onTapUpdate(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.dashboardPage,
-    );
-  }
 }

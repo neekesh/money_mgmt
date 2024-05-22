@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "747311779197",
+    "firebase_url": "https://oil2u-c25aa-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "oil2u-c25aa",
+    "storage_bucket": "oil2u-c25aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747311779197:android:bdcef445f37f61c8719014",
+        "android_client_info": {
+          "package_name": "com.oll2u.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHBSRP-9uNYfWZjmxxPfFcDUT-T3S0r1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-import 'package:money_mgmt/main.dart';
+import 'package:oll2u/main.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 

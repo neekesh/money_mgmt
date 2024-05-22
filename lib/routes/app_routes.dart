@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:money_mgmt/presentation/dashboard_page/dashboard_page.dart';
-import 'package:money_mgmt/presentation/edit_profile_screen/edit_profile_screen.dart';
-import 'package:money_mgmt/presentation/invoices_page_one_screen/invoices_page_one_screen.dart';
-import 'package:money_mgmt/presentation/notification_screen/notification_complete_page.dart';
-import 'package:money_mgmt/presentation/notification_screen/notification_list.dart';
-import 'package:money_mgmt/presentation/order_page_two_screen/order_page_two_screen.dart';
-import 'package:money_mgmt/presentation/order_payment/order_payment.dart';
-import 'package:money_mgmt/presentation/order_screen/order_screen.dart';
-import 'package:money_mgmt/presentation/profile_details_screen/profile_details_screen.dart';
-import 'package:money_mgmt/presentation/urgent_delivery_page_one_container_screen/urgent_delivery_page_one_container_screen.dart';
-import 'package:money_mgmt/presentation/urgent_delivery_page_two_screen/urgent_delivery_page_two_screen.dart';
-import 'package:money_mgmt/presentation/urgent_payment/urgent_payment.dart';
+import 'package:oll2u/presentation/dashboard_page/dashboard_page.dart';
+import 'package:oll2u/presentation/edit_profile_screen/edit_profile_screen.dart';
+import 'package:oll2u/presentation/entry_page/entry_page.dart';
+import 'package:oll2u/presentation/invoices_page_one_screen/invoices_page_one_screen.dart';
+import 'package:oll2u/presentation/notification_screen/notification_complete_page.dart';
+import 'package:oll2u/presentation/notification_screen/notification_list.dart';
+import 'package:oll2u/presentation/order_page_two_screen/order_page_two_screen.dart';
+import 'package:oll2u/presentation/order_payment/order_payment.dart';
+import 'package:oll2u/presentation/order_screen/order_screen.dart';
+import 'package:oll2u/presentation/profile_details_screen/profile_details_screen.dart';
+import 'package:oll2u/presentation/urgent_delivery_page_one_container_screen/urgent_delivery_page_one_container_screen.dart';
+import 'package:oll2u/presentation/urgent_delivery_page_two_screen/urgent_delivery_page_two_screen.dart';
+import 'package:oll2u/presentation/urgent_payment/urgent_payment.dart';
 
 import '../presentation/app_navigation_screen/app_navigation_screen.dart';
 import '../presentation/appointment_one_screen/appointment_one_screen.dart';
@@ -78,6 +79,7 @@ class AppRoutes {
   static const String initialRoute = '/initialRoute';
   static const String orderPayment = '/order_payment';
   static const String urgentPayment = '/urgent_payment';
+  static const String entryScreen = '/entry_screen';
 
   static Map<String, WidgetBuilder> routes = {
     getStartedPageScreen: (context) => GetStartedPageScreen(),
@@ -91,6 +93,7 @@ class AppRoutes {
     maintainenceScreen: (context) => MaintenanceScreen(),
     appointmentOneScreen: (context) => AppointmentOneScreen(),
     maintainenceOneScreen: (context) => MaintenanceOneScreen(),
+    entryScreen: (context) => EntryPage(),
     urgentDeliveryPageOneContainerScreen: (context) =>
         UrgentDeliveryPageOneContainerScreen(),
     urgentDeliveryPageTwoScreen: (context) => UrgentDeliveryPageTwoScreen(),

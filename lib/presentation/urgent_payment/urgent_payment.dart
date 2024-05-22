@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:money_mgmt/core/network/api_s.dart';
-import 'package:money_mgmt/core/network/logger.dart';
-import 'package:money_mgmt/core/utils/flash_message.dart';
-import 'package:money_mgmt/core/utils/get_route.dart';
-import 'package:money_mgmt/widgets/custom_text_form_field.dart';
+import 'package:oll2u/core/network/api_s.dart';
+import 'package:oll2u/core/network/logger.dart';
+import 'package:oll2u/core/utils/flash_message.dart';
+import 'package:oll2u/core/utils/get_route.dart';
+import 'package:oll2u/widgets/custom_text_form_field.dart';
 
 import '../../core/app_export.dart';
 import '../../core/network/apis.dart';
@@ -487,10 +487,10 @@ class UrgentPaymentState extends ConsumerState<UrgentPayment> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBarSection(context),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.only(right: 4.h),
+        //   child: _buildBottomBarSection(context),
+        // ),
       ),
     );
   }

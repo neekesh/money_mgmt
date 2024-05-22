@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
-import 'package:money_mgmt/core/network/logger.dart';
+import 'package:oll2u/core/network/logger.dart';
 import '../../../core/app_export.dart';
 import '../../../core/network/api_s.dart';
 import '../../../core/network/apis.dart';
@@ -61,13 +61,9 @@ class LoginNotifier extends StateNotifier<LoginState> {
         final request = await dio.post(APIs.login, data: user);
         if (request.statusCode == 200) {
           state.isLoading = false;
-          showSuccess("Login successful!!", context);
-          debugLog(message: request.data['access']);
           PrefUtils().setAccessToken(request.data['access']);
-
-          NavigatorService.pushNamed(
-            AppRoutes.dashboardPage,
-          );
+          debugLog(message: request.data['access']);
+          await getProfile(context, request.data['access']);
         }
       } on Exception catch (e) {
         if (e is DioException) {
@@ -80,4 +76,30 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   String? authToken() => PrefUtils().getAccessToken();
+
+  Future<void> getProfile(BuildContext context, String token) async {
+    Map<String, dynamic> userData = {};
+    try {
+      final request = await dio.get(APIs.getUser);
+      if (request.statusCode == 200 || request.statusCode == 201) {
+        userData = request.data as Map<String, dynamic>;
+        showSuccess("Login successful!!", context);
+
+        state.passwordCtrl!.clear();
+        state.usernameCtrl!.clear();
+        PrefUtils().setAddress(userData["address"]);
+        PrefUtils().setEmail(userData["email"]);
+        PrefUtils().setPhoneNumber(userData["phone_number"]);
+        NavigatorService.pushNamedAndRemoveUntil(
+          AppRoutes.entryScreen,
+        );
+      }
+    } on Exception catch (e) {
+      PrefUtils().clearPreferencesData();
+      if (e is DioException) {
+        showError("${e.response?.data ?? "Login Failed details!!"}", context);
+      }
+      showError("error occurred:$e", context);
+    }
+  }
 }

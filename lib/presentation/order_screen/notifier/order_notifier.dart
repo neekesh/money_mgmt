@@ -1,14 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:intl/intl.dart';
-import 'package:money_mgmt/core/network/logger.dart';
-
-import '../../../core/network/api_s.dart';
-import '../../../core/network/apis.dart';
-import '../../../core/utils/flash_message.dart';
-import '../models/order_model.dart';
-import 'package:flutter/material.dart';
-import '../../../core/app_export.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:oll2u/core/network/logger.dart';
+
+import '../../../core/app_export.dart';
+import '../models/order_model.dart';
 
 part 'order_state.dart';
 
@@ -35,6 +31,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
     state.addressCtrl!.text = PrefUtils().getAddress() ?? "";
     state.emailSectionController!.text = PrefUtils().getEmail() ?? "";
     state.phoneNumberSectionController!.text = PrefUtils().getPhone() ?? "";
+    state.frequencyCtrl = "weekly";
   }
 
   validateEmail(String? value) {
@@ -79,6 +76,9 @@ class OrderNotifier extends StateNotifier<OrderState> {
     if (int.tryParse(value)! < 1) {
       return "Invalid duration";
     }
+    if (value.length > 3) {
+      return "Invalid duration";
+    }
     return null;
   }
 
@@ -101,6 +101,9 @@ class OrderNotifier extends StateNotifier<OrderState> {
       return "Quantity is required";
     }
     if (int.tryParse(value)! < 1) {
+      return "Invalid quantity";
+    }
+    if (value.length > 3) {
       return "Invalid quantity";
     }
     return null;

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:money_mgmt/core/network/data_logger.dart';
-import 'package:money_mgmt/core/network/interceptors.dart';
+import 'package:oll2u/core/network/data_logger.dart';
+import 'package:oll2u/core/network/interceptors.dart';
 
 import '../../config.dart';
 

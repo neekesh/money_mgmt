@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:money_mgmt/core/network/api_s.dart';
-import 'package:money_mgmt/core/network/logger.dart';
-import 'package:money_mgmt/core/utils/flash_message.dart';
-import 'package:money_mgmt/core/utils/space_card.dart';
-import 'package:money_mgmt/widgets/custom_text_form_field.dart';
+import 'package:oll2u/core/network/api_s.dart';
+import 'package:oll2u/core/network/logger.dart';
+import 'package:oll2u/core/utils/flash_message.dart';
+import 'package:oll2u/core/utils/space_card.dart';
+import 'package:oll2u/presentation/order_screen/notifier/order_notifier.dart';
+import 'package:oll2u/widgets/custom_text_form_field.dart';
 
 import '../../core/app_export.dart';
 import '../../core/network/apis.dart';
@@ -492,10 +493,10 @@ class OrderPaymentState extends ConsumerState<OrderPayment> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBarSection(context),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.only(right: 4.h),
+        //   child: _buildBottomBarSection(context),
+        // ),
       ),
     );
   }
@@ -568,6 +569,7 @@ class OrderPaymentState extends ConsumerState<OrderPayment> {
           NavigatorService.pushNamed(
             AppRoutes.orderPageTwoScreen,
           );
+          ref.read(orderNotifier.notifier).clearForm();
         }
       } on Exception catch (e) {
         if (e is DioException) {

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:money_mgmt/core/network/api_s.dart';
+import 'package:oll2u/core/network/api_s.dart';
 import '../../../core/app_export.dart';
 import 'package:equatable/equatable.dart';
 import '../../../core/network/apis.dart';
@@ -34,9 +34,9 @@ class ProfileDetailsNotifier extends StateNotifier<ProfileDetailsState> {
           "username": "${userData["first_name"] + userData["last_name"]}",
           "company": "${userData["company_name"]}"
         };
-        PrefUtils().setAddress(userData["address"]);
-        PrefUtils().setEmail(userData["email"]);
-        PrefUtils().setPhoneNumber(userData["phone_number"]);
+        // PrefUtils().setAddress(userData["address"]);
+        // PrefUtils().setEmail(userData["email"]);
+        // PrefUtils().setPhoneNumber(userData["phone_number"]);
       }
     } on Exception catch (e) {
       if (e is DioException) {

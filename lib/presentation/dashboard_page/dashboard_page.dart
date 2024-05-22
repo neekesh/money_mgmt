@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:money_mgmt/core/utils/get_route.dart';
-import 'package:money_mgmt/core/utils/navigator_service.dart';
-import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
-import 'package:money_mgmt/presentation/profile_details_screen/notifier/profile_details_notifier.dart';
-import 'package:money_mgmt/widgets/custom_bottom_bar.dart';
+import 'package:oll2u/core/utils/get_route.dart';
+import 'package:oll2u/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
+import 'package:oll2u/widgets/custom_bottom_bar.dart';
 
 import '../../core/app_export.dart';
 import 'models/gridordertext_item_model.dart';
@@ -26,10 +22,12 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   // StreamSubscription? _streamSubscription;
 
+  static const routeName = "/dashbaord";
+
   @override
   void initState() {
     //_startFetchingNotifications();
-    setProfile();
+
     super.initState();
   }
 
@@ -39,10 +37,6 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
   //
   // ref.read(invoicesPageOneNotifier.notifier).latestNotification(context));
   // }
-
-  void setProfile() {
-    ref.read(profileDetailsNotifier.notifier).getProfile(context);
-  }
 
   @override
   void dispose() {
@@ -88,10 +82,10 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
             ],
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBar(context),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.only(right: 4.h),
+        //   child: _buildBottomBar(context),
+        // ),
       ),
     );
   }
@@ -236,6 +230,9 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
             //     );
             //   },
             // );
+          }
+          if (BottomBarEnum.Homepage == type) {
+            return;
           }
 
           NavigatorService.pushNamed(

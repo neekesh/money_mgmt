@@ -1,4 +1,4 @@
-package com.nikeshsapplication.app
+package com.oll2u.app
 
 import io.flutter.embedding.android.FlutterActivity
 

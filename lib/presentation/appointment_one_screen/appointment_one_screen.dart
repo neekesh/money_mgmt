@@ -1,11 +1,10 @@
-import 'package:money_mgmt/core/utils/get_route.dart';
+import 'package:flutter/material.dart';
+import 'package:oll2u/core/utils/get_route.dart';
 
 import '../../core/app_export.dart';
-import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import '../dashboard_page/dashboard_page.dart';
-import 'notifier/appointment_one_notifier.dart';
 import '../../widgets/custom_elevated_button.dart';
+import '../dashboard_page/dashboard_page.dart';
 
 class AppointmentOneScreen extends ConsumerStatefulWidget {
   const AppointmentOneScreen({Key? key})
@@ -89,10 +88,6 @@ class AppointmentOneScreenState extends ConsumerState<AppointmentOneScreen> {
               ],
             ),
           ),
-        ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBar(context),
         ),
       ),
     );

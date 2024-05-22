@@ -1,7 +1,7 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_mgmt/core/utils/get_route.dart';
+import 'package:oll2u/core/utils/get_route.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
@@ -50,7 +50,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
           scrollDirection: Axis.vertical,
           child: Container(
             width: SizeUtils.width,
-            height: SizeUtils.height * 1.2,
+            height: SizeUtils.height * 1.4,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment(0.5, 0),
@@ -69,7 +69,7 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
                       height: 146.v,
                       width: 333.h,
                     ),
-                    SizedBox(height: 44.v),
+                    SizedBox(height: 100.v),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 30.h),
                       decoration: BoxDecoration(
@@ -154,10 +154,10 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBar(context),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.only(right: 4.h),
+        //   child: _buildBottomBar(context),
+        // ),
       ),
     );
   }
@@ -248,6 +248,8 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
             width: 282.h,
             maxLines: 3,
             contentPadding: EdgeInsets.all(6),
+            validator: (value) =>
+                ref.watch(maintenanceNotifier.notifier).validateMessage(value),
             controller: ref.watch(maintenanceNotifier).messageTextController,
           ),
         ],

@@ -1,6 +1,8 @@
-import 'package:money_mgmt/core/network/apis.dart';
-import 'package:money_mgmt/core/network/logger.dart';
-import 'package:money_mgmt/presentation/login_screen/notifier/login_notifier.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:oll2u/core/network/apis.dart';
+import 'package:oll2u/core/network/logger.dart';
+import 'package:oll2u/presentation/login_screen/notifier/login_notifier.dart';
 
 import 'core/app_export.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+    apiKey: "AIzaSyAHBSRP-9uNYfWZjmxxPfFcDUT-T3S0r1w",
+    appId: '1:747311779197:android:bdcef445f37f61c8719014',
+    messagingSenderId: '747311779197',
+    projectId: 'oil2u-c25aa',
+    storageBucket: "oil2u-c25aa.appspot.com",
+    databaseURL:
+        "https://oil2u-c25aa-default-rtdb.asia-southeast1.firebasedatabase.app",
+  ));
+
   InitDio()();
   Future.wait([
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
@@ -34,7 +47,7 @@ class MyApp extends ConsumerWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           theme: theme,
-          title: 'money_mgmt',
+          title: 'oll2u',
           navigatorKey: NavigatorService.navigatorKey,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
@@ -50,7 +63,7 @@ class MyApp extends ConsumerWidget {
             )
           ],
           initialRoute: authToken != null
-              ? AppRoutes.dashboardPage
+              ? AppRoutes.entryScreen
               : AppRoutes.initialRoute,
           routes: AppRoutes.routes,
         );

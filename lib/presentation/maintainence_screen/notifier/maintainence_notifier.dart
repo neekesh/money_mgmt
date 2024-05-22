@@ -50,6 +50,13 @@ class MaintenanceNotifier extends StateNotifier<MaintenanceState> {
     return null;
   }
 
+  validateMessage(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Message is required";
+    }
+    return null;
+  }
+
   validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return "Email is required";

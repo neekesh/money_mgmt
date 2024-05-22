@@ -1,8 +1,8 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_mgmt/core/network/logger.dart';
-import 'package:money_mgmt/core/utils/get_route.dart';
+import 'package:oll2u/core/network/logger.dart';
+import 'package:oll2u/core/utils/get_route.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
@@ -60,7 +60,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
         body: SingleChildScrollView(
           child: Container(
             width: SizeUtils.width,
-            height: SizeUtils.height + 500,
+            height: SizeUtils.height + 600,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment(0.5, 0),
@@ -83,6 +83,7 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
                               height: 146.v,
                               width: 333.h,
                             ),
+                            SizedBox(height: 34.v),
                             SizedBox(height: 34.v),
                             SingleChildScrollView(
                               scrollDirection: Axis.vertical,
@@ -139,10 +140,10 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBarSection(context),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.only(right: 4.h),
+        //   child: _buildBottomBarSection(context),
+        // ),
       ),
     );
   }

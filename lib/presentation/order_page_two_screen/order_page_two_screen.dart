@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_mgmt/core/utils/get_route.dart';
+import 'package:oll2u/core/utils/get_route.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
@@ -130,7 +130,7 @@ class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
                                 ),
                                 onPressed: () {
                                   NavigatorService.pushNamedAndRemoveUntil(
-                                      AppRoutes.dashboardPage);
+                                      AppRoutes.entryScreen);
                                 },
                               ),
                               SizedBox(height: 42.v)
@@ -145,10 +145,10 @@ class OrderPageTwoScreenState extends ConsumerState<OrderPageTwoScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(right: 4.h),
-          child: _buildBottomBar(context),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.only(right: 4.h),
+        //   child: _buildBottomBar(context),
+        // ),
       ),
     );
   }
