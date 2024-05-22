@@ -182,7 +182,7 @@ class UrgentDeliveryPageOnePageState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Phone Number".tr,
+            "Quantity".tr,
             style: theme.textTheme.titleMedium!.copyWith(
               color: Colors.black,
             ),
@@ -191,11 +191,11 @@ class UrgentDeliveryPageOnePageState
           Consumer(
             builder: (context, ref, _) {
               return CustomTextFormField(
-                textInputType: TextInputType.phone,
+                textInputType: TextInputType.number,
                 width: 141.h,
                 contentPadding: EdgeInsets.all(6),
-                controller: phoneNumberCtrl,
-                validator: (value) => validatePhone(value),
+                controller: qtyCtrl,
+                validator: (value) => validateQuantity(value),
               );
             },
           ),
@@ -212,7 +212,7 @@ class UrgentDeliveryPageOnePageState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Quantity".tr,
+              "Phone Number".tr,
               style: theme.textTheme.titleMedium!.copyWith(
                 color: Colors.black,
               ),
@@ -221,11 +221,11 @@ class UrgentDeliveryPageOnePageState
             Consumer(
               builder: (context, ref, _) {
                 return CustomTextFormField(
-                  textInputType: TextInputType.number,
+                  textInputType: TextInputType.phone,
                   width: 141.h,
                   contentPadding: EdgeInsets.all(6),
-                  controller: qtyCtrl,
-                  validator: (value) => validateQuantity(value),
+                  controller: phoneNumberCtrl,
+                  validator: (value) => validatePhone(value),
                 );
               },
             ),
