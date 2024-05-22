@@ -117,11 +117,11 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
                                     SizedBox(height: 22.v),
                                     _firstFields(context),
                                     SizedBox(height: 26.v),
+                                    _buildQuanityField(context),
+                                    SizedBox(height: 26.v),
                                     _secondFields(context),
                                     SizedBox(height: 26.v),
                                     _thirdFields(context),
-                                    SizedBox(height: 26.v),
-                                    _buildQuanityField(context),
                                     SizedBox(height: 26.v),
                                     _buildCreateAnOrderSection(context),
                                     SizedBox(height: 60.v)

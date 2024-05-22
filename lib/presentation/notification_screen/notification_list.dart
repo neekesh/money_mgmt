@@ -136,7 +136,7 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
                                                     fontSize: 16.fSize,
                                                   ),
                                                 ),
-                                                items["status"] == "processing"
+                                                items["status"] != "processing"
                                                     ? SizedBox()
                                                     : CustomElevatedButton(
                                                         width: 120.h,
