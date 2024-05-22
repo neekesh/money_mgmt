@@ -34,6 +34,12 @@ class MaintenanceScreenState extends ConsumerState<MaintenanceScreen> {
   }
 
   @override
+  void initState() {
+    ref.read(maintenanceNotifier.notifier).setInitialValue();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(

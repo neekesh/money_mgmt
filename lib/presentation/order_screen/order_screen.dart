@@ -1,6 +1,5 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:money_mgmt/core/network/logger.dart';
 import 'package:money_mgmt/core/utils/get_route.dart';
@@ -9,7 +8,6 @@ import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../urgent_delivery_page_one_page/urgent_delivery_page_one_page.dart';
 import 'notifier/order_notifier.dart';
 
 class OrderScreen extends ConsumerStatefulWidget {
@@ -44,6 +42,12 @@ class OrderScreenState extends ConsumerState<OrderScreen> {
         initialDate = date;
       });
     }
+  }
+
+  @override
+  void initState() {
+    ref.read(orderNotifier.notifier).setInitialValue();
+    super.initState();
   }
 
   @override

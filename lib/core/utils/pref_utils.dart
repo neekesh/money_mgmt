@@ -36,7 +36,23 @@ class PrefUtils {
     return _sharedPreferences!.setInt("notification_id", id);
   }
 
+  Future<void> setEmail(String email) {
+    return _sharedPreferences!.setString("email", email);
+  }
+
+  Future<void> setAddress(String address) {
+    return _sharedPreferences!.setString("address", address);
+  }
+
+  Future<void> setPhoneNumber(String phone) {
+    return _sharedPreferences!.setString("phone", phone);
+  }
+
   String? getAccessToken() => _sharedPreferences!.getString("accessToken");
+
+  String? getAddress() => _sharedPreferences!.getString("address");
+  String? getPhone() => _sharedPreferences!.getString("phone");
+  String? getEmail() => _sharedPreferences!.getString("email");
 
   int? getNotificationID() => _sharedPreferences!.getInt("notification_id");
 

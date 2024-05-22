@@ -14,11 +14,13 @@ import '../../widgets/custom_elevated_button.dart';
 import '../urgent_delivery_page_one_page/urgent_delivery_page_one_page.dart';
 
 class OrderPayment extends ConsumerStatefulWidget {
-  const OrderPayment({Key? key, required this.orderID})
+  const OrderPayment({Key? key, required this.orderData})
       : super(
           key: key,
         );
-  final int orderID;
+  // final int orderID;
+
+  final Map<String, dynamic> orderData;
 
   @override
   OrderPaymentState createState() => OrderPaymentState();
@@ -471,7 +473,7 @@ class OrderPaymentState extends ConsumerState<OrderPayment> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            onPayment();
+                                            createOrder(context);
                                           },
                                         ),
                                       ],
@@ -550,10 +552,10 @@ class OrderPaymentState extends ConsumerState<OrderPayment> {
     );
   }
 
-  Future<void> onPayment() async {
+  Future<void> onPayment(int orderID) async {
     if (formKey.currentState!.validate()) {
       Map<String, dynamic> paymentData = {
-        "order_id": widget.orderID,
+        "order_id": orderID,
         "type": "scheduled"
       };
       debugLog(message: paymentData.toString());
@@ -575,6 +577,45 @@ class OrderPaymentState extends ConsumerState<OrderPayment> {
         }
         showError("error occurred:$e", context);
       }
+    }
+  }
+
+  Future<void> createOrder(BuildContext context) async {
+    // Map<String, dynamic> orderParams = {
+    //   "email": state.emailSectionController!.text,
+    //   "phone_number": state.phoneNumberSectionController!.text,
+    //   "address": state.addressCtrl!.text,
+    //   "start_date": DateFormat('yyyy-MM-dd').format(
+    //     state.startDateController ?? DateTime.now(),
+    //   ),
+    //   "frequency": state.frequencyCtrl,
+    //   "duration": int.tryParse(state.durationCtrl!.text),
+    //   "quantity": int.tryParse(state.quantityController!.text),
+    // };
+    Map<String, dynamic> orderParams = widget.orderData;
+    try {
+      final request = await dio.post(
+        APIs.createOrder,
+        data: orderParams,
+      );
+      if (request.statusCode == 200 || request.statusCode == 201) {
+        // NavigatorService.pushNamed(
+        //   AppRoutes.orderPayment,
+        //   arguments: {'orderID': request.data["id"]},
+        // );
+
+        onPayment(request.data["id"]);
+
+        // showSuccess(
+        //     "Order Placed Successfully!! Please proceed payment", context);
+        //  clearForm();
+      }
+    } on Exception catch (e) {
+      if (e is DioException) {
+        showError("${e.response?.data ?? "Order creation failed!!"}", context);
+        return;
+      }
+      showError("error occurred:$e", context);
     }
   }
 }

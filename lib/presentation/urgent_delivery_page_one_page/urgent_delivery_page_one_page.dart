@@ -27,7 +27,7 @@ class UrgentDeliveryPageOnePageState
   TextEditingController phoneNumberCtrl = TextEditingController();
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController qtyCtrl = TextEditingController();
-  TextEditingController? addressCtrl = TextEditingController();
+  TextEditingController addressCtrl = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
 
   DateTime initialDate = DateTime.now();
@@ -38,6 +38,14 @@ class UrgentDeliveryPageOnePageState
         initialDate = date;
       });
     }
+  }
+
+  @override
+  void initState() {
+    phoneNumberCtrl.text = PrefUtils().getPhone() ?? "";
+    emailCtrl.text = PrefUtils().getEmail() ?? "";
+    addressCtrl.text = PrefUtils().getAddress() ?? "";
+    super.initState();
   }
 
   @override
@@ -245,33 +253,37 @@ class UrgentDeliveryPageOnePageState
       Map<String, dynamic> urgentParams = {
         "email": emailCtrl.text,
         "phone_number": phoneNumberCtrl.text,
-        "address": addressCtrl!.text,
+        "address": addressCtrl.text,
         "date": DateFormat('yyyy-MM-dd').format(initialDate),
-        "quantity": qtyCtrl.text
+        "quantity": double.tryParse(qtyCtrl.text)
       };
-      debugLog(message: urgentParams.toString());
-      try {
-        final request = await dio.post(
-          APIs.createUrgentOrder,
-          data: urgentParams,
-        );
-        if (request.statusCode == 200 || request.statusCode == 201) {
-          showSuccess(
-              "Urgent delivery Placed Successfully!! Please proceed payment",
-              context);
-        }
-        NavigatorService.pushNamed(
-          AppRoutes.urgentPayment,
-          arguments: {'orderID': request.data["id"]},
-        );
-      } on Exception catch (e) {
-        if (e is DioException) {
-          showError("${e.response?.data ?? "Urgent order creation failed!!"}",
-              context);
-          return;
-        }
-        showError("error occurred:$e", context);
-      }
+      NavigatorService.pushNamed(
+        AppRoutes.urgentPayment,
+        arguments: urgentParams,
+      );
+      // debugLog(message: urgentParams.toString());
+      // try {
+      //   final request = await dio.post(
+      //     APIs.createUrgentOrder,
+      //     data: urgentParams,
+      //   );
+      //   if (request.statusCode == 200 || request.statusCode == 201) {
+      //     showSuccess(
+      //         "Urgent delivery Placed Successfully!! Please proceed payment",
+      //         context);
+      //   }
+      //   NavigatorService.pushNamed(
+      //     AppRoutes.urgentPayment,
+      //     arguments: {'orderID': request.data["id"]},
+      //   );
+      // } on Exception catch (e) {
+      //   if (e is DioException) {
+      //     showError("${e.response?.data ?? "Urgent order creation failed!!"}",
+      //         context);
+      //     return;
+      //   }
+      //   showError("error occurred:$e", context);
+      // }
     }
   }
 

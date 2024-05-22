@@ -1,9 +1,8 @@
-import 'dart:ffi';
+import 'dart:ui';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:money_mgmt/core/network/api_s.dart';
 import 'package:money_mgmt/core/network/logger.dart';
 import 'package:money_mgmt/core/utils/flash_message.dart';
@@ -11,8 +10,6 @@ import 'package:money_mgmt/core/utils/get_route.dart';
 import 'package:money_mgmt/widgets/custom_text_form_field.dart';
 
 import '../../core/app_export.dart';
-
-import 'package:flutter/material.dart';
 import '../../core/network/apis.dart';
 import '../../core/utils/space_card.dart';
 import '../../widgets/custom_bottom_bar.dart';
@@ -20,11 +17,11 @@ import '../../widgets/custom_elevated_button.dart';
 import '../urgent_delivery_page_one_page/urgent_delivery_page_one_page.dart';
 
 class UrgentPayment extends ConsumerStatefulWidget {
-  const UrgentPayment({Key? key, required this.orderID})
+  const UrgentPayment({Key? key, required this.orderData})
       : super(
           key: key,
         );
-  final int orderID;
+  final Map<String, dynamic> orderData;
   @override
   UrgentPaymentState createState() => UrgentPaymentState();
 }
@@ -471,7 +468,7 @@ class UrgentPaymentState extends ConsumerState<UrgentPayment> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            onPayment();
+                                            onTapConfirm(context);
                                           },
                                         ),
                                       ],
@@ -519,10 +516,11 @@ class UrgentPaymentState extends ConsumerState<UrgentPayment> {
     );
   }
 
-  Future<void> onPayment() async {
+  Future<void> onPayment(int orderID) async {
+    debugLog(message: "orderID.toString() ${orderID.toString()}");
     if (formKey.currentState!.validate()) {
       Map<String, dynamic> paymentData = {
-        "order_id": widget.orderID,
+        "order_id": orderID,
         "type": "urgent"
       };
       debugLog(message: paymentData.toString());
@@ -539,6 +537,32 @@ class UrgentPaymentState extends ConsumerState<UrgentPayment> {
       } on Exception catch (e) {
         if (e is DioException) {
           showError("${e.response?.data ?? "Failed to payment!!"}", context);
+          return;
+        }
+        showError("error occurred:$e", context);
+      }
+    }
+  }
+
+  onTapConfirm(BuildContext context) async {
+    if (formKey.currentState!.validate()) {
+      Map<String, dynamic> urgentParams = widget.orderData;
+
+      try {
+        final request = await dio.post(
+          APIs.createUrgentOrder,
+          data: urgentParams,
+        );
+        debugLog(message: "statuscode ${request.statusCode}");
+        if (request.statusCode == 200 || request.statusCode == 201) {
+          debugLog(
+              message: "orderID.toString() ${request.data["id"].toString()}");
+          onPayment(int.tryParse(request.data["id"].toString()) ?? -1);
+        }
+      } on Exception catch (e) {
+        if (e is DioException) {
+          showError("${e.response?.data ?? "Urgent order creation failed!!"}",
+              context);
           return;
         }
         showError("error occurred:$e", context);

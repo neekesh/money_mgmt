@@ -34,6 +34,9 @@ class ProfileDetailsNotifier extends StateNotifier<ProfileDetailsState> {
           "username": "${userData["first_name"] + userData["last_name"]}",
           "company": "${userData["company_name"]}"
         };
+        PrefUtils().setAddress(userData["address"]);
+        PrefUtils().setEmail(userData["email"]);
+        PrefUtils().setPhoneNumber(userData["phone_number"]);
       }
     } on Exception catch (e) {
       if (e is DioException) {

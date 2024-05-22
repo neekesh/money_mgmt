@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:money_mgmt/core/utils/get_route.dart';
 import 'package:money_mgmt/core/utils/navigator_service.dart';
 import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
+import 'package:money_mgmt/presentation/profile_details_screen/notifier/profile_details_notifier.dart';
 import 'package:money_mgmt/widgets/custom_bottom_bar.dart';
 
 import '../../core/app_export.dart';
@@ -23,22 +24,29 @@ class DashboardPage extends ConsumerStatefulWidget {
 
 class DashboardPageState extends ConsumerState<DashboardPage> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  StreamSubscription? _streamSubscription;
+  // StreamSubscription? _streamSubscription;
 
   @override
   void initState() {
-    _startFetchingNotifications();
+    //_startFetchingNotifications();
+    setProfile();
     super.initState();
   }
 
-  void _startFetchingNotifications() {
-    _streamSubscription = Stream.periodic(Duration(seconds: 10)).listen((_) =>
-        ref.read(invoicesPageOneNotifier.notifier).latestNotification(context));
+  // void _startFetchingNotifications() {
+  //   _streamSubscription = Stream.periodic(Duration(seconds: 10)).listen((_) =>
+  //
+  //
+  // ref.read(invoicesPageOneNotifier.notifier).latestNotification(context));
+  // }
+
+  void setProfile() {
+    ref.read(profileDetailsNotifier.notifier).getProfile(context);
   }
 
   @override
   void dispose() {
-    _streamSubscription!.cancel();
+    // _streamSubscription!.cancel();
     super.dispose();
   }
 

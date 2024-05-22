@@ -64,6 +64,13 @@ class MaintenanceNotifier extends StateNotifier<MaintenanceState> {
   }
 
   bool isFormValidated() => state.formKey.currentState!.validate();
+
+  void setInitialValue() {
+    state.addressEditTextController!.text = PrefUtils().getAddress() ?? "";
+    state.emailEditTextController!.text = PrefUtils().getEmail() ?? "";
+    state.phoneNumberEditTextController!.text = PrefUtils().getPhone() ?? "";
+  }
+
   Future<void> createMaintenance(BuildContext context) async {
     if (isFormValidated()) {
       Map<String, dynamic> maintenanceParams = {

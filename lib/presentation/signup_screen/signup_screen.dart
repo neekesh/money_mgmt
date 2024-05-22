@@ -26,7 +26,7 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
           scrollDirection: Axis.vertical,
           child: Container(
             width: SizeUtils.width,
-            height: SizeUtils.height * 1.3,
+            height: SizeUtils.height * 1.5,
             decoration: BoxDecoration(
               color: Color.fromRGBO(226, 226, 226, 1),
             ),
@@ -45,7 +45,7 @@ class SignupScreenState extends ConsumerState<SignupScreen> {
                       child: Column(
                         children: [
                           Container(
-                            height: SizeUtils.height,
+                            height: SizeUtils.height * 1.3,
                             padding: EdgeInsets.symmetric(
                               horizontal: 79.h,
                               vertical: 35.v,

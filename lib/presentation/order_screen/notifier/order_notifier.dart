@@ -31,6 +31,12 @@ final orderNotifier = StateNotifierProvider<OrderNotifier, OrderState>(
 class OrderNotifier extends StateNotifier<OrderState> {
   OrderNotifier(OrderState state) : super(state);
 
+  void setInitialValue() {
+    state.addressCtrl!.text = PrefUtils().getAddress() ?? "";
+    state.emailSectionController!.text = PrefUtils().getEmail() ?? "";
+    state.phoneNumberSectionController!.text = PrefUtils().getPhone() ?? "";
+  }
+
   validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return "Email is required";
@@ -118,31 +124,35 @@ class OrderNotifier extends StateNotifier<OrderState> {
         "duration": int.tryParse(state.durationCtrl!.text),
         "quantity": int.tryParse(state.quantityController!.text),
       };
-      try {
-        state.isLoading = true;
-        final request = await dio.post(
-          APIs.createOrder,
-          data: orderParams,
-        );
-        if (request.statusCode == 200 || request.statusCode == 201) {
-          state.isLoading = false;
-          NavigatorService.pushNamed(
-            AppRoutes.orderPayment,
-            arguments: {'orderID': request.data["id"]},
-          );
+      NavigatorService.pushNamed(
+        AppRoutes.orderPayment,
+        arguments: orderParams,
+      );
+      // try {
+      //   state.isLoading = true;
+      //   final request = await dio.post(
+      //     APIs.createOrder,
+      //     data: orderParams,
+      //   );
+      //   if (request.statusCode == 200 || request.statusCode == 201) {
+      //     state.isLoading = false;
+      //     NavigatorService.pushNamed(
+      //       AppRoutes.orderPayment,
+      //       arguments: {'orderID': request.data["id"]},
+      //     );
 
-          showSuccess(
-              "Order Placed Successfully!! Please proceed payment", context);
-          clearForm();
-        }
-      } on Exception catch (e) {
-        if (e is DioException) {
-          showError(
-              "${e.response?.data ?? "Order creation failed!!"}", context);
-          return;
-        }
-        showError("error occurred:$e", context);
-      }
+      //     showSuccess(
+      //         "Order Placed Successfully!! Please proceed payment", context);
+      //     //  clearForm();
+      //   }
+      // } on Exception catch (e) {
+      //   if (e is DioException) {
+      //     showError(
+      //         "${e.response?.data ?? "Order creation failed!!"}", context);
+      //     return;
+      //   }
+      //   showError("error occurred:$e", context);
+      // }
     }
   }
 

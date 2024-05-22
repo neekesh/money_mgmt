@@ -105,12 +105,14 @@ class AppRoutes {
     orderPayment: (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      return OrderPayment(orderID: int.tryParse(args['orderID'].toString())!);
+      // return OrderPayment(orderID: int.tryParse(args['orderID'].toString())!);
+      return OrderPayment(orderData: args);
     },
     urgentPayment: (context) {
       final args =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      return UrgentPayment(orderID: int.tryParse(args['orderID'].toString())!);
+      return UrgentPayment(orderData: args);
+      // return UrgentPayment(orderID: int.tryParse(args['orderID'].toString())!);
     },
 
     notificationScreen: ((context) => NotificationPage()),

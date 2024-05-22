@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:money_mgmt/core/utils/get_route.dart';
 import 'package:money_mgmt/presentation/invoices_page_one_screen/notifier/invoices_page_one_notifier.dart';
 import 'package:money_mgmt/presentation/profile_details_screen/notifier/profile_details_notifier.dart';
@@ -101,8 +99,25 @@ class ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
                                     textAlign: TextAlign.left,
                                   );
                                 }),
-                          )
+                          ),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 23.h),
+                      child: CustomElevatedButton(
+                        height: 28.v,
+                        width: 110.v,
+                        text: "Logout".tr,
+                        buttonStyle: CustomButtonStyles.outlinePrimaryTL14,
+                        buttonTextStyle:
+                            CustomTextStyles.titleSmallOnErrorSemiBold,
+                        onPressed: () {
+                          PrefUtils().clearPreferencesData();
+                          NavigatorService.pushNamedAndRemoveUntil(
+                            AppRoutes.initialRoute,
+                          );
+                        },
                       ),
                     ),
                     SizedBox(height: 52.v),
