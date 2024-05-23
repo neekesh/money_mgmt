@@ -61,12 +61,12 @@ class InvoicesPageOneNotifier extends StateNotifier<InvoicesPageOneState> {
     return invoiceData;
   }
 
-  Future<void> updateOrderStatus(BuildContext context, int orderID) async {
+  Future<void> updateOrderStatus(
+      BuildContext context, int orderID, String orderType) async {
     debugLog(message: orderID.toString());
     try {
-      final request = await dio.put(
-        APIs.updateNotification + orderID.toString(),
-      );
+      final request = await dio.put(APIs.updateOrderStatus + orderID.toString(),
+          data: {"type": orderType});
       debugLog(message: request.statusCode.toString());
       if (request.statusCode == 200 || request.statusCode == 201) {
         showSuccess("Successfully shipped order", context);

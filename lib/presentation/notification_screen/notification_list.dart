@@ -94,6 +94,16 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
                                     ),
                                     itemBuilder: (context, index) {
                                       Map<String, dynamic> items = data[index];
+                                      String orderType =
+                                          data[index]["order"] != null
+                                              ? "scheduled"
+                                              : "urgent";
+                                      int orderID = data[index]["order"] != null
+                                          ? int.parse(
+                                              data[index]["order"].toString())
+                                          : int.parse(data[index]
+                                                  ["urgent_delivery"]
+                                              .toString());
                                       String orderDate =
                                           DateFormat('yyyy-MM-dd').format(
                                               DateTime.parse(
@@ -144,9 +154,8 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
                                                         height: 30,
                                                         text: "Completed",
                                                         onPressed: () {
-                                                          showPopup(int.parse(
-                                                              items["id"]
-                                                                  .toString()));
+                                                          showPopup(orderID,
+                                                              orderType);
                                                         },
                                                         buttonTextStyle: theme
                                                             .textTheme
@@ -234,7 +243,7 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
     );
   }
 
-  void showPopup(int orderID) {
+  void showPopup(int orderID, String orderType) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -295,7 +304,7 @@ class NotificationPageState extends ConsumerState<NotificationPage> {
               onPressed: () {
                 ref
                     .read(invoicesPageOneNotifier.notifier)
-                    .updateOrderStatus(context, orderID);
+                    .updateOrderStatus(context, orderID, orderType);
               },
               buttonTextStyle: theme.textTheme.headlineSmall!.copyWith(
                 fontSize: 12.fSize,
